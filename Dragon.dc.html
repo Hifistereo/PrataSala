@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@keyframes drgBob { 0%,100%{ transform: translateY(0) rotate(-1.5deg);} 50%{ transform: translateY(-4%) rotate(1.5deg);} }
+@keyframes drgWingL { 0%,100%{ transform: rotate(8deg);} 50%{ transform: rotate(-16deg);} }
+@keyframes drgWingR { 0%,100%{ transform: rotate(-8deg);} 50%{ transform: rotate(16deg);} }
+@keyframes drgBlink { 0%,92%,100%{ transform: scaleY(1);} 96%{ transform: scaleY(0.1);} }
+@keyframes drgPuff { 0%{ transform: scale(0.6); opacity:0;} 30%{ opacity:0.9;} 100%{ transform: scale(1.4) translate(8%,-30%); opacity:0;} }
+</style>
+</helmet>
+<div style="position: relative; width: 100%; aspect-ratio: 1 / 1;">
+
+  <!-- floating sparkle puffs -->
+  <div style="position:absolute; left:6%; top:30%; width:9%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff, #FFE6A8); animation: drgPuff 2.6s ease-out infinite;"></div>
+  <div style="position:absolute; left:84%; top:24%; width:7%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 35%, #fff, #FFCBE3); animation: drgPuff 3.1s ease-out 0.8s infinite;"></div>
+
+  <div style="position:absolute; inset:0; animation: drgBob 3.4s ease-in-out infinite; transform-origin:50% 90%;">
+
+    <!-- tail -->
+    <div style="position:absolute; left:60%; bottom:6%; width:34%; height:30%; background:linear-gradient(150deg, #6FE0B4, #38B58C); border-radius:60% 40% 60% 40% / 60% 50% 50% 40%; transform: rotate(18deg); box-shadow: inset 0 -6px 0 rgba(20,90,70,.18);"></div>
+    <div style="position:absolute; left:86%; bottom:18%; width:11%; height:11%; background:#FFC861; border-radius:50% 50% 50% 10%; transform: rotate(28deg); box-shadow: inset 0 -3px 0 rgba(180,110,20,.25);"></div>
+
+    <!-- wings -->
+    <div style="position:absolute; left:-2%; top:30%; width:34%; height:40%; background:linear-gradient(135deg, #B79CF2, #8A63E8); border-radius:70% 30% 60% 40% / 60% 40% 60% 40%; transform-origin:90% 60%; animation: drgWingL 1.6s ease-in-out infinite; box-shadow: inset 0 -5px 0 rgba(70,40,140,.25);"></div>
+    <div style="position:absolute; right:-2%; top:30%; width:34%; height:40%; background:linear-gradient(225deg, #B79CF2, #8A63E8); border-radius:30% 70% 40% 60% / 40% 60% 40% 60%; transform-origin:10% 60%; animation: drgWingR 1.6s ease-in-out infinite; box-shadow: inset 0 -5px 0 rgba(70,40,140,.25);"></div>
+
+    <!-- back spikes -->
+    <div style="position:absolute; left:33%; top:8%; width:9%; height:11%; background:linear-gradient(180deg,#FFD98A,#FFB14E); border-radius:50% 50% 50% 50% / 80% 80% 20% 20%; transform: rotate(-12deg);"></div>
+    <div style="position:absolute; left:46%; top:4%; width:10%; height:13%; background:linear-gradient(180deg,#FFD98A,#FFB14E); border-radius:50% 50% 50% 50% / 80% 80% 20% 20%;"></div>
+    <div style="position:absolute; left:60%; top:8%; width:9%; height:11%; background:linear-gradient(180deg,#FFD98A,#FFB14E); border-radius:50% 50% 50% 50% / 80% 80% 20% 20%; transform: rotate(12deg);"></div>
+
+    <!-- horns -->
+    <div style="position:absolute; left:30%; top:11%; width:8%; height:12%; background:linear-gradient(180deg,#FFF3D6,#F4D79A); border-radius:50% 50% 40% 40% / 70% 70% 30% 30%; transform: rotate(-18deg);"></div>
+    <div style="position:absolute; left:62%; top:11%; width:8%; height:12%; background:linear-gradient(180deg,#FFF3D6,#F4D79A); border-radius:50% 50% 40% 40% / 70% 70% 30% 30%; transform: rotate(18deg);"></div>
+
+    <!-- body -->
+    <div style="position:absolute; left:15%; bottom:5%; width:70%; height:74%; background:linear-gradient(160deg, #74E2B0 8%, #46C091 62%, #34B083 100%); border-radius:48% 48% 46% 46% / 54% 54% 46% 46%; box-shadow: inset 0 -10px 0 rgba(20,100,75,.16), 0 16px 26px rgba(40,120,95,.28);"></div>
+
+    <!-- belly -->
+    <div style="position:absolute; left:31%; bottom:8%; width:38%; height:46%; background:linear-gradient(180deg, #FFFBEA, #FCEFC6); border-radius:50% 50% 48% 48% / 60% 60% 40% 40%;"></div>
+    <div style="position:absolute; left:38%; bottom:18%; width:24%; height:5%; border-radius:50%; background:rgba(225,180,120,.35);"></div>
+    <div style="position:absolute; left:40%; bottom:30%; width:20%; height:4%; border-radius:50%; background:rgba(225,180,120,.25);"></div>
+
+    <!-- feet -->
+    <div style="position:absolute; left:26%; bottom:2%; width:18%; height:12%; background:linear-gradient(180deg,#5ECF9E,#3CAE83); border-radius:50% 50% 50% 50% / 60% 60% 50% 50%;"></div>
+    <div style="position:absolute; right:26%; bottom:2%; width:18%; height:12%; background:linear-gradient(180deg,#5ECF9E,#3CAE83); border-radius:50% 50% 50% 50% / 60% 60% 50% 50%;"></div>
+
+    <!-- arms -->
+    <div style="position:absolute; left:11%; bottom:30%; width:15%; height:18%; background:linear-gradient(160deg,#6FE0B0,#42BB8C); border-radius:60% 40% 50% 50% / 60% 50% 50% 40%; transform: rotate(20deg);"></div>
+    <div style="position:absolute; right:11%; bottom:30%; width:15%; height:18%; background:linear-gradient(200deg,#6FE0B0,#42BB8C); border-radius:40% 60% 50% 50% / 50% 60% 40% 50%; transform: rotate(-20deg);"></div>
+
+    <!-- cheeks -->
+    <div style="position:absolute; left:24%; top:46%; width:13%; height:9%; background:radial-gradient(circle, rgba(255,140,180,.85), rgba(255,140,180,0) 70%); border-radius:50%;"></div>
+    <div style="position:absolute; right:24%; top:46%; width:13%; height:9%; background:radial-gradient(circle, rgba(255,140,180,.85), rgba(255,140,180,0) 70%); border-radius:50%;"></div>
+
+    <!-- eyes -->
+    <div style="position:absolute; left:31%; top:30%; width:18%; height:21%; background:#fff; border-radius:50%; box-shadow: inset 0 -3px 0 rgba(0,0,0,.05); animation: drgBlink 4.2s ease-in-out infinite; transform-origin:50% 50%;">
+      <div style="position:absolute; left:30%; top:34%; width:46%; height:46%; background:#3A2A5C; border-radius:50%;"></div>
+      <div style="position:absolute; left:40%; top:40%; width:22%; height:22%; background:#fff; border-radius:50%;"></div>
+    </div>
+    <div style="position:absolute; right:31%; top:30%; width:18%; height:21%; background:#fff; border-radius:50%; box-shadow: inset 0 -3px 0 rgba(0,0,0,.05); animation: drgBlink 4.2s ease-in-out infinite; transform-origin:50% 50%;">
+      <div style="position:absolute; left:24%; top:34%; width:46%; height:46%; background:#3A2A5C; border-radius:50%;"></div>
+      <div style="position:absolute; left:34%; top:40%; width:22%; height:22%; background:#fff; border-radius:50%;"></div>
+    </div>
+
+    <!-- snout / mouth -->
+    <div style="position:absolute; left:41%; top:52%; width:5%; height:4%; background:#3A2A5C; border-radius:50%; opacity:.55;"></div>
+    <div style="position:absolute; left:54%; top:52%; width:5%; height:4%; background:#3A2A5C; border-radius:50%; opacity:.55;"></div>
+    <div style="position:absolute; left:40%; top:57%; width:20%; height:13%; background:#6A3D7A; border-radius:42% 42% 50% 50% / 30% 30% 70% 70%; overflow:hidden; box-shadow: inset 0 4px 0 rgba(0,0,0,.12);">
+      <div style="position:absolute; left:24%; bottom:0; width:52%; height:55%; background:linear-gradient(180deg,#FF8FA8,#FF607F); border-radius:50% 50% 50% 50% / 70% 70% 40% 40%;"></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 280, &quot;height&quot;: 280}}"></script>
+</body>
+</html>

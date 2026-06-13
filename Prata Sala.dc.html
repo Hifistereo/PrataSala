@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; }
+  @keyframes floaty { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
+  @keyframes floaty2 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-16px);} }
+  @keyframes drift { 0%{ transform: translateX(0);} 100%{ transform: translateX(40px);} }
+  @keyframes sunspin { 0%{ transform: rotate(0);} 100%{ transform: rotate(360deg);} }
+  @keyframes pop { 0%{ transform: scale(.6); opacity:0;} 70%{ transform: scale(1.08);} 100%{ transform: scale(1); opacity:1;} }
+  @keyframes popIn { 0%{ transform: scale(.7);} 60%{ transform: scale(1.06);} 100%{ transform: scale(1);} }
+  @keyframes star-twinkle { 0%,100%{ transform: scale(1) rotate(0); opacity:.9;} 50%{ transform: scale(1.25) rotate(15deg); opacity:1;} }
+  @keyframes wave { 0%,100%{ transform: rotate(-8deg);} 50%{ transform: rotate(18deg);} }
+  @keyframes confetti-fall { 0%{ transform: translateY(-20px) rotate(0); opacity:1;} 100%{ transform: translateY(420px) rotate(540deg); opacity:0;} }
+  @keyframes robotHop { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-6px);} }
+  @keyframes pulseGlow { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.035);} }
+  @keyframes raysSpin { 0%{ transform: rotate(0);} 100%{ transform: rotate(360deg);} }
+  @keyframes sparkPop { 0%{ transform: scale(0) rotate(0); opacity:0;} 40%{ opacity:1;} 100%{ transform: scale(1.3) rotate(40deg); opacity:0;} }
+</style>
+</helmet>
+
+<div style="min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:40px 20px 80px;">
+
+  <!-- board header -->
+  <div style="max-width:1180px; margin:0 auto 36px; text-align:center;">
+    <div style="display:inline-block; background:#fff; border-radius:999px; padding:8px 22px; box-shadow:0 6px 0 #C9D6E8; font-weight:900; color:#5B6B86; letter-spacing:.5px; font-size:14px;">PRĀTA PIEDZĪVOJUMU SALA · VIZUĀLAIS DIZAINS</div>
+    <h1 style="font-family:'Baloo 2', cursive; font-size:40px; color:#34245C; margin:18px 0 6px; font-weight:800;">Bērnu spēļu sala 🏝️</h1>
+    <p style="margin:0; color:#5B6B86; font-weight:800; font-size:17px;">Trīs salas stili · interaktīvais prototips ar īstu mini-spēli</p>
+  </div>
+
+  <!-- ===== SECTION 1: THREE STYLE DIRECTIONS ===== -->
+  <div style="max-width:1180px; margin:0 auto 60px;">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+      <div style="width:38px; height:38px; border-radius:12px; background:#FF7A55; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; box-shadow:0 4px 0 #E55733;">1</div>
+      <h2 style="font-family:'Baloo 2',cursive; font-size:26px; color:#34245C; margin:0; font-weight:800;">Izvēlies salas stilu</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;">
+      <sc-for list="{{ themes }}" as="t" hint-placeholder-count="3">
+        <div onClick="{{ t.pick }}" style="cursor:pointer;">
+          <div style="border-radius:30px; overflow:hidden; box-shadow:0 14px 30px rgba(40,60,100,.18); border:5px solid #fff; position:relative;">
+            <!-- mini start screen -->
+            <div style="{{ t.vars }}">
+              <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden;">
+                <!-- sky -->
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot));"></div>
+                <!-- sun -->
+                <div style="position:absolute; top:7%; right:9%; width:20%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 40% 40%, #FFF1B8, var(--sun)); box-shadow:0 0 28px var(--sun);"></div>
+                <!-- clouds -->
+                <div style="position:absolute; top:14%; left:8%; width:30%; height:9%; background:#fff; border-radius:999px; opacity:.92;"></div>
+                <div style="position:absolute; top:24%; left:55%; width:26%; height:8%; background:#fff; border-radius:999px; opacity:.85;"></div>
+                <!-- sea -->
+                <div style="position:absolute; bottom:0; left:0; right:0; height:42%; background:linear-gradient(180deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #fff));"></div>
+                <!-- island -->
+                <div style="position:absolute; bottom:14%; left:14%; right:14%; height:30%; background:linear-gradient(180deg, var(--grass), var(--hill)); border-radius:50% 50% 24% 24% / 60% 60% 40% 40%; box-shadow:inset 0 -6px 0 rgba(0,0,0,.08);"></div>
+                <div style="position:absolute; bottom:11%; left:9%; right:9%; height:13%; background:var(--sand); border-radius:50%;"></div>
+                <!-- dragon -->
+                <div style="position:absolute; bottom:18%; left:31%; width:38%;">
+                  <dc-import name="Dragon" hint-size="100%,100%"></dc-import>
+                </div>
+                <!-- title -->
+                <div style="position:absolute; top:6%; left:0; right:0; text-align:center;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(13px, 4.2cqw, 22px); color:#fff; line-height:1; text-shadow:0 2px 0 var(--primary-dark), 0 4px 8px rgba(0,0,0,.18); -webkit-text-stroke:1px var(--primary-dark);">PRĀTA<br>SALA</div>
+                </div>
+                <!-- start button -->
+                <div style="position:absolute; bottom:4%; left:14%; right:14%; background:var(--primary); border-radius:999px; padding:7% 0; text-align:center; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(10px,3.2cqw,16px); box-shadow:0 4px 0 var(--primary-dark);">▶ Sākt!</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 6px 0;">
+            <div>
+              <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:19px; color:#34245C;">{{ t.label }}</div>
+              <div style="font-weight:800; font-size:13px; color:#7C8AA3;">{{ t.tag }}</div>
+            </div>
+            <div style="background:{{ t.chip }}; width:34px; height:34px; border-radius:50%; box-shadow:0 3px 0 rgba(0,0,0,.15);"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: INTERACTIVE PROTOTYPE ===== -->
+  <div style="max-width:1180px; margin:0 auto;">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
+      <div style="width:38px; height:38px; border-radius:12px; background:#8A63E8; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; box-shadow:0 4px 0 #6B45C9;">2</div>
+      <h2 style="font-family:'Baloo 2',cursive; font-size:26px; color:#34245C; margin:0; font-weight:800;">Spēlē pats!</h2>
+      <span style="font-weight:800; color:#7C8AA3; font-size:15px;">5 spēles · kartītes · vecāku zona</span>
+      <div style="margin-left:auto; display:flex; gap:8px; align-items:center; background:#fff; padding:6px 8px; border-radius:999px; box-shadow:0 4px 0 #C9D6E8;">
+        <span style="font-weight:900; font-size:12px; color:#7C8AA3; padding-left:6px;">STILS:</span>
+        <sc-for list="{{ themes }}" as="t" hint-placeholder-count="3">
+          <button onClick="{{ t.pick }}" aria-label="{{ t.label }}" style="width:26px; height:26px; border-radius:50%; border:3px solid {{ t.ring }}; background:{{ t.chip }}; cursor:pointer; padding:0;"></button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- device frame -->
+    <div style="display:flex; justify-content:center;">
+      <div style="width:100%; max-width:430px; background:#2B2150; border-radius:48px; padding:14px; box-shadow:0 30px 60px rgba(43,33,80,.35);">
+       <div style="{{ themeVars }}">
+        <div style="border-radius:36px; overflow:hidden; position:relative; aspect-ratio:9/16; background:#fff;">
+
+          <!-- ============ START SCREEN ============ -->
+          <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute; inset:0; container-type:inline-size;">
+              <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot));"></div>
+              <div style="position:absolute; top:5%; right:8%; width:22%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 40% 40%, #FFF6C8, var(--sun)); box-shadow:0 0 40px var(--sun); animation:sunspin 26s linear infinite;"></div>
+              <div style="position:absolute; top:12%; left:6%; width:34%; height:7%; background:#fff; border-radius:999px; opacity:.95; animation:floaty 5s ease-in-out infinite;"></div>
+              <div style="position:absolute; top:21%; left:60%; width:28%; height:6%; background:#fff; border-radius:999px; opacity:.85; animation:floaty2 6s ease-in-out infinite;"></div>
+
+              <!-- sea + island -->
+              <div style="position:absolute; bottom:0; left:0; right:0; height:38%; background:linear-gradient(180deg, var(--sea), color-mix(in srgb, var(--sea) 65%, #fff));"></div>
+              <div style="position:absolute; bottom:30%; left:10%; right:10%; height:24%; background:linear-gradient(180deg, var(--grass), var(--hill)); border-radius:50% 50% 22% 22% / 62% 62% 38% 38%; box-shadow:inset 0 -8px 0 rgba(0,0,0,.08);"></div>
+              <div style="position:absolute; bottom:27%; left:5%; right:5%; height:12%; background:var(--sand); border-radius:50%;"></div>
+              <!-- palm -->
+              <div style="position:absolute; bottom:40%; left:14%; width:4%; height:18%; background:linear-gradient(90deg,#8a5a32,#a86a3c); border-radius:6px; transform:rotate(-6deg); transform-origin:bottom;"></div>
+              <div style="position:absolute; bottom:56%; left:7%; width:22%; height:9%; background:#4CA64C; border-radius:60% 60% 50% 50% / 100% 100% 0 0;"></div>
+
+              <!-- dragon waving -->
+              <div style="position:absolute; bottom:30%; left:30%; width:40%; animation:floaty 4s ease-in-out infinite;">
+                <dc-import name="Dragon" hint-size="100%,100%"></dc-import>
+              </div>
+              <div style="position:absolute; bottom:62%; right:18%; font-size:26px; animation:wave 1.6s ease-in-out infinite; transform-origin:bottom;">👋</div>
+
+              <!-- title -->
+              <div style="position:absolute; top:8%; left:0; right:0; text-align:center; animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;">
+                <div style="display:inline-block; font-family:'Baloo 2',cursive; font-weight:800; font-size:13cqw; color:#fff; line-height:.95; text-shadow:0 3px 0 var(--primary-dark), 0 7px 0 rgba(0,0,0,.12), 0 10px 16px rgba(0,0,0,.2); -webkit-text-stroke:2px var(--primary-dark);">PRĀTA<br>SALA</div>
+                <div style="margin-top:4px; display:inline-block; background:#fff; color:var(--primary); font-weight:900; font-size:3.4cqw; padding:4px 14px; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.1);">PIEDZĪVOJUMU SALA</div>
+              </div>
+
+              <!-- buttons -->
+              <div style="position:absolute; bottom:5%; left:7%; right:7%; display:flex; flex-direction:column; gap:11px;">
+                <button onClick="{{ goMap }}" style="width:100%; border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:6cqw; padding:18px; border-radius:22px; box-shadow:0 7px 0 var(--primary-dark), 0 12px 18px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; gap:10px;">▶ Sākt piedzīvojumu!</button>
+                <div style="display:flex; gap:11px;">
+                  <button onClick="{{ goCollection }}" style="flex:1; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.2cqw; padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #E0A91E; display:flex; align-items:center; justify-content:center; gap:6px;">🎴 Kartītes</button>
+                  <button onClick="{{ goParent }}" style="flex:1; border:none; cursor:pointer; background:#8A63E8; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.2cqw; padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #6B45C9; display:flex; align-items:center; justify-content:center; gap:6px;">👪 Vecāki</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ MAP SCREEN ============ -->
+          <sc-if value="{{ isMap }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); overflow-y:auto;">
+              <!-- water bg texture -->
+              <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sea), color-mix(in srgb, var(--sea) 75%, var(--sky-bot))); opacity:.55;"></div>
+
+              <!-- top bar -->
+              <div style="position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; padding:14px 14px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark);">
+                <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:42px; height:42px; border-radius:14px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:5cqw; text-shadow:0 2px 0 var(--primary-dark);">Piedzīvojumu Sala</div>
+                <div style="display:flex; align-items:center; gap:5px; background:#fff; padding:6px 12px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
+                  <span style="font-size:16px; animation:star-twinkle 2s ease-in-out infinite;">⭐</span>
+                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">{{ totalStars }}</span>
+                </div>
+              </div>
+
+              <!-- daily mission banner -->
+              <div style="position:relative; z-index:2; margin:14px; background:#fff; border-radius:22px; padding:13px 14px; box-shadow:0 7px 0 rgba(0,0,0,.08);">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="font-size:26px; animation:floaty 3s ease-in-out infinite;">📜</div>
+                  <div style="flex:1; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">Šodienas uzdevumi</div>
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:14px;">{{ dailyDoneCount }}/3</div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
+                  <sc-for list="{{ dailyChips }}" as="mm" hint-placeholder-count="3">
+                    <div style="display:flex; align-items:center; gap:9px; background:{{ mm.bg }}; border:2px solid {{ mm.ring }}; border-radius:13px; padding:7px 10px;">
+                      <span style="font-size:18px;">{{ mm.icon }}</span>
+                      <span style="flex:1; font-weight:800; color:#34245C; font-size:12px;">{{ mm.label }}</span>
+                      <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:15px;">{{ mm.tick }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ dailyReady }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ claimReward }}" style="width:100%; margin-top:10px; border:none; cursor:pointer; background:linear-gradient(180deg,#FFD86B,#FFB627); color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:15px; padding:12px; border-radius:14px; box-shadow:0 5px 0 #E0A91E; animation:pulseGlow 1.3s ease-in-out infinite;">🎁 Saņem balvu!</button>
+                </sc-if>
+                <sc-if value="{{ dailyClaimed }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align:center; margin-top:10px; font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:13px;">✓ Balva saņemta! 🎉</div>
+                </sc-if>
+              </div>
+
+              <!-- zone path -->
+              <div style="position:relative; z-index:2; padding:6px 16px 24px;">
+                <sc-for list="{{ zones }}" as="z" hint-placeholder-count="5">
+                  <div onClick="{{ z.go }}" style="cursor:pointer; display:flex; align-items:center; gap:14px; margin:0 0 14px; flex-direction:{{ z.dir }};">
+                    <!-- node -->
+                    <div style="position:relative; flex:0 0 auto; width:84px; height:84px; border-radius:28px; background:linear-gradient(165deg, {{ z.c1 }}, {{ z.c2 }}); display:grid; place-items:center; box-shadow:0 8px 0 {{ z.shadow }}, 0 14px 20px rgba(0,0,0,.18); border:4px solid #fff;">
+                      <span style="font-size:38px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.2));">{{ z.icon }}</span>
+                      <div style="position:absolute; top:-12px; right:-10px; background:#fff; border-radius:50%; width:30px; height:30px; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 3px 0 rgba(0,0,0,.12);">{{ z.lvlLabel }}</div>
+                    </div>
+                    <!-- label card -->
+                    <div style="flex:1; background:#fff; border-radius:20px; padding:11px 14px; box-shadow:0 6px 0 rgba(0,0,0,.08);">
+                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px; line-height:1.05;">{{ z.name }}</div>
+                      <div style="font-weight:800; color:#8595AE; font-size:12px; margin:2px 0 5px;">{{ z.sub }}</div>
+                      <div style="display:flex; gap:3px;">{{ z.starRow }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ GAME SCREEN (Robotu Laukums) ============ -->
+          <sc-if value="{{ isRobot }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <!-- header -->
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
+                <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
+                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                </div>
+              </div>
+
+              <!-- dragon hint bubble -->
+              <div style="display:flex; align-items:center; gap:8px; padding:10px 12px 4px; flex:0 0 auto;">
+                <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+                <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px;">{{ hint }}</div>
+              </div>
+
+              <!-- grid board -->
+              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 12px;">
+                <div style="position:relative; width:min(86cqw, 320px); aspect-ratio:1; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
+                  <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="25">
+                    <div style="border-radius:10px; background:{{ cell.bg }}; display:grid; place-items:center; font-size:5.5cqw;">{{ cell.mark }}</div>
+                  </sc-for>
+                  <!-- robot overlay -->
+                  <div style="position:absolute; width:14%; height:14%; left:{{ robotLeft }}; top:{{ robotTop }}; transition:left .32s cubic-bezier(.34,1.56,.64,1), top .32s cubic-bezier(.34,1.56,.64,1); display:grid; place-items:center; pointer-events:none;">
+                    <div style="font-size:8cqw; animation:robotHop .5s ease-in-out infinite; transform:rotate({{ robotRot }});">🤖</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- command queue -->
+              <div style="flex:0 0 auto; padding:4px 12px; min-height:38px;">
+                <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:center; min-height:38px; flex-wrap:wrap;">
+                  <span style="font-weight:900; color:#5B6B86; font-size:12px;">Komandas:</span>
+                  <sc-for list="{{ queue }}" as="q" hint-placeholder-count="0">
+                    <div style="width:26px; height:26px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:15px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <!-- controls -->
+              <div style="flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:6px 12px 16px;">
+                <div style="display:grid; grid-template-columns:repeat(3,40px); grid-template-rows:repeat(2,40px); gap:5px;">
+                  <div></div>
+                  <button onClick="{{ addUp }}" aria-label="Uz augšu" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬆️</button>
+                  <div></div>
+                  <button onClick="{{ addLeft }}" aria-label="Pa kreisi" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬅️</button>
+                  <button onClick="{{ addDown }}" aria-label="Uz leju" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
+                  <button onClick="{{ addRight }}" aria-label="Pa labi" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
+                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:5cqw; padding:13px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
+                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:3.8cqw; padding:9px; border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
+                </div>
+              </div>
+
+            </div>
+          </sc-if>
+
+          <!-- ============ MEMORY PATH (Atmiņas Taka) ============ -->
+          <sc-if value="{{ isMemory }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
+                <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
+                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:12px 12px 4px; flex:0 0 auto;">
+                <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+                <div style="flex:1; background:#fff; border-radius:16px; padding:10px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">{{ memStatus }}</div>
+              </div>
+              <div style="display:flex; justify-content:center; padding:4px;">{{ memStepEls }}</div>
+              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
+                <div style="width:min(80cqw, 300px); aspect-ratio:1; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:9px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
+                  <sc-for list="{{ memCells }}" as="cell" hint-placeholder-count="16">
+                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:6cqw; transition:background .15s;">{{ cell.mark }}</div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex:0 0 auto; padding:8px 14px 18px;">
+                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.4cqw; padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ LISTEN & DO (Klausies un Dari) ============ -->
+          <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
+                <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
+                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                </div>
+              </div>
+              <!-- instruction -->
+              <div style="display:flex; align-items:center; gap:10px; padding:14px 14px 6px; flex:0 0 auto;">
+                <div style="width:56px; height:56px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+                <div style="flex:1; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 5px 0 rgba(0,0,0,.08); display:flex; align-items:center; gap:10px;">
+                  <div style="flex:1; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px;">{{ listenInstr }}</div>
+                  <button onClick="{{ listenSpeak }}" aria-label="Klausīties" style="border:none; cursor:pointer; background:var(--primary); color:#fff; width:42px; height:42px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 var(--primary-dark);">🔊</button>
+                </div>
+              </div>
+              <!-- feedback + round progress -->
+              <div style="display:flex; align-items:center; justify-content:center; gap:10px; min-height:26px; padding:2px;">
+                <span>{{ listenRoundEls }}</span>
+                <span style="font-family:'Baloo 2',cursive; font-weight:800; color:{{ listenFbColor }}; font-size:16px;">{{ listenFeedback }}</span>
+              </div>
+              <!-- objects -->
+              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 16px 18px;">
+                <div style="width:100%; display:grid; grid-template-columns:repeat(2,1fr); gap:14px;">
+                  <sc-for list="{{ listenObjs }}" as="o" hint-placeholder-count="4">
+                    <button onClick="{{ o.tap }}" style="border:4px solid #fff; cursor:pointer; background:#fff; border-radius:22px; aspect-ratio:1; display:grid; place-items:center; font-size:18cqw; box-shadow:0 7px 0 rgba(0,0,0,.1);">{{ o.e }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ NUMBER TREASURE (Skaitļu Dārgumi) ============ -->
+          <sc-if value="{{ isNumber }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
+                <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
+                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                </div>
+              </div>
+              <!-- question -->
+              <div style="margin:14px 14px 4px; background:#fff; border-radius:18px; padding:12px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:19px;">{{ numQ }}</div>
+              <div style="display:flex; justify-content:center; align-items:center; gap:6px; padding:2px;">
+                <span style="font-weight:800; color:#7C8AA3; font-size:11px;">Dārgumi:</span>
+                <span>{{ numCountEls }}</span>
+              </div>
+              <!-- two chests -->
+              <div style="flex:1 1 auto; display:flex; gap:12px; padding:6px 14px;">
+                <button onClick="{{ pickA }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderA }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
+                  <div style="flex:1; display:flex; flex-wrap:wrap; gap:4px; align-content:center; justify-content:center;">
+                    <sc-for list="{{ gemsA }}" as="gem" hint-placeholder-count="3">
+                      <span style="font-size:8cqw;">💎</span>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:30px; margin-top:6px;">{{ numA }}</div>
+                  </sc-if>
+                </button>
+                <button onClick="{{ pickB }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderB }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
+                  <div style="flex:1; display:flex; flex-wrap:wrap; gap:4px; align-content:center; justify-content:center;">
+                    <sc-for list="{{ gemsB }}" as="gem" hint-placeholder-count="5">
+                      <span style="font-size:8cqw;">💎</span>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:30px; margin-top:6px;">{{ numB }}</div>
+                  </sc-if>
+                </button>
+              </div>
+              <!-- equal option (higher levels) -->
+              <sc-if value="{{ numAllowEqual }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:4px 14px 0;">
+                  <button onClick="{{ pickEqual }}" style="width:100%; cursor:pointer; border:4px solid {{ numEqualBorder }}; background:#fff; border-radius:16px; padding:11px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px; box-shadow:0 5px 0 rgba(0,0,0,.08);">⚖️ Vienādi!</button>
+                </div>
+              </sc-if>
+              <!-- next -->
+              <div style="flex:0 0 auto; padding:8px 14px 18px; min-height:64px;">
+                <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:5cqw; padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ DON'T CATCH DRAGON (Neķer Pūķi!) ============ -->
+          <sc-if value="{{ isDragon }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
+                <div style="display:flex; gap:6px;">
+                  <div style="background:#fff; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">⏱️ {{ dragTime }}</div>
+                  <div style="background:#FFCE3A; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#7A4E00; font-size:13px; box-shadow:0 4px 0 #E0A91E;">⭐ {{ dragScore }}</div>
+                </div>
+              </div>
+              <div style="text-align:center; padding:10px 14px 4px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
+              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
+                <div style="position:relative; width:min(82cqw, 300px); aspect-ratio:1; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
+                  <sc-for list="{{ dragCells }}" as="cell" hint-placeholder-count="9">
+                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:50%; background:{{ cell.bg }}; display:grid; place-items:center; font-size:13cqw; box-shadow:inset 0 4px 8px rgba(0,0,0,.18);">{{ cell.critter }}</div>
+                  </sc-for>
+                  <sc-if value="{{ dragIdle }}" hint-placeholder-val="{{ true }}">
+                    <div style="position:absolute; inset:0; background:rgba(43,33,80,.55); border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
+                      <div style="display:flex; align-items:center; gap:8px; background:#fff; padding:6px; border-radius:999px; box-shadow:0 5px 0 rgba(0,0,0,.18);">
+                        <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
+                        <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; min-width:54px; text-align:center;">Līm. {{ lvl }}</span>
+                        <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">+</button>
+                      </div>
+                      <button onClick="{{ dragStart }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; padding:16px 34px; border-radius:20px; box-shadow:0 7px 0 var(--primary-dark);">▶ Sākt!</button>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+              <div style="flex:0 0 auto; height:14px;"></div>
+            </div>
+          </sc-if>
+
+          <!-- ============ COLLECTION (Manas Kartītes) ============ -->
+          <sc-if value="{{ isCollection }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🎴 Manas Kartītes</div>
+                <div style="background:#fff; padding:5px 11px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">{{ cardsGot }}/{{ cardsTotal }}</div>
+              </div>
+              <div style="text-align:center; padding:10px 14px 2px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Savāc visas salas kartītes! ✨</div>
+              <div style="flex:1 1 auto; overflow-y:auto; padding:12px 14px 16px;">
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px;">
+                  <sc-for list="{{ cards }}" as="card" hint-placeholder-count="12">
+                    <div style="background:{{ card.bg }}; border:3px solid {{ card.ring }}; border-radius:18px; padding:10px 5px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); opacity:{{ card.op }};">
+                      <div style="font-size:32px; filter:{{ card.filter }};">{{ card.e }}</div>
+                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:9.5px; margin-top:5px; line-height:1.12; min-height:24px;">{{ card.n }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ PARENT ZONE (Vecāku Zona) ============ -->
+          <sc-if value="{{ isParent }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; container-type:inline-size; background:#EEF3F9; display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, #6E5BD0, #5B45BE); box-shadow:0 4px 0 #4A3699; flex:0 0 auto;">
+                <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:#5B45BE; width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🏠</button>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw;">👪 Vecāku Zona</div>
+                <div style="background:#fff; padding:5px 11px; border-radius:999px; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🔒</div>
+              </div>
+              <div style="flex:1 1 auto; overflow-y:auto; padding:14px;">
+                <!-- stat cards -->
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;">
+                  <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#2BB7D6; font-size:26px;">{{ played }}</div>
+                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Spēlēts</div>
+                  </div>
+                  <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:26px;">{{ successes }}</div>
+                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Veiksmes</div>
+                  </div>
+                  <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#FF7A55; font-size:26px;">{{ accuracy }}%</div>
+                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Precizitāte</div>
+                  </div>
+                </div>
+                <!-- per game -->
+                <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:10px;">Spēļu līmeņi</div>
+                  <sc-for list="{{ parentGames }}" as="pg" hint-placeholder-count="5">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                      <span style="font-size:22px;">{{ pg.icon }}</span>
+                      <div style="flex:1;">
+                        <div style="font-weight:800; color:#34245C; font-size:12px;">{{ pg.name }}</div>
+                        <div style="height:8px; background:#EDF1F6; border-radius:99px; margin-top:4px; overflow:hidden;">
+                          <div style="height:100%; width:{{ pg.pct }}; background:linear-gradient(90deg,#8A63E8,#6E5BD0); border-radius:99px;"></div>
+                        </div>
+                      </div>
+                      <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#8A63E8; font-size:13px;">Lvl {{ pg.lvl }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <!-- settings -->
+                <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+                  <span style="font-size:22px;">🔊</span>
+                  <div style="flex:1;">
+                    <div style="font-weight:800; color:#34245C; font-size:13px;">Balss norādes</div>
+                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">{{ speechLabel }}</div>
+                  </div>
+                  <button onClick="{{ toggleSpeech }}" aria-label="Pārslēgt balss norādes" style="border:none; cursor:pointer; width:54px; height:30px; border-radius:99px; padding:3px; display:flex; align-items:center; background:{{ speechKnob.background }}; justify-content:{{ speechKnob.justifyContent }};">
+                    <span style="width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.2);"></span>
+                  </button>
+                </div>
+                <!-- reset -->
+                <sc-if value="{{ notResetConfirm }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ askReset }}" style="width:100%; border:none; cursor:pointer; background:#fff; color:#E25555; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:14px; border-radius:16px; box-shadow:0 5px 0 #D9E1EC;">↺ Atiestatīt progresu</button>
+                </sc-if>
+                <sc-if value="{{ resetConfirm }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#fff; border-radius:16px; padding:14px; box-shadow:0 5px 0 #D9E1EC;">
+                    <div style="font-weight:800; color:#34245C; font-size:13px; text-align:center; margin-bottom:10px;">Vai tiešām dzēst visu progresu?</div>
+                    <div style="display:flex; gap:10px;">
+                      <button onClick="{{ cancelReset }}" style="flex:1; border:none; cursor:pointer; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:12px; border-radius:14px;">Nē</button>
+                      <button onClick="{{ doReset }}" style="flex:1; border:none; cursor:pointer; background:#E25555; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:12px; border-radius:14px; box-shadow:0 4px 0 #B83C3C;">Jā, dzēst</button>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ============ SHARED CELEBRATION OVERLAY ============ -->
+          <sc-if value="{{ result }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; background:rgba(43,33,80,.55); display:grid; place-items:center; z-index:30; overflow:hidden;">
+              <div style="background:#fff; border-radius:30px; padding:26px 24px; text-align:center; box-shadow:0 16px 40px rgba(0,0,0,.3); animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both; opacity:1; max-width:82%; position:relative; z-index:2;">
+                <div style="font-size:58px; animation:star-twinkle 1.2s ease-in-out infinite;">{{ resultEmoji }}</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:26px; margin:6px 0;">{{ resultTitle }}</div>
+                <div style="font-weight:800; color:#7C8AA3; font-size:15px; margin-bottom:14px;">{{ resultMsg }}</div>
+                <div style="margin-bottom:18px;">{{ resultStars }}</div>
+                <div style="display:flex; gap:10px; justify-content:center;">
+                  <button onClick="{{ playAgain }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 var(--primary-dark);">↺ Vēlreiz!</button>
+                  <button onClick="{{ goMap }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">🏝️ Karte</button>
+                </div>
+              </div>
+              <sc-for list="{{ confetti }}" as="c" hint-placeholder-count="0">
+                <div style="position:absolute; top:0; left:{{ c.left }}; width:10px; height:14px; background:{{ c.color }}; border-radius:3px; animation:confetti-fall {{ c.dur }} linear {{ c.delay }} infinite;"></div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ============ REWARD UNLOCK FLOURISH ============ -->
+          <sc-if value="{{ rewardOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; background:rgba(43,33,80,.7); display:grid; place-items:center; z-index:40; overflow:hidden;">
+              <!-- sunburst rays -->
+              <div style="position:absolute; width:160%; aspect-ratio:1; background:repeating-conic-gradient(rgba(255,206,58,.32) 0deg 9deg, rgba(255,206,58,0) 9deg 18deg); border-radius:50%; animation:raysSpin 14s linear infinite; transition:opacity .5s; opacity:{{ rewardRays.opacity }};"></div>
+              <!-- sparkles -->
+              <sc-for list="{{ rewardSparks }}" as="sp" hint-placeholder-count="0">
+                <div style="position:absolute; left:{{ sp.x }}; top:{{ sp.y }}; font-size:{{ sp.s }}; animation:sparkPop 1.3s ease-out {{ sp.d }} infinite;">✨</div>
+              </sc-for>
+              <!-- modal -->
+              <div style="position:relative; z-index:2; text-align:center; animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;">
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:24px; text-shadow:0 2px 0 rgba(0,0,0,.25); margin-bottom:4px;">🎉 Jauna kartīte!</div>
+                <div style="font-weight:800; color:#FFE08A; font-size:13px; margin-bottom:16px;">Tu nopelnīji balvu par uzdevumiem</div>
+                <!-- flip card -->
+                <div style="perspective:900px; width:170px; height:218px; margin:0 auto 18px;">
+                  <div style="position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.34,1.4,.5,1); transform:{{ rewardFlip }};">
+                    <!-- front (revealed card) -->
+                    <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(165deg,#FFFFFF,#FFF3E0); border:5px solid #FFCE3A; border-radius:24px; box-shadow:{{ rewardGlow }}; transition:box-shadow .5s; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;">
+                      <div style="font-size:74px;">{{ rewardEmoji }}</div>
+                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; padding:0 8px; line-height:1.1;">{{ rewardName }}</div>
+                    </div>
+                    <!-- back (cover) -->
+                    <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateY(180deg); background:linear-gradient(165deg,#8A63E8,#6B45C9); border:5px solid #fff; border-radius:24px; box-shadow:0 12px 26px rgba(0,0,0,.3); display:grid; place-items:center;">
+                      <div style="font-size:64px;">❓</div>
+                    </div>
+                  </div>
+                </div>
+                <button onClick="{{ closeReward }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:17px; padding:13px 34px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">Forši! ✨</button>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = {
+    theme: 'tropic',
+    screen: 'start',
+    result: null,
+    robot: { r: 4, c: 0, dir: 'up' },
+    start: { r: 4, c: 0 },
+    target: { r: 0, c: 4 },
+    queue: [],
+    running: false,
+    levels: { robotCommands: 1, memoryPath: 2, listenAndDo: 1, numberTreasure: 3, dontCatchDragon: 2 },
+    mem: { seq: [], phase: 'idle', step: 0, flash: -1 },
+    listen: { round: 0, seq: [0], step: 0, status: '' },
+    num: { a: 3, b: 5, mode: 'more', answered: false, correct: false, picked: null, count: 0 },
+    dragonGame: { active: false, timeLeft: 25, score: 0, cell: -1, kind: null, flash: '' },
+    daily: {
+      missions: [
+        { icon: '🤖', label: 'Pabeidz Robotu Laukumu', done: true },
+        { icon: '🐾', label: 'Spēlē Atmiņas Taku', done: true },
+        { icon: '🏆', label: 'Pabeidz jebkuru spēli', done: false },
+      ],
+      claimed: false,
+    },
+    reward: { open: false, revealed: false, cardIdx: null },
+    cards: [
+      { id:1, e:'🐉', n:'Pūķēns Dārcis', got:true },
+      { id:2, e:'🦉', n:'Gudrā Pūce', got:true },
+      { id:3, e:'🦜', n:'Salas Papagailis', got:true },
+      { id:4, e:'🐢', n:'Jūras Bruņurupucis', got:true },
+      { id:5, e:'🦀', n:'Zvaigžņu Krabis', got:false },
+      { id:6, e:'🐠', n:'Varavīksnes Zivs', got:false },
+      { id:7, e:'🧰', n:'Dārgumu Lāde', got:false },
+      { id:8, e:'🐚', n:'Burvju Gliemežvāks', got:false },
+      { id:9, e:'🥥', n:'Maģiskais Kokoss', got:false },
+      { id:10, e:'🐵', n:'Salas Mērkaķis', got:false },
+      { id:11, e:'🌋', n:'Vulkāna Akmens', got:false },
+      { id:12, e:'🦩', n:'Rozā Flamingo', got:false },
+    ],
+    speech: true,
+  };
+
+  themeDefs() {
+    return {
+      tropic: { label:'Tropu Sala', tag:'Saulaina un spilgta', chip:'#23ADD2', ring:'#0E7FA0',
+        vars:{ '--sky-top':'#82DDF5','--sky-bot':'#D2F4FE','--sea':'#23ADD2','--sand':'#FFD27A','--grass':'#76CD5A','--hill':'#54B447','--primary':'#FF7A55','--primary-dark':'#E55733','--sun':'#FFD23F' } },
+      sunset: { label:'Saulrieta Sala', tag:'Silta un sapņaina', chip:'#FF5E87', ring:'#DF3E69',
+        vars:{ '--sky-top':'#FF93AE','--sky-bot':'#FFD7A8','--sea':'#9B63E6','--sand':'#F7C77E','--grass':'#6FC9A6','--hill':'#4FB58C','--primary':'#FF5E87','--primary-dark':'#DF3E69','--sun':'#FFE08A' } },
+      jungle: { label:'Džungļu Sala', tag:'Zaļa un dzīva', chip:'#1EB6A4', ring:'#138577',
+        vars:{ '--sky-top':'#63E2C2','--sky-bot':'#D5F8EC','--sea':'#1EB6A4','--sand':'#E9D6A2','--grass':'#45B86C','--hill':'#2F9E57','--primary':'#FFA63D','--primary-dark':'#E8842A','--sun':'#FFE15A' } },
+    };
+  }
+
+  zoneDefs() {
+    return [
+      { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', lvl:1, stars:3, c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9' },
+      { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', lvl:2, stars:2, c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684' },
+      { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', lvl:1, stars:1, c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A' },
+      { id:'numberTreasure', icon:'💎', name:'Skaitļu Dārgumi', sub:'Skaitļi', lvl:3, stars:3, c1:'#69D6A8', c2:'#3FB389', shadow:'#2E9E70' },
+      { id:'dontCatchDragon', icon:'🐉', name:'Neķer Pūķi!', sub:'Reakcija', lvl:2, stars:2, c1:'#B79CF2', c2:'#8A63E8', shadow:'#6B45C9' },
+    ];
+  }
+
+  setTheme(t){ this.setState({ theme:t }); }
+
+  wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+  setResult(r){ this.setState({ result: r }); this.advanceDaily(); }
+
+  curLevel(){ return this.state.levels[this.state.screen] || 1; }
+  incLevel(){ const s=this.state.screen; const L=Math.min(5,(this.state.levels[s]||1)+1); this.setState(st=>({ levels:{ ...st.levels, [s]:L } }), () => this.initScreen(s)); }
+  decLevel(){ const s=this.state.screen; const L=Math.max(1,(this.state.levels[s]||1)-1); this.setState(st=>({ levels:{ ...st.levels, [s]:L } }), () => this.initScreen(s)); }
+
+  advanceDaily(){
+    this.setState(st => {
+      const missions=st.daily.missions.slice();
+      const idx=missions.findIndex(m => !m.done);
+      if(idx<0) return null;
+      missions[idx]={ ...missions[idx], done:true };
+      return { daily:{ ...st.daily, missions } };
+    });
+  }
+  claimReward(){
+    const idx=this.state.cards.findIndex(c => !c.got);
+    this.setState({ reward:{ open:true, revealed:false, cardIdx:idx } });
+    setTimeout(() => this.setState(s => s.reward.open ? ({ reward:{ ...s.reward, revealed:true } }) : null), 140);
+  }
+  closeReward(){
+    const idx=this.state.reward.cardIdx;
+    this.setState(s => {
+      const cards = idx>=0 ? s.cards.map((c,i) => i===idx ? ({ ...c, got:true }) : c) : s.cards;
+      return { cards, reward:{ open:false, revealed:false, cardIdx:null }, daily:{ ...s.daily, claimed:true } };
+    });
+  }
+  obstaclesFor(L){ if(L<3) return []; if(L===3) return [[2,2]]; if(L===4) return [[2,2],[1,3]]; return [[2,2],[1,3],[3,1]]; }
+  isObstacle(r,c){ return this.obstaclesFor(this.state.levels.robotCommands||1).some(o => o[0]===r && o[1]===c); }
+
+  go(screen){
+    this.stopDragon();
+    this.setState({ screen, result:null }, () => this.initScreen(screen));
+  }
+  initScreen(screen){
+    if(screen==='robotCommands') this.resetGame();
+    else if(screen==='memoryPath') this.startMemory();
+    else if(screen==='listenAndDo') this.startListen();
+    else if(screen==='numberTreasure') this.startNumber();
+    else if(screen==='dontCatchDragon') this.resetDragon();
+  }
+  playAgain(){
+    const s = this.state.screen;
+    this.setState({ result:null }, () => this.initScreen(s));
+  }
+
+  resetGame(){
+    this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false, result:null }));
+  }
+
+  // ---------- Memory Path ----------
+  startMemory(){
+    const len = 2 + (this.state.levels.memoryPath||1);
+    const seq=[];
+    while(seq.length<len){ seq.push(Math.floor(Math.random()*16)); }
+    this.memToken=(this.memToken||0)+1;
+    this.setState({ mem:{ seq, phase:'show', step:0, flash:-1 } }, () => this.playMemory());
+  }
+  async playMemory(){
+    const token=this.memToken;
+    const seq=this.state.mem.seq;
+    await this.wait(550);
+    for(const cell of seq){
+      if(token!==this.memToken || this.state.screen!=='memoryPath') return;
+      this.setState(st => ({ mem:{ ...st.mem, flash:cell } }));
+      await this.wait(520);
+      if(token!==this.memToken) return;
+      this.setState(st => ({ mem:{ ...st.mem, flash:-1 } }));
+      await this.wait(240);
+    }
+    if(token!==this.memToken) return;
+    this.setState(st => ({ mem:{ ...st.mem, phase:'input', step:0 } }));
+  }
+  tapMemory(i){
+    const m=this.state.mem;
+    if(m.phase!=='input') return;
+    if(i===m.seq[m.step]){
+      const step=m.step+1;
+      this.setState(st => ({ mem:{ ...st.mem, step, flash:i } }));
+      setTimeout(() => this.setState(st => st.mem.flash===i ? ({ mem:{ ...st.mem, flash:-1 } }) : null), 240);
+      if(step>=m.seq.length){
+        setTimeout(() => this.setResult({ emoji:'🧠', title:'Lieliski!', msg:'Tu iegaumēji visu taciņu!', stars:3 }), 320);
+      }
+    } else {
+      this.memToken=(this.memToken||0)+1;
+      this.setState(st => ({ mem:{ ...st.mem, phase:'show', step:0, flash:-1 } }), () => this.playMemory());
+    }
+  }
+
+  // ---------- Listen & Do ----------
+  startListen(){ this._listenRounds = 2 + (this.state.levels.listenAndDo||1); this.setState({ listen:{ round:0, seq:this.genListenSeq(), step:0, status:'' } }); }
+  genListenSeq(){
+    const two = (this.state.levels.listenAndDo||1) >= 3;
+    const a = Math.floor(Math.random()*4);
+    if(!two) return [a];
+    let b; do{ b=Math.floor(Math.random()*4); } while(b===a);
+    return [a, b];
+  }
+  speak(text){
+    if(!this.state.speech) return;
+    try{ const u=new SpeechSynthesisUtterance(text); u.lang='lv-LV'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+  }
+  tapListen(i){
+    const Ls=this.state.listen;
+    if(Ls.status==='done') return;
+    if(i===Ls.seq[Ls.step]){
+      const step=Ls.step+1;
+      if(step<Ls.seq.length){
+        this.setState({ listen:{ ...Ls, step, status:'good' } });
+        setTimeout(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 350);
+      } else {
+        const round=Ls.round+1;
+        if(round>=(this._listenRounds||3)){
+          this.setState({ listen:{ ...Ls, status:'done' } });
+          setTimeout(() => this.setResult({ emoji:'👂', title:'Malacis!', msg:'Tu visu izdarīji pareizi!', stars:3 }), 320);
+        } else {
+          this.setState({ listen:{ round, seq:this.genListenSeq(), step:0, status:'good' } });
+          setTimeout(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
+        }
+      }
+    } else {
+      this.setState({ listen:{ ...Ls, step:0, status:'bad' } });
+      setTimeout(() => this.setState(st => st.listen.status==='bad' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
+    }
+  }
+
+  // ---------- Number Treasure ----------
+  startNumber(){ this._numCount=0; this.dealNumber(); }
+  dealNumber(){
+    const L=this.state.levels.numberTreasure||1;
+    const maxN=Math.min(10, 2+L);
+    const allowEqual=L>=4;
+    let a=1+Math.floor(Math.random()*maxN), b=1+Math.floor(Math.random()*maxN);
+    let mode;
+    if(allowEqual && Math.random()<0.25){ b=a; mode='equal'; }
+    else { while(a===b){ b=1+Math.floor(Math.random()*maxN); } mode = Math.random()<0.5?'more':'less'; }
+    this.setState({ num:{ a, b, mode, answered:false, correct:false, picked:null, count:this._numCount||0 } });
+  }
+  answerNumber(pick){
+    const n=this.state.num; if(n.answered) return;
+    let correct;
+    if(n.mode==='equal') correct = pick==='equal';
+    else if(n.mode==='more') correct = pick===(n.a>n.b?'a':'b');
+    else correct = pick===(n.a<n.b?'a':'b');
+    this.setState({ num:{ ...n, answered:true, correct, picked:pick } });
+    if(correct){
+      this._numCount=(this._numCount||0)+1;
+      if(this._numCount>=3){ setTimeout(() => this.setResult({ emoji:'💎', title:'Bagāts!', msg:'Tu atradi visus dārgumus!', stars:3 }), 750); }
+    }
+  }
+  nextNumber(){ this.dealNumber(); }
+
+  // ---------- Don't Catch Dragon ----------
+  randCritter(kind){ if(kind==='dragon') return '🐉'; const c=['🐰','🐢','🦜','🐱','🐧','🐹']; return c[Math.floor(Math.random()*c.length)]; }
+  resetDragon(){ this.stopDragon(); this.setState({ dragonGame:{ active:false, timeLeft:25, score:0, cell:-1, kind:null, flash:'', critter:'' } }); }
+  startDragon(){
+    this.stopDragon();
+    const L=this.state.levels.dontCatchDragon||1;
+    const time=18+L*2;
+    const spawnMs=Math.max(380, 1000 - L*120);
+    const dragonChance=0.18 + L*0.05;
+    this.setState({ dragonGame:{ active:true, timeLeft:time, score:0, cell:-1, kind:null, flash:'', critter:'' } });
+    this._dragClock=setInterval(() => {
+      this.setState(st => {
+        const t=st.dragonGame.timeLeft-1;
+        if(t<=0){ this.stopDragon(); setTimeout(() => this.finishDragon(), 60); return { dragonGame:{ ...st.dragonGame, timeLeft:0, active:false, cell:-1 } }; }
+        return { dragonGame:{ ...st.dragonGame, timeLeft:t } };
+      });
+    }, 1000);
+    this._dragSpawn=setInterval(() => {
+      const cell=Math.floor(Math.random()*9);
+      const kind=Math.random()<dragonChance?'dragon':'good';
+      this.setState(st => st.dragonGame.active ? ({ dragonGame:{ ...st.dragonGame, cell, kind, critter:this.randCritter(kind) } }) : null);
+    }, spawnMs);
+  }
+  tapDragon(i){
+    const g=this.state.dragonGame; if(!g.active || i!==g.cell) return;
+    if(g.kind==='good'){ this.setState(st => ({ dragonGame:{ ...st.dragonGame, score:st.dragonGame.score+1, cell:-1, flash:'good' } })); }
+    else { this.setState(st => ({ dragonGame:{ ...st.dragonGame, score:Math.max(0,st.dragonGame.score-1), cell:-1, flash:'bad' } })); }
+    setTimeout(() => this.setState(st => ({ dragonGame:{ ...st.dragonGame, flash:'' } })), 250);
+  }
+  finishDragon(){ const sc=this.state.dragonGame.score; const stars= sc>=10?3:(sc>=5?2:1); this.setResult({ emoji:'🎉', title:'Beigas!', msg:'Tu savāci '+sc+' draugus!', stars }); }
+  stopDragon(){ clearInterval(this._dragClock); clearInterval(this._dragSpawn); this._dragClock=null; this._dragSpawn=null; }
+  componentWillUnmount(){ this.stopDragon(); }
+
+  addCmd(dir){
+    if(this.state.running || this.state.result) return;
+    const cap = 8 + (this.state.levels.robotCommands||1);
+    if(this.state.queue.length >= cap) return;
+    this.setState(s => ({ queue:[...s.queue, dir] }));
+  }
+
+  rotFor(dir){ return ({ up:'0deg', right:'90deg', down:'180deg', left:'270deg' })[dir] || '0deg'; }
+
+  async runQueue(){
+    if(this.state.running || this.state.queue.length === 0) return;
+    this.setState({ running:true });
+    let r = this.state.start.r, c = this.state.start.c;
+    const cmds = this.state.queue.slice();
+    for(const cmd of cmds){
+      let nr=r, nc=c;
+      if(cmd==='up') nr = Math.max(0, r-1);
+      if(cmd==='down') nr = Math.min(4, r+1);
+      if(cmd==='left') nc = Math.max(0, c-1);
+      if(cmd==='right') nc = Math.min(4, c+1);
+      if(!this.isObstacle(nr, nc)){ r=nr; c=nc; }
+      this.setState({ robot:{ r, c, dir:cmd } });
+      await new Promise(res => setTimeout(res, 360));
+    }
+    await new Promise(res => setTimeout(res, 200));
+    if(r === this.state.target.r && c === this.state.target.c){
+      this.setState({ running:false });
+      this.setResult({ emoji:'🌟', title:'Malacis!', msg:'Robots aizsniedza zvaigzni!', stars:3 });
+    } else {
+      // gentle retry: bounce back to start
+      this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false }));
+    }
+  }
+
+  renderVals(){
+    const T = this.themeDefs();
+    const cur = T[this.state.theme] || T.tropic;
+    const screen = this.state.screen;
+
+    // theme cards
+    const themes = Object.keys(T).map(key => {
+      const d = T[key];
+      return {
+        key, label:d.label, tag:d.tag, chip:d.chip, ring:d.ring,
+        vars:{ ...d.vars, width:'100%' },
+        pick: () => this.setTheme(key),
+      };
+    });
+
+    // zones
+    const zones = this.zoneDefs().map((z, i) => {
+      const starRow = React.createElement('span', { style:{ display:'inline-flex', gap:'3px' } },
+        [0,1,2].map(k => React.createElement('span', { key:k, style:{ fontSize:'14px', opacity: k < z.stars ? 1 : .25 } }, '⭐'))
+      );
+      return {
+        ...z,
+        dir: i % 2 === 0 ? 'row' : 'row-reverse',
+        lvlLabel: 'L' + z.lvl,
+        starRow,
+        go: () => this.go(z.id),
+      };
+    });
+
+    // robot grid
+    const obs = this.obstaclesFor(this.state.levels.robotCommands||1);
+    const isObs = (r,c) => obs.some(o => o[0]===r && o[1]===c);
+    const cells = [];
+    for(let r=0;r<5;r++){
+      for(let c=0;c<5;c++){
+        const isTarget = r===this.state.target.r && c===this.state.target.c;
+        const ob = isObs(r,c);
+        const checker = (r+c)%2===0;
+        cells.push({
+          bg: isTarget ? 'rgba(255,210,63,.4)' : (ob ? 'rgba(70,52,38,.32)' : (checker ? 'rgba(255,255,255,.30)' : 'rgba(255,255,255,.16)')),
+          mark: isTarget ? '⭐' : (ob ? '🪨' : ''),
+        });
+      }
+    }
+
+    // ----- result overlay -----
+    const result = this.state.result;
+    const resultStars = result ? React.createElement('span', { style:{ display:'inline-flex', gap:'6px' } },
+      Array.from({length:3}, (_,k) => React.createElement('span', { key:k, style:{ fontSize:'30px', opacity:k<result.stars?1:.28 } }, '⭐'))
+    ) : null;
+
+    const confetti = [];
+    if(result){
+      const cols = ['#FF7A55','#FFCE3A','#46C091','#8A63E8','#23ADD2','#FF5E87'];
+      for(let i=0;i<24;i++){
+        confetti.push({ left:(Math.random()*100)+'%', color:cols[i%cols.length], dur:(1.5+Math.random()*1.2)+'s', delay:(Math.random()*0.8)+'s' });
+      }
+    }
+
+    const qmap = { up:'⬆️', down:'⬇️', left:'⬅️', right:'➡️' };
+
+    // ----- memory -----
+    const m = this.state.mem;
+    const memCells = Array.from({length:16}, (_,i) => ({
+      bg: m.flash===i ? 'radial-gradient(circle at 40% 35%, #FFF1A8, #FFC83D)' : 'rgba(255,255,255,.5)',
+      mark: m.flash===i ? '🐾' : '🪷',
+      glow: m.flash===i ? '0 0 0 4px rgba(255,200,61,.7), 0 6px 0 rgba(0,0,0,.1)' : '0 3px 0 rgba(0,0,0,.08)',
+      tap: () => this.tapMemory(i),
+    }));
+    const memStatus = m.phase==='show' ? 'Skaties un iegaumē! 👀' : (m.phase==='input' ? 'Tava kārta — atkārto! 👆' : '...');
+    const memStepEls = React.createElement('span', { style:{ display:'inline-flex', gap:'4px' } },
+      (m.seq||[]).map((_,k) => React.createElement('span', { key:k, style:{ width:'12px', height:'12px', borderRadius:'50%', background: (m.phase==='input'&&k<m.step) ? '#46C091' : 'rgba(255,255,255,.7)' } }))
+    );
+
+    // ----- listen -----
+    const objs = [ {e:'🍎', n:'ābolam'}, {e:'⭐', n:'zvaigznei'}, {e:'🦋', n:'tauriņam'}, {e:'🌸', n:'puķei'} ];
+    const L = this.state.listen;
+    const lseq = L.seq && L.seq.length ? L.seq : [0];
+    const listenObjs = objs.map((o,i) => ({ e:o.e, tap:()=>this.tapListen(i) }));
+    const listenInstr = lseq.length>1
+      ? ('Pieskaries ' + objs[lseq[0]].n + ', tad ' + objs[lseq[1]].n + '!')
+      : ('Pieskaries ' + objs[lseq[0]].n + '!');
+    const listenSpeak = () => this.speak(listenInstr);
+    const listenFeedback = L.status==='good' ? '✅ Pareizi!' : (L.status==='bad' ? '🤔 Mēģini vēlreiz!' : (L.status==='done' ? '🎉 Gatavs!' : ''));
+    const listenFbColor = L.status==='bad' ? '#FF6B6B' : '#46C091';
+    const listenTotal = 2 + (this.state.levels.listenAndDo||1);
+    const listenRoundEls = React.createElement('span', { style:{ display:'inline-flex', gap:'4px' } },
+      Array.from({length:listenTotal}, (_,k) => React.createElement('span', { key:k, style:{ fontSize:'13px', opacity:k<L.round?1:.3 } }, '⭐'))
+    );
+
+    // ----- number -----
+    const n = this.state.num;
+    const gemsA = Array.from({length:n.a}, (_,i)=>i);
+    const gemsB = Array.from({length:n.b}, (_,i)=>i);
+    const numQ = n.mode==='equal' ? 'Vai 💎 ir vienādi?' : (n.mode==='more' ? 'Kur ir VAIRĀK 💎?' : 'Kur ir MAZĀK 💎?');
+    const numAllowEqual = (this.state.levels.numberTreasure||1) >= 4;
+    const panelBorder = (which) => {
+      if(!n.answered) return '#FFFFFF';
+      if(n.mode==='equal') return which===n.picked ? '#FF8585' : '#FFFFFF';
+      const right = n.mode==='more' ? (n.a>n.b?'a':'b') : (n.a<n.b?'a':'b');
+      if(which===right) return '#46C091';
+      if(which===n.picked) return '#FF8585';
+      return '#FFFFFF';
+    };
+    const numEqualBorder = !n.answered ? '#FFFFFF' : (n.mode==='equal' ? '#46C091' : (n.picked==='equal' ? '#FF8585' : '#FFFFFF'));
+    const numCountEls = React.createElement('span', { style:{ display:'inline-flex', gap:'5px' } },
+      [0,1,2].map(k => React.createElement('span', { key:k, style:{ fontSize:'15px', opacity:k<(n.count||0)?1:.3 } }, '💎'))
+    );
+
+    // ----- dragon -----
+    const g = this.state.dragonGame;
+    const dragCells = Array.from({length:9}, (_,i) => {
+      const here = g.active && g.cell===i;
+      return {
+        critter: here ? g.critter : '',
+        bg: here && g.kind==='dragon' ? 'radial-gradient(circle at 50% 40%, #FFD2DE, #FF9DB6)' : (here ? 'radial-gradient(circle at 50% 40%, #FFF3C8, #FFE08A)' : 'rgba(0,0,0,.14)'),
+        tap: () => this.tapDragon(i),
+      };
+    });
+
+    // ----- collection -----
+    const cards = this.state.cards.map(c => ({
+      e: c.got ? c.e : '❓',
+      n: c.got ? c.n : '???',
+      bg: c.got ? 'linear-gradient(165deg, #FFFFFF, #FFF3E0)' : 'linear-gradient(165deg, #E7ECF3, #DCE3EC)',
+      ring: c.got ? '#FFCE3A' : '#C7D0DD',
+      op: c.got ? 1 : 0.85,
+      filter: c.got ? 'none' : 'grayscale(0.4)',
+    }));
+    const cardsGot = this.state.cards.filter(c=>c.got).length;
+
+    // ----- parent -----
+    const played = 42, successes = 31;
+    const accuracy = Math.round(successes/played*100);
+    const parentGames = this.zoneDefs().map(z => ({ name:z.name, icon:z.icon, lvl:z.lvl, pct: Math.round(z.lvl/5*100)+'%' }));
+    const resetConfirm = !!this.state.resetConfirm;
+
+    // ----- level control (current game) -----
+    const lvl = this.state.levels[screen] || 1;
+
+    // ----- daily missions -----
+    const dmissions = this.state.daily.missions;
+    const dailyChips = dmissions.map(mm => ({
+      icon: mm.icon, label: mm.label,
+      bg: mm.done ? '#46C091' : 'rgba(255,255,255,.55)',
+      ring: mm.done ? '#2E9E70' : 'rgba(0,0,0,.06)',
+      tick: mm.done ? '✓' : '',
+    }));
+    const dailyDoneCount = dmissions.filter(mm => mm.done).length;
+    const dailyReady = dmissions.every(mm => mm.done) && !this.state.daily.claimed;
+    const dailyClaimed = this.state.daily.claimed;
+
+    // ----- reward -----
+    const rw = this.state.reward;
+    const rwCard = (rw.cardIdx != null && rw.cardIdx >= 0) ? this.state.cards[rw.cardIdx] : null;
+    const rewardSparks = rw.revealed ? [
+      {x:'6%',y:'18%',s:'22px',d:'0s'},{x:'88%',y:'14%',s:'18px',d:'.3s'},{x:'12%',y:'74%',s:'16px',d:'.6s'},
+      {x:'84%',y:'70%',s:'24px',d:'.15s'},{x:'48%',y:'4%',s:'20px',d:'.45s'},{x:'70%',y:'40%',s:'14px',d:'.75s'},
+      {x:'24%',y:'44%',s:'16px',d:'.5s'},{x:'92%',y:'48%',s:'18px',d:'.9s'},
+    ] : [];
+
+    return {
+      themeVars: { ...cur.vars },
+      themes,
+      isStart: screen==='start',
+      isMap: screen==='map',
+      isRobot: screen==='robotCommands',
+      isMemory: screen==='memoryPath',
+      isListen: screen==='listenAndDo',
+      isNumber: screen==='numberTreasure',
+      isDragon: screen==='dontCatchDragon',
+      isCollection: screen==='collection',
+      isParent: screen==='parent',
+      goStart: () => this.go('start'),
+      goMap: () => this.go('map'),
+      goCollection: () => this.go('collection'),
+      goParent: () => this.go('parent'),
+      zones,
+      // level control
+      lvl, canDecLevel: lvl>1, canIncLevel: lvl<5,
+      incLevel: () => this.incLevel(),
+      decLevel: () => this.decLevel(),
+      // daily + reward
+      dailyChips, dailyDoneCount, dailyReady, notDailyReady: !dailyReady, dailyClaimed,
+      claimReward: () => this.claimReward(),
+      rewardOpen: rw.open,
+      rewardFlip: rw.revealed ? 'rotateY(0deg)' : 'rotateY(180deg)',
+      rewardRays: rw.revealed ? { opacity:1 } : { opacity:0 },
+      rewardGlow: rw.revealed ? '0 0 0 6px rgba(255,206,58,.45), 0 0 50px rgba(255,206,58,.9)' : '0 12px 26px rgba(0,0,0,.25)',
+      rewardEmoji: rwCard ? rwCard.e : '🎁',
+      rewardName: rwCard ? rwCard.n : '',
+      rewardSparks,
+      closeReward: () => this.closeReward(),
+      totalStars: this.zoneDefs().reduce((a,z)=>a+z.stars,0),
+      // shared result
+      result,
+      resultTitle: result ? result.title : '',
+      resultMsg: result ? result.msg : '',
+      resultEmoji: result ? result.emoji : '',
+      resultStars,
+      confetti,
+      playAgain: () => this.playAgain(),
+      // robot
+      cells,
+      hint: 'Palīdzi robotam aizsniegt ⭐ zvaigzni!',
+      robotLeft: 'calc(8px + ' + this.state.robot.c + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
+      robotTop: 'calc(8px + ' + this.state.robot.r + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
+      robotRot: this.rotFor(this.state.robot.dir),
+      queue: this.state.queue.map(d => qmap[d]),
+      addUp: () => this.addCmd('up'),
+      addDown: () => this.addCmd('down'),
+      addLeft: () => this.addCmd('left'),
+      addRight: () => this.addCmd('right'),
+      runQueue: () => this.runQueue(),
+      resetGame: () => this.resetGame(),
+      // memory
+      memCells, memStatus, memStepEls,
+      memReplay: () => this.startMemory(),
+      // listen
+      listenObjs, listenInstr, listenSpeak, listenFeedback, listenFbColor, listenRoundEls,
+      // number
+      gemsA, gemsB, numQ, numA:n.a, numB:n.b, numAnswered:n.answered, numCorrect:n.correct,
+      numBorderA: panelBorder('a'), numBorderB: panelBorder('b'), numCountEls,
+      numAllowEqual, numEqualBorder,
+      pickA: () => this.answerNumber('a'),
+      pickB: () => this.answerNumber('b'),
+      pickEqual: () => this.answerNumber('equal'),
+      nextNumber: () => this.nextNumber(),
+      // dragon
+      dragCells, dragScore:g.score, dragTime:g.timeLeft, dragActive:g.active,
+      dragStart: () => this.startDragon(),
+      // collection
+      cards, cardsGot, cardsTotal: this.state.cards.length,
+      // parent
+      played, successes, accuracy, parentGames,
+      speechOn: this.state.speech,
+      speechLabel: this.state.speech ? 'Ieslēgtas' : 'Izslēgtas',
+      speechKnob: this.state.speech
+        ? { background:'#46C091', justifyContent:'flex-end' }
+        : { background:'#C7D0DD', justifyContent:'flex-start' },
+      toggleSpeech: () => this.setState(s => ({ speech:!s.speech })),
+      dragIdle: !g.active && !result,
+      resetConfirm,
+      notResetConfirm: !resetConfirm,
+      askReset: () => this.setState({ resetConfirm:true }),
+      cancelReset: () => this.setState({ resetConfirm:false }),
+      doReset: () => this.setState({ resetConfirm:false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

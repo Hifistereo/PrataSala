@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="lv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Prāta Piedzīvojumu Sala - bērnu attīstības mini spēļu sala"
+    />
+    <title>Prāta Piedzīvojumu Sala</title>
+    <style>
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+        overflow-x: hidden;
+        background: #dceaf7;
+      }
+
+      body {
+        min-width: 320px;
+      }
+
+      .boot-error {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        color: #34245c;
+        font: 800 18px/1.35 system-ui, sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div class="boot-error">
+        Lai spēlētu Prāta Piedzīvojumu Salu, pārlūkā jābūt ieslēgtam JavaScript.
+      </div>
+    </noscript>
+
+    <script>
+      (async () => {
+        const sourceUrl = "./Prata%20Sala.dc.html";
+        const response = await fetch(sourceUrl);
+
+        if (!response.ok) {
+          throw new Error(`Neizdevās ielādēt spēli: ${response.status}`);
+        }
+
+        const source = await response.text();
+        const sourceDoc = new DOMParser().parseFromString(source, "text/html");
+        const sourceDc = sourceDoc.querySelector("x-dc");
+        const sourceLogic = sourceDoc.querySelector("script[data-dc-script]");
+
+        if (!sourceDc || !sourceLogic) {
+          throw new Error("Spēles eksportā trūkst nepieciešamā x-dc satura.");
+        }
+
+        const page = Array.from(sourceDc.children).find(
+          (node) => node.tagName.toLowerCase() === "div"
+        );
+        const pageChildren = Array.from(page.children);
+        const prototypeSection = pageChildren[2];
+        const playableFrame = prototypeSection
+          ? Array.from(prototypeSection.children)[1]
+          : null;
+
+        if (!page || !playableFrame) {
+          throw new Error("Spēles sākuma ekrānu neizdevās sagatavot.");
+        }
+
+        page.replaceChildren(playableFrame);
+        page.setAttribute(
+          "style",
+          "min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:16px; display:grid; place-items:center; overflow:hidden;"
+        );
+
+        playableFrame.setAttribute(
+          "style",
+          "width:100%; max-width:430px; display:flex; justify-content:center;"
+        );
+
+        const deviceFrame = playableFrame.firstElementChild;
+        if (deviceFrame) {
+          deviceFrame.setAttribute(
+            "style",
+            "width:100%; max-width:430px; background:#2B2150; border-radius:clamp(30px, 10vw, 48px); padding:min(14px, 3.4vw); box-shadow:0 24px 54px rgba(43,33,80,.32);"
+          );
+        }
+
+        const gameScreen = deviceFrame
+          ? deviceFrame.querySelector('div[style*="aspect-ratio:9/16"]')
+          : null;
+        if (gameScreen) {
+          gameScreen.style.borderRadius = "clamp(22px, 8vw, 36px)";
+        }
+
+        const dc = sourceDc.cloneNode(true);
+        document.body.appendChild(dc);
+
+        const logic = document.createElement("script");
+        logic.type = "text/x-dc";
+        logic.setAttribute("data-dc-script", "");
+        logic.setAttribute(
+          "data-props",
+          sourceLogic.getAttribute("data-props") || "{}"
+        );
+        logic.textContent = sourceLogic.textContent || "";
+        document.body.appendChild(logic);
+
+        const runtime = document.createElement("script");
+        runtime.src = "./support.js";
+        document.head.appendChild(runtime);
+      })().catch((error) => {
+        console.error(error);
+        document.body.innerHTML =
+          '<div class="boot-error">Spēli pašlaik neizdevās ielādēt. Pārbaudi, vai visi faili ir augšupielādēti kopā.</div>';
+      });
+    </script>
+  </body>
+</html>
