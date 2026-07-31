@@ -30,7 +30,7 @@
 </style>
 </helmet>
 
-<div style="min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:40px 20px 80px;">
+<div data-app="page" style="min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:40px 20px 80px;">
 
   <!-- board header -->
   <div style="max-width:1180px; margin:0 auto 36px; text-align:center;">
@@ -105,10 +105,12 @@
     </div>
 
     <!-- device frame -->
-    <div style="display:flex; justify-content:center;">
-      <div style="width:100%; max-width:430px; background:#2B2150; border-radius:48px; padding:14px; box-shadow:0 30px 60px rgba(43,33,80,.35);">
+    <!-- data-app hooks are the contract index.html mounts against — keep them
+         on these three nodes if the board is rearranged -->
+    <div data-app="frame" style="display:flex; justify-content:center;">
+      <div data-app="device" style="width:100%; max-width:430px; background:#2B2150; border-radius:48px; padding:14px; box-shadow:0 30px 60px rgba(43,33,80,.35);">
        <div style="{{ themeVars }}">
-        <div style="border-radius:36px; overflow:hidden; position:relative; aspect-ratio:9/16; background:#fff;">
+        <div data-app="screen" style="border-radius:36px; overflow:hidden; position:relative; aspect-ratio:9/16; background:#fff;">
 
           <!-- ============ START SCREEN ============ -->
           <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
@@ -218,9 +220,9 @@
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
 
@@ -279,9 +281,9 @@
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px; padding:12px 12px 4px; flex:0 0 auto;">
@@ -309,9 +311,9 @@
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <!-- instruction -->
@@ -345,9 +347,9 @@
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <!-- question -->
@@ -414,9 +416,9 @@
                   <sc-if value="{{ dragIdle }}" hint-placeholder-val="{{ true }}">
                     <div style="position:absolute; inset:0; background:rgba(43,33,80,.55); border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
                       <div style="display:flex; align-items:center; gap:8px; background:#fff; padding:6px; border-radius:999px; box-shadow:0 5px 0 rgba(0,0,0,.18);">
-                        <button onClick="{{ decLevel }}" aria-label="Vieglāks līmenis" style="border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
+                        <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
                         <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; min-width:54px; text-align:center;">Līm. {{ lvl }}</span>
-                        <button onClick="{{ incLevel }}" aria-label="Grūtāks līmenis" style="border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">+</button>
+                        <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">+</button>
                       </div>
                       <button onClick="{{ dragStart }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; padding:16px 34px; border-radius:20px; box-shadow:0 7px 0 var(--primary-dark);">▶ Sākt!</button>
                     </div>
@@ -469,7 +471,7 @@
                     <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Veiksmes</div>
                   </div>
                   <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#FF7A55; font-size:26px;">{{ accuracy }}%</div>
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#FF7A55; font-size:26px;">{{ accuracy }}</div>
                     <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Precizitāte</div>
                   </div>
                 </div>
@@ -577,6 +579,76 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
+const SAVE_KEY = 'prata-sala-v1';
+const SAVE_VERSION = 1;
+
+// Baseline difficulty per game. Not progress — "reset progress" restores these,
+// it does not drop everything to 1.
+const DEFAULT_LEVELS = { robotCommands: 1, memoryPath: 2, listenAndDo: 1, numberTreasure: 3, dontCatchDragon: 2 };
+
+const CARD_DEFS = [
+  { id:1, e:'🐉', n:'Pūķēns Dārcis' },
+  { id:2, e:'🦉', n:'Gudrā Pūce' },
+  { id:3, e:'🦜', n:'Salas Papagailis' },
+  { id:4, e:'🐢', n:'Jūras Bruņurupucis' },
+  { id:5, e:'🦀', n:'Zvaigžņu Krabis' },
+  { id:6, e:'🐠', n:'Varavīksnes Zivs' },
+  { id:7, e:'🧰', n:'Dārgumu Lāde' },
+  { id:8, e:'🐚', n:'Burvju Gliemežvāks' },
+  { id:9, e:'🥥', n:'Maģiskais Kokoss' },
+  { id:10, e:'🐵', n:'Salas Mērkaķis' },
+  { id:11, e:'🌋', n:'Vulkāna Akmens' },
+  { id:12, e:'🦩', n:'Rozā Flamingo' },
+];
+
+const MISSION_DEFS = [
+  { icon: '🤖', label: 'Pabeidz Robotu Laukumu' },
+  { icon: '🐾', label: 'Spēlē Atmiņas Taku' },
+  { icon: '🏆', label: 'Pabeidz jebkuru spēli' },
+];
+
+function todayStamp(){
+  const d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+}
+
+function freshDaily(){
+  return { date: todayStamp(), missions: MISSION_DEFS.map(m => ({ ...m, done:false })), claimed:false };
+}
+
+function freshCards(gotIds){
+  const got = new Set(gotIds || []);
+  return CARD_DEFS.map(c => ({ ...c, got: got.has(c.id) }));
+}
+
+function freshStats(){
+  return { played: 0, successes: 0, perGame: {} };
+}
+
+// localStorage throws outright in Safari private mode and when storage is
+// disabled, so every access is guarded — a kids' app must still boot.
+function loadSave(){
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return null;
+    const s = JSON.parse(raw);
+    if(!s || s.v !== SAVE_VERSION) return null;
+    const daily = (s.daily && s.daily.date === todayStamp())
+      ? { date:s.daily.date, missions: MISSION_DEFS.map((m,i) => ({ ...m, done: !!(s.daily.missions||[])[i] })), claimed: !!s.daily.claimed }
+      : freshDaily();
+    return {
+      theme: s.theme || 'tropic',
+      levels: { ...DEFAULT_LEVELS, ...(s.levels || {}) },
+      cards: freshCards(s.cardIds),
+      speech: s.speech !== false,
+      stats: { ...freshStats(), ...(s.stats || {}) },
+      daily,
+    };
+  } catch(e){
+    return null;
+  }
+}
+
 class Component extends DCLogic {
   state = {
     theme: 'tropic',
@@ -587,36 +659,69 @@ class Component extends DCLogic {
     target: { r: 0, c: 4 },
     queue: [],
     running: false,
-    levels: { robotCommands: 1, memoryPath: 2, listenAndDo: 1, numberTreasure: 3, dontCatchDragon: 2 },
+    levels: { ...DEFAULT_LEVELS },
     mem: { seq: [], phase: 'idle', step: 0, flash: -1 },
     listen: { round: 0, seq: [0], step: 0, status: '' },
     num: { a: 3, b: 5, mode: 'more', answered: false, correct: false, picked: null, count: 0 },
-    dragonGame: { active: false, timeLeft: 25, score: 0, cell: -1, kind: null, flash: '' },
-    daily: {
-      missions: [
-        { icon: '🤖', label: 'Pabeidz Robotu Laukumu', done: true },
-        { icon: '🐾', label: 'Spēlē Atmiņas Taku', done: true },
-        { icon: '🏆', label: 'Pabeidz jebkuru spēli', done: false },
-      ],
-      claimed: false,
-    },
+    dragonGame: { active: false, timeLeft: 25, score: 0, cell: -1, kind: null, flash: '', critter: '' },
+    daily: freshDaily(),
     reward: { open: false, revealed: false, cardIdx: null },
-    cards: [
-      { id:1, e:'🐉', n:'Pūķēns Dārcis', got:true },
-      { id:2, e:'🦉', n:'Gudrā Pūce', got:true },
-      { id:3, e:'🦜', n:'Salas Papagailis', got:true },
-      { id:4, e:'🐢', n:'Jūras Bruņurupucis', got:true },
-      { id:5, e:'🦀', n:'Zvaigžņu Krabis', got:false },
-      { id:6, e:'🐠', n:'Varavīksnes Zivs', got:false },
-      { id:7, e:'🧰', n:'Dārgumu Lāde', got:false },
-      { id:8, e:'🐚', n:'Burvju Gliemežvāks', got:false },
-      { id:9, e:'🥥', n:'Maģiskais Kokoss', got:false },
-      { id:10, e:'🐵', n:'Salas Mērkaķis', got:false },
-      { id:11, e:'🌋', n:'Vulkāna Akmens', got:false },
-      { id:12, e:'🦩', n:'Rozā Flamingo', got:false },
-    ],
+    cards: freshCards([]),
+    stats: freshStats(),
     speech: true,
+    resetConfirm: false,
+    ...(loadSave() || {}),
   };
+
+  // ---------- persistence ----------
+  saveProgress(){
+    try {
+      const s = this.state;
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        v: SAVE_VERSION,
+        theme: s.theme,
+        levels: s.levels,
+        cardIds: s.cards.filter(c => c.got).map(c => c.id),
+        speech: s.speech,
+        stats: s.stats,
+        daily: { date: s.daily.date, missions: s.daily.missions.map(m => m.done), claimed: s.daily.claimed },
+      }));
+    } catch(e){
+      // storage unavailable — play on without saving
+    }
+  }
+  clearSave(){
+    try { localStorage.removeItem(SAVE_KEY); } catch(e){}
+  }
+  resetProgress(){
+    this.setState({
+      levels: { ...DEFAULT_LEVELS },
+      cards: freshCards([]),
+      daily: freshDaily(),
+      stats: freshStats(),
+      reward: { open:false, revealed:false, cardIdx:null },
+      resetConfirm: false,
+    }, () => this.clearSave());
+  }
+
+  // ---------- timers ----------
+  // Every deferred callback goes through later() so navigating away or
+  // unmounting can't land a setState on a dead screen.
+  later(fn, ms){
+    if(!this.timers) this.timers = new Set();
+    const id = setTimeout(() => { this.timers.delete(id); fn(); }, ms);
+    this.timers.add(id);
+    return id;
+  }
+  clearTimers(){
+    if(this.timers) this.timers.forEach(id => clearTimeout(id));
+    this.timers = new Set();
+  }
+  cancelPending(){
+    this.clearTimers();
+    this.memToken = (this.memToken || 0) + 1;
+    this.runToken = (this.runToken || 0) + 1;
+  }
 
   themeDefs() {
     return {
@@ -631,22 +736,47 @@ class Component extends DCLogic {
 
   zoneDefs() {
     return [
-      { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', lvl:1, stars:3, c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9' },
-      { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', lvl:2, stars:2, c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684' },
-      { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', lvl:1, stars:1, c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A' },
-      { id:'numberTreasure', icon:'💎', name:'Skaitļu Dārgumi', sub:'Skaitļi', lvl:3, stars:3, c1:'#69D6A8', c2:'#3FB389', shadow:'#2E9E70' },
-      { id:'dontCatchDragon', icon:'🐉', name:'Neķer Pūķi!', sub:'Reakcija', lvl:2, stars:2, c1:'#B79CF2', c2:'#8A63E8', shadow:'#6B45C9' },
+      { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9' },
+      { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684' },
+      { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A' },
+      { id:'numberTreasure', icon:'💎', name:'Skaitļu Dārgumi', sub:'Skaitļi', c1:'#69D6A8', c2:'#3FB389', shadow:'#2E9E70' },
+      { id:'dontCatchDragon', icon:'🐉', name:'Neķer Pūķi!', sub:'Reakcija', c1:'#B79CF2', c2:'#8A63E8', shadow:'#6B45C9' },
     ];
   }
+  gameStats(id){ return this.state.stats.perGame[id] || { played:0, successes:0, stars:0 }; }
 
-  setTheme(t){ this.setState({ theme:t }); }
+  setTheme(t){ this.setState({ theme:t }, () => this.saveProgress()); }
 
-  wait(ms){ return new Promise(r => setTimeout(r, ms)); }
-  setResult(r){ this.setState({ result: r }); this.advanceDaily(); }
+  wait(ms){ return new Promise(r => this.later(r, ms)); }
+  setResult(r){
+    const id = this.state.screen;
+    // A run counts as a success at 2+ stars. Every game but the dragon awards 3
+    // only on a win; the dragon scales 1-3 by score, so a weak run isn't a win.
+    const won = (r.stars || 0) >= 2 ? 1 : 0;
+    this.setState(st => {
+      const prev = st.stats.perGame[id] || { played:0, successes:0, stars:0 };
+      return { result: r, stats: { ...st.stats, successes: st.stats.successes + won,
+        perGame: { ...st.stats.perGame, [id]: { ...prev, successes: prev.successes + won, stars: Math.max(prev.stars, r.stars || 0) } } } };
+    });
+    this.advanceDaily();
+  }
+  recordPlayed(id){
+    this.setState(st => {
+      const prev = st.stats.perGame[id] || { played:0, successes:0, stars:0 };
+      return { stats: { ...st.stats, played: st.stats.played + 1,
+        perGame: { ...st.stats.perGame, [id]: { ...prev, played: prev.played + 1 } } } };
+    }, () => this.saveProgress());
+  }
 
   curLevel(){ return this.state.levels[this.state.screen] || 1; }
-  incLevel(){ const s=this.state.screen; const L=Math.min(5,(this.state.levels[s]||1)+1); this.setState(st=>({ levels:{ ...st.levels, [s]:L } }), () => this.initScreen(s)); }
-  decLevel(){ const s=this.state.screen; const L=Math.max(1,(this.state.levels[s]||1)-1); this.setState(st=>({ levels:{ ...st.levels, [s]:L } }), () => this.initScreen(s)); }
+  incLevel(){ this.changeLevel(1); }
+  decLevel(){ this.changeLevel(-1); }
+  changeLevel(delta){
+    const s=this.state.screen;
+    const L=Math.min(5, Math.max(1, (this.state.levels[s]||1) + delta));
+    if(L === (this.state.levels[s]||1)) return;
+    this.setState(st=>({ levels:{ ...st.levels, [s]:L } }), () => { this.saveProgress(); this.initScreen(s); });
+  }
 
   advanceDaily(){
     this.setState(st => {
@@ -655,27 +785,35 @@ class Component extends DCLogic {
       if(idx<0) return null;
       missions[idx]={ ...missions[idx], done:true };
       return { daily:{ ...st.daily, missions } };
-    });
+    }, () => this.saveProgress());
   }
   claimReward(){
     const idx=this.state.cards.findIndex(c => !c.got);
     this.setState({ reward:{ open:true, revealed:false, cardIdx:idx } });
-    setTimeout(() => this.setState(s => s.reward.open ? ({ reward:{ ...s.reward, revealed:true } }) : null), 140);
+    this.later(() => this.setState(s => s.reward.open ? ({ reward:{ ...s.reward, revealed:true } }) : null), 140);
   }
   closeReward(){
     const idx=this.state.reward.cardIdx;
     this.setState(s => {
       const cards = idx>=0 ? s.cards.map((c,i) => i===idx ? ({ ...c, got:true }) : c) : s.cards;
       return { cards, reward:{ open:false, revealed:false, cardIdx:null }, daily:{ ...s.daily, claimed:true } };
-    });
+    }, () => this.saveProgress());
   }
   obstaclesFor(L){ if(L<3) return []; if(L===3) return [[2,2]]; if(L===4) return [[2,2],[1,3]]; return [[2,2],[1,3],[3,1]]; }
   isObstacle(r,c){ return this.obstaclesFor(this.state.levels.robotCommands||1).some(o => o[0]===r && o[1]===c); }
 
+  isGameScreen(screen){ return this.zoneDefs().some(z => z.id === screen); }
+
   go(screen){
     this.stopDragon();
-    this.setState({ screen, result:null }, () => this.initScreen(screen));
+    this.cancelPending();
+    this.setState({ screen, result:null }, () => {
+      this.initScreen(screen);
+      if(this.isGameScreen(screen)) this.recordPlayed(screen);
+    });
   }
+  // Restarts the current game without counting a new play — used by go(),
+  // playAgain() and the level stepper, which each decide about the play count.
   initScreen(screen){
     if(screen==='robotCommands') this.resetGame();
     else if(screen==='memoryPath') this.startMemory();
@@ -685,10 +823,15 @@ class Component extends DCLogic {
   }
   playAgain(){
     const s = this.state.screen;
-    this.setState({ result:null }, () => this.initScreen(s));
+    this.cancelPending();
+    this.setState({ result:null }, () => {
+      this.initScreen(s);
+      if(this.isGameScreen(s)) this.recordPlayed(s);
+    });
   }
 
   resetGame(){
+    this.runToken=(this.runToken||0)+1;
     this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false, result:null }));
   }
 
@@ -721,9 +864,9 @@ class Component extends DCLogic {
     if(i===m.seq[m.step]){
       const step=m.step+1;
       this.setState(st => ({ mem:{ ...st.mem, step, flash:i } }));
-      setTimeout(() => this.setState(st => st.mem.flash===i ? ({ mem:{ ...st.mem, flash:-1 } }) : null), 240);
+      this.later(() => this.setState(st => st.mem.flash===i ? ({ mem:{ ...st.mem, flash:-1 } }) : null), 240);
       if(step>=m.seq.length){
-        setTimeout(() => this.setResult({ emoji:'🧠', title:'Lieliski!', msg:'Tu iegaumēji visu taciņu!', stars:3 }), 320);
+        this.later(() => this.setResult({ emoji:'🧠', title:'Lieliski!', msg:'Tu iegaumēji visu taciņu!', stars:3 }), 320);
       }
     } else {
       this.memToken=(this.memToken||0)+1;
@@ -751,20 +894,20 @@ class Component extends DCLogic {
       const step=Ls.step+1;
       if(step<Ls.seq.length){
         this.setState({ listen:{ ...Ls, step, status:'good' } });
-        setTimeout(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 350);
+        this.later(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 350);
       } else {
         const round=Ls.round+1;
         if(round>=(this._listenRounds||3)){
           this.setState({ listen:{ ...Ls, status:'done' } });
-          setTimeout(() => this.setResult({ emoji:'👂', title:'Malacis!', msg:'Tu visu izdarīji pareizi!', stars:3 }), 320);
+          this.later(() => this.setResult({ emoji:'👂', title:'Malacis!', msg:'Tu visu izdarīji pareizi!', stars:3 }), 320);
         } else {
           this.setState({ listen:{ round, seq:this.genListenSeq(), step:0, status:'good' } });
-          setTimeout(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
+          this.later(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
         }
       }
     } else {
       this.setState({ listen:{ ...Ls, step:0, status:'bad' } });
-      setTimeout(() => this.setState(st => st.listen.status==='bad' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
+      this.later(() => this.setState(st => st.listen.status==='bad' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
     }
   }
 
@@ -786,10 +929,12 @@ class Component extends DCLogic {
     if(n.mode==='equal') correct = pick==='equal';
     else if(n.mode==='more') correct = pick===(n.a>n.b?'a':'b');
     else correct = pick===(n.a<n.b?'a':'b');
-    this.setState({ num:{ ...n, answered:true, correct, picked:pick } });
-    if(correct){
-      this._numCount=(this._numCount||0)+1;
-      if(this._numCount>=3){ setTimeout(() => this.setResult({ emoji:'💎', title:'Bagāts!', msg:'Tu atradi visus dārgumus!', stars:3 }), 750); }
+    if(correct) this._numCount=(this._numCount||0)+1;
+    // count goes into this setState too, so the 💎 dots fill on the answer
+    // rather than lagging until the next deal
+    this.setState({ num:{ ...n, answered:true, correct, picked:pick, count:this._numCount||0 } });
+    if(correct && this._numCount>=3){
+      this.later(() => this.setResult({ emoji:'💎', title:'Bagāts!', msg:'Tu atradi visus dārgumus!', stars:3 }), 750);
     }
   }
   nextNumber(){ this.dealNumber(); }
@@ -807,7 +952,7 @@ class Component extends DCLogic {
     this._dragClock=setInterval(() => {
       this.setState(st => {
         const t=st.dragonGame.timeLeft-1;
-        if(t<=0){ this.stopDragon(); setTimeout(() => this.finishDragon(), 60); return { dragonGame:{ ...st.dragonGame, timeLeft:0, active:false, cell:-1 } }; }
+        if(t<=0){ this.stopDragon(); this.later(() => this.finishDragon(), 60); return { dragonGame:{ ...st.dragonGame, timeLeft:0, active:false, cell:-1 } }; }
         return { dragonGame:{ ...st.dragonGame, timeLeft:t } };
       });
     }, 1000);
@@ -821,11 +966,11 @@ class Component extends DCLogic {
     const g=this.state.dragonGame; if(!g.active || i!==g.cell) return;
     if(g.kind==='good'){ this.setState(st => ({ dragonGame:{ ...st.dragonGame, score:st.dragonGame.score+1, cell:-1, flash:'good' } })); }
     else { this.setState(st => ({ dragonGame:{ ...st.dragonGame, score:Math.max(0,st.dragonGame.score-1), cell:-1, flash:'bad' } })); }
-    setTimeout(() => this.setState(st => ({ dragonGame:{ ...st.dragonGame, flash:'' } })), 250);
+    this.later(() => this.setState(st => ({ dragonGame:{ ...st.dragonGame, flash:'' } })), 250);
   }
   finishDragon(){ const sc=this.state.dragonGame.score; const stars= sc>=10?3:(sc>=5?2:1); this.setResult({ emoji:'🎉', title:'Beigas!', msg:'Tu savāci '+sc+' draugus!', stars }); }
   stopDragon(){ clearInterval(this._dragClock); clearInterval(this._dragSpawn); this._dragClock=null; this._dragSpawn=null; }
-  componentWillUnmount(){ this.stopDragon(); }
+  componentWillUnmount(){ this.stopDragon(); this.cancelPending(); }
 
   addCmd(dir){
     if(this.state.running || this.state.result) return;
@@ -838,6 +983,9 @@ class Component extends DCLogic {
 
   async runQueue(){
     if(this.state.running || this.state.queue.length === 0) return;
+    // Same cancellation token as the memory game: leaving the screen mid-run
+    // must not drop a result overlay on whatever comes next.
+    const token = this.runToken = (this.runToken||0)+1;
     this.setState({ running:true });
     let r = this.state.start.r, c = this.state.start.c;
     const cmds = this.state.queue.slice();
@@ -849,9 +997,11 @@ class Component extends DCLogic {
       if(cmd==='right') nc = Math.min(4, c+1);
       if(!this.isObstacle(nr, nc)){ r=nr; c=nc; }
       this.setState({ robot:{ r, c, dir:cmd } });
-      await new Promise(res => setTimeout(res, 360));
+      await this.wait(360);
+      if(token !== this.runToken) return;
     }
-    await new Promise(res => setTimeout(res, 200));
+    await this.wait(200);
+    if(token !== this.runToken) return;
     if(r === this.state.target.r && c === this.state.target.c){
       this.setState({ running:false });
       this.setResult({ emoji:'🌟', title:'Malacis!', msg:'Robots aizsniedza zvaigzni!', stars:3 });
@@ -876,15 +1026,16 @@ class Component extends DCLogic {
       };
     });
 
-    // zones
+    // zones — level and stars come from live state, not from zoneDefs()
     const zones = this.zoneDefs().map((z, i) => {
+      const stars = this.gameStats(z.id).stars;
       const starRow = React.createElement('span', { style:{ display:'inline-flex', gap:'3px' } },
-        [0,1,2].map(k => React.createElement('span', { key:k, style:{ fontSize:'14px', opacity: k < z.stars ? 1 : .25 } }, '⭐'))
+        [0,1,2].map(k => React.createElement('span', { key:k, style:{ fontSize:'14px', opacity: k < stars ? 1 : .25 } }, '⭐'))
       );
       return {
         ...z,
         dir: i % 2 === 0 ? 'row' : 'row-reverse',
-        lvlLabel: 'L' + z.lvl,
+        lvlLabel: 'L' + (this.state.levels[z.id] || 1),
         starRow,
         go: () => this.go(z.id),
       };
@@ -993,9 +1144,17 @@ class Component extends DCLogic {
     const cardsGot = this.state.cards.filter(c=>c.got).length;
 
     // ----- parent -----
-    const played = 42, successes = 31;
-    const accuracy = Math.round(successes/played*100);
-    const parentGames = this.zoneDefs().map(z => ({ name:z.name, icon:z.icon, lvl:z.lvl, pct: Math.round(z.lvl/5*100)+'%' }));
+    const played = this.state.stats.played;
+    const successes = this.state.stats.successes;
+    const accuracy = played > 0 ? Math.round(successes/played*100) + '%' : '—';
+    const parentGames = this.zoneDefs().map(z => {
+      const gs = this.gameStats(z.id);
+      return {
+        name:z.name, icon:z.icon,
+        lvl: this.state.levels[z.id] || 1,
+        pct: (gs.played > 0 ? Math.round(gs.successes/gs.played*100) : 0) + '%',
+      };
+    });
     const resetConfirm = !!this.state.resetConfirm;
 
     // ----- level control (current game) -----
@@ -1040,11 +1199,13 @@ class Component extends DCLogic {
       goParent: () => this.go('parent'),
       zones,
       // level control
-      lvl, canDecLevel: lvl>1, canIncLevel: lvl<5,
+      lvl,
+      decLevelDisabled: lvl<=1, decLevelOpacity: lvl<=1 ? .35 : 1,
+      incLevelDisabled: lvl>=5, incLevelOpacity: lvl>=5 ? .35 : 1,
       incLevel: () => this.incLevel(),
       decLevel: () => this.decLevel(),
       // daily + reward
-      dailyChips, dailyDoneCount, dailyReady, notDailyReady: !dailyReady, dailyClaimed,
+      dailyChips, dailyDoneCount, dailyReady, dailyClaimed,
       claimReward: () => this.claimReward(),
       rewardOpen: rw.open,
       rewardFlip: rw.revealed ? 'rotateY(0deg)' : 'rotateY(180deg)',
@@ -1054,7 +1215,7 @@ class Component extends DCLogic {
       rewardName: rwCard ? rwCard.n : '',
       rewardSparks,
       closeReward: () => this.closeReward(),
-      totalStars: this.zoneDefs().reduce((a,z)=>a+z.stars,0),
+      totalStars: this.zoneDefs().reduce((a,z)=>a+this.gameStats(z.id).stars,0),
       // shared result
       result,
       resultTitle: result ? result.title : '',
@@ -1082,7 +1243,7 @@ class Component extends DCLogic {
       // listen
       listenObjs, listenInstr, listenSpeak, listenFeedback, listenFbColor, listenRoundEls,
       // number
-      gemsA, gemsB, numQ, numA:n.a, numB:n.b, numAnswered:n.answered, numCorrect:n.correct,
+      gemsA, gemsB, numQ, numA:n.a, numB:n.b, numAnswered:n.answered,
       numBorderA: panelBorder('a'), numBorderB: panelBorder('b'), numCountEls,
       numAllowEqual, numEqualBorder,
       pickA: () => this.answerNumber('a'),
@@ -1090,24 +1251,23 @@ class Component extends DCLogic {
       pickEqual: () => this.answerNumber('equal'),
       nextNumber: () => this.nextNumber(),
       // dragon
-      dragCells, dragScore:g.score, dragTime:g.timeLeft, dragActive:g.active,
+      dragCells, dragScore:g.score, dragTime:g.timeLeft,
       dragStart: () => this.startDragon(),
       // collection
       cards, cardsGot, cardsTotal: this.state.cards.length,
       // parent
       played, successes, accuracy, parentGames,
-      speechOn: this.state.speech,
       speechLabel: this.state.speech ? 'Ieslēgtas' : 'Izslēgtas',
       speechKnob: this.state.speech
         ? { background:'#46C091', justifyContent:'flex-end' }
         : { background:'#C7D0DD', justifyContent:'flex-start' },
-      toggleSpeech: () => this.setState(s => ({ speech:!s.speech })),
+      toggleSpeech: () => this.setState(s => ({ speech:!s.speech }), () => this.saveProgress()),
       dragIdle: !g.active && !result,
       resetConfirm,
       notResetConfirm: !resetConfirm,
       askReset: () => this.setState({ resetConfirm:true }),
       cancelReset: () => this.setState({ resetConfirm:false }),
-      doReset: () => this.setState({ resetConfirm:false }),
+      doReset: () => this.resetProgress(),
     };
   }
 }
