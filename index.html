@@ -2,7 +2,11 @@
 <html lang="lv">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover is what makes env(safe-area-inset-*) non-zero -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta
       name="description"
       content="Prāta Piedzīvojumu Sala - bērnu attīstības mini spēļu sala"
@@ -31,45 +35,25 @@
         text-align: center;
       }
 
-      /* The design board wraps the playable phone in a page of annotations.
-         index.html keeps only the phone; these rules restyle the surviving
-         nodes for a full-screen app, keyed off the data-app hooks in
-         "Prata Sala.dc.html". */
-      [data-app="page"] {
-        min-height: 100dvh;
-        padding: 16px;
-        display: grid;
-        place-items: center;
+      /* The design board wraps the playable phone in a page of annotations and
+         a mock device bezel. index.html keeps only the screen and gives it the
+         whole viewport — position:fixed sidesteps the entire wrapper chain
+         (page -> frame -> device -> themeVars), so none of those need styling
+         at all. Custom properties still inherit through a fixed element, so
+         --sky-top and --u (from "Prata Sala.dc.html") keep working. */
+      [data-app="screen"] {
+        position: fixed;
+        inset: 0;
         overflow: hidden;
         font-family: "Nunito", sans-serif;
-        background: radial-gradient(
-          circle at 20% 0%,
-          #eaf6ff,
-          #dceaf7 40%,
-          #d3e0f0 100%
-        );
-      }
-
-      [data-app="frame"] {
-        width: 100%;
-        max-width: 430px;
-        display: flex;
-        justify-content: center;
-      }
-
-      [data-app="device"] {
-        width: 100%;
-        max-width: 430px;
-        background: #2b2150;
-        border-radius: clamp(30px, 10vw, 48px);
-        padding: min(14px, 3.4vw);
-        box-shadow: 0 24px 54px rgba(43, 33, 80, 0.32);
-      }
-
-      /* The only override on a node that keeps its inline style, so it needs
-         the !important the three rules above avoid by dropping theirs. */
-      [data-app="screen"] {
-        border-radius: clamp(22px, 8vw, 36px) !important;
+        /* the theme's sky colour, so a notch or home-indicator inset blends in
+           instead of showing white */
+        background: var(--sky-top, #dceaf7);
+        /* screens inside are position:absolute inset:0, and absolute children
+           resolve against the padding box — so this keeps content clear of the
+           notch and home indicator */
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
       }
     </style>
   </head>
@@ -108,13 +92,18 @@
           throw new Error("Spēles sākuma ekrānu neizdevās sagatavot.");
         }
 
-        // Drop the annotations, keep the phone. These three carry board-layout
-        // inline styles that only make sense on the board; clearing them hands
-        // layout to the [data-app] rules in this file's stylesheet.
+        // Drop the annotations, keep the screen. These all carry board-layout
+        // inline styles that only make sense on the board — the bezel, the
+        // 430px frame, the 9:16 aspect ratio and rounded corners. Clearing them
+        // hands layout to the [data-app] rules in this file's stylesheet.
         page.replaceChildren(playableFrame);
         page.removeAttribute("style");
         playableFrame.removeAttribute("style");
-        playableFrame.querySelector('[data-app="device"]')?.removeAttribute("style");
+        for (const hook of ["device", "screen"]) {
+          playableFrame
+            .querySelector(`[data-app="${hook}"]`)
+            ?.removeAttribute("style");
+        }
 
         const dc = sourceDc.cloneNode(true);
         document.body.appendChild(dc);

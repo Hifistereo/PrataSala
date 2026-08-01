@@ -14,6 +14,21 @@
 <style>
   *{ box-sizing:border-box; }
   body{ margin:0; }
+
+  /* Single sizing container for every screen, and the one scale unit the whole
+     UI is built from. cqmin (the shorter axis) is what keeps a wide-but-short
+     landscape viewport from inflating the type; the clamp caps growth so a
+     desktop browser doesn't get absurd controls. At the old 402px phone frame
+     1cqmin = 4.02px, so phone rendering is unchanged. */
+  [data-app="screen"],
+  [data-app="preview"]{
+    container-type: size;
+    --u: clamp(3.2px, 1cqmin, 7.5px);
+  }
+  /* The design board's three theme thumbnails are tiny, so they opt out of the
+     floor that keeps real screens legible. */
+  [data-app="preview"]{ --u: 1cqmin; }
+
   @keyframes floaty { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-10px);} }
   @keyframes floaty2 { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-16px);} }
   @keyframes drift { 0%{ transform: translateX(0);} 100%{ transform: translateX(40px);} }
@@ -52,7 +67,7 @@
           <div style="border-radius:30px; overflow:hidden; box-shadow:0 14px 30px rgba(40,60,100,.18); border:5px solid #fff; position:relative;">
             <!-- mini start screen -->
             <div style="{{ t.vars }}">
-              <div style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden;">
+              <div data-app="preview" style="position:relative; width:100%; aspect-ratio:3/4; overflow:hidden;">
                 <!-- sky -->
                 <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot));"></div>
                 <!-- sun -->
@@ -71,10 +86,10 @@
                 </div>
                 <!-- title -->
                 <div style="position:absolute; top:6%; left:0; right:0; text-align:center;">
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(13px, 4.2cqw, 22px); color:#fff; line-height:1; text-shadow:0 2px 0 var(--primary-dark), 0 4px 8px rgba(0,0,0,.18); -webkit-text-stroke:1px var(--primary-dark);">PRĀTA<br>SALA</div>
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(13px, calc(4.2 * var(--u)), 22px); color:#fff; line-height:1; text-shadow:0 2px 0 var(--primary-dark), 0 4px 8px rgba(0,0,0,.18); -webkit-text-stroke:1px var(--primary-dark);">PRĀTA<br>SALA</div>
                 </div>
                 <!-- start button -->
-                <div style="position:absolute; bottom:4%; left:14%; right:14%; background:var(--primary); border-radius:999px; padding:7% 0; text-align:center; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(10px,3.2cqw,16px); box-shadow:0 4px 0 var(--primary-dark);">▶ Sākt!</div>
+                <div style="position:absolute; bottom:4%; left:14%; right:14%; background:var(--primary); border-radius:999px; padding:7% 0; text-align:center; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(10px,calc(3.2 * var(--u)),16px); box-shadow:0 4px 0 var(--primary-dark);">▶ Sākt!</div>
               </div>
             </div>
           </div>
@@ -114,7 +129,7 @@
 
           <!-- ============ START SCREEN ============ -->
           <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
-            <div style="position:absolute; inset:0; container-type:inline-size;">
+            <div style="position:absolute; inset:0;">
               <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot));"></div>
               <div style="position:absolute; top:5%; right:8%; width:22%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 40% 40%, #FFF6C8, var(--sun)); box-shadow:0 0 40px var(--sun); animation:sunspin 26s linear infinite;"></div>
               <div style="position:absolute; top:12%; left:6%; width:34%; height:7%; background:#fff; border-radius:999px; opacity:.95; animation:floaty 5s ease-in-out infinite;"></div>
@@ -136,31 +151,33 @@
 
               <!-- title -->
               <div style="position:absolute; top:8%; left:0; right:0; text-align:center; animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;">
-                <div style="display:inline-block; font-family:'Baloo 2',cursive; font-weight:800; font-size:13cqw; color:#fff; line-height:.95; text-shadow:0 3px 0 var(--primary-dark), 0 7px 0 rgba(0,0,0,.12), 0 10px 16px rgba(0,0,0,.2); -webkit-text-stroke:2px var(--primary-dark);">PRĀTA<br>SALA</div>
-                <div style="margin-top:4px; display:inline-block; background:#fff; color:var(--primary); font-weight:900; font-size:3.4cqw; padding:4px 14px; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.1);">PIEDZĪVOJUMU SALA</div>
+                <div style="display:block; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(13 * var(--u)); color:#fff; line-height:.95; text-shadow:0 3px 0 var(--primary-dark), 0 7px 0 rgba(0,0,0,.12), 0 10px 16px rgba(0,0,0,.2); -webkit-text-stroke:2px var(--primary-dark);">PRĀTA<br>SALA</div>
+                <div style="margin-top:4px; display:inline-block; background:#fff; color:var(--primary); font-weight:900; font-size:calc(3.4 * var(--u)); padding:4px 14px; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.1);">PIEDZĪVOJUMU SALA</div>
               </div>
 
               <!-- buttons -->
               <div style="position:absolute; bottom:5%; left:7%; right:7%; display:flex; flex-direction:column; gap:11px;">
-                <button onClick="{{ goMap }}" style="width:100%; border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:6cqw; padding:18px; border-radius:22px; box-shadow:0 7px 0 var(--primary-dark), 0 12px 18px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; gap:10px;">▶ Sākt piedzīvojumu!</button>
+                <button onClick="{{ goMap }}" style="width:100%; border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(6 * var(--u)); padding:18px; border-radius:22px; box-shadow:0 7px 0 var(--primary-dark), 0 12px 18px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; gap:10px;">▶ Sākt piedzīvojumu!</button>
                 <div style="display:flex; gap:11px;">
-                  <button onClick="{{ goCollection }}" style="flex:1; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.2cqw; padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #E0A91E; display:flex; align-items:center; justify-content:center; gap:6px;">🎴 Kartītes</button>
-                  <button onClick="{{ goParent }}" style="flex:1; border:none; cursor:pointer; background:#8A63E8; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.2cqw; padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #6B45C9; display:flex; align-items:center; justify-content:center; gap:6px;">👪 Vecāki</button>
+                  <button onClick="{{ goCollection }}" style="flex:1; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #E0A91E; display:flex; align-items:center; justify-content:center; gap:6px;">🎴 Kartītes</button>
+                  <button onClick="{{ goParent }}" style="flex:1; border:none; cursor:pointer; background:#8A63E8; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #6B45C9; display:flex; align-items:center; justify-content:center; gap:6px;">👪 Vecāki</button>
                 </div>
+                <!-- build marker: tells you which version Pages is serving -->
+                <div style="text-align:right; font-weight:800; font-size:calc(2.6 * var(--u)); color:#fff; opacity:.55; text-shadow:0 1px 2px rgba(0,0,0,.25);">v{{ appVersion }}</div>
               </div>
             </div>
           </sc-if>
 
           <!-- ============ MAP SCREEN ============ -->
           <sc-if value="{{ isMap }}" hint-placeholder-val="{{ true }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); overflow-y:auto;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); overflow-y:auto;">
               <!-- water bg texture -->
               <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sea), color-mix(in srgb, var(--sea) 75%, var(--sky-bot))); opacity:.55;"></div>
 
               <!-- top bar -->
               <div style="position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; padding:14px 14px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark);">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:42px; height:42px; border-radius:14px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:5cqw; text-shadow:0 2px 0 var(--primary-dark);">Piedzīvojumu Sala</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(5 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">Piedzīvojumu Sala</div>
                 <div style="display:flex; align-items:center; gap:5px; background:#fff; padding:6px 12px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <span style="font-size:16px; animation:star-twinkle 2s ease-in-out infinite;">⭐</span>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">{{ totalStars }}</span>
@@ -214,11 +231,11 @@
 
           <!-- ============ GAME SCREEN (Robotu Laukums) ============ -->
           <sc-if value="{{ isRobot }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <!-- header -->
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
@@ -234,13 +251,13 @@
 
               <!-- grid board -->
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 12px;">
-                <div style="position:relative; width:min(86cqw, 320px); aspect-ratio:1; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
+                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(86 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
                   <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="25">
-                    <div style="border-radius:10px; background:{{ cell.bg }}; display:grid; place-items:center; font-size:5.5cqw;">{{ cell.mark }}</div>
+                    <div style="border-radius:10px; background:{{ cell.bg }}; display:grid; place-items:center; font-size:calc(5.5 * var(--u));">{{ cell.mark }}</div>
                   </sc-for>
                   <!-- robot overlay -->
-                  <div style="position:absolute; width:14%; height:14%; left:{{ robotLeft }}; top:{{ robotTop }}; transition:left .32s cubic-bezier(.34,1.56,.64,1), top .32s cubic-bezier(.34,1.56,.64,1); display:grid; place-items:center; pointer-events:none;">
-                    <div style="font-size:8cqw; animation:robotHop .5s ease-in-out infinite; transform:rotate({{ robotRot }});">🤖</div>
+                  <div style="grid-area:1/1/-1/-1; position:absolute; width:14%; height:14%; left:{{ robotLeft }}; top:{{ robotTop }}; transition:left .32s cubic-bezier(.34,1.56,.64,1), top .32s cubic-bezier(.34,1.56,.64,1); display:grid; place-items:center; pointer-events:none;">
+                    <div style="font-size:calc(8 * var(--u)); animation:robotHop .5s ease-in-out infinite; transform:rotate({{ robotRot }});">🤖</div>
                   </div>
                 </div>
               </div>
@@ -266,8 +283,8 @@
                   <button onClick="{{ addRight }}" aria-label="Pa labi" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
                 </div>
                 <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
-                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:5cqw; padding:13px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
-                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:3.8cqw; padding:9px; border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
+                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
+                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(3.8 * var(--u)); padding:9px; border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
                 </div>
               </div>
 
@@ -276,10 +293,10 @@
 
           <!-- ============ MEMORY PATH (Atmiņas Taka) ============ -->
           <sc-if value="{{ isMemory }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
@@ -292,24 +309,24 @@
               </div>
               <div style="display:flex; justify-content:center; padding:4px;">{{ memStepEls }}</div>
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
-                <div style="width:min(80cqw, 300px); aspect-ratio:1; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:9px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
+                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(80 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:9px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
                   <sc-for list="{{ memCells }}" as="cell" hint-placeholder-count="16">
-                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:6cqw; transition:background .15s;">{{ cell.mark }}</div>
+                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:calc(6 * var(--u)); transition:background .15s;">{{ cell.mark }}</div>
                   </sc-for>
                 </div>
               </div>
               <div style="flex:0 0 auto; padding:8px 14px 18px;">
-                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:4.4cqw; padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
+                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.4 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
               </div>
             </div>
           </sc-if>
 
           <!-- ============ LISTEN & DO (Klausies un Dari) ============ -->
           <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
@@ -331,9 +348,9 @@
               </div>
               <!-- objects -->
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 16px 18px;">
-                <div style="width:100%; display:grid; grid-template-columns:repeat(2,1fr); gap:14px;">
+                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(86 * var(--u)), 100%); max-width:100%; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); gap:14px;">
                   <sc-for list="{{ listenObjs }}" as="o" hint-placeholder-count="4">
-                    <button onClick="{{ o.tap }}" style="border:4px solid #fff; cursor:pointer; background:#fff; border-radius:22px; aspect-ratio:1; display:grid; place-items:center; font-size:18cqw; box-shadow:0 7px 0 rgba(0,0,0,.1);">{{ o.e }}</button>
+                    <button onClick="{{ o.tap }}" style="border:4px solid #fff; cursor:pointer; background:#fff; border-radius:22px; aspect-ratio:1; display:grid; place-items:center; font-size:calc(18 * var(--u)); box-shadow:0 7px 0 rgba(0,0,0,.1);">{{ o.e }}</button>
                   </sc-for>
                 </div>
               </div>
@@ -342,10 +359,10 @@
 
           <!-- ============ NUMBER TREASURE (Skaitļu Dārgumi) ============ -->
           <sc-if value="{{ isNumber }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
                   <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
@@ -363,7 +380,7 @@
                 <button onClick="{{ pickA }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderA }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
                   <div style="flex:1; display:flex; flex-wrap:wrap; gap:4px; align-content:center; justify-content:center;">
                     <sc-for list="{{ gemsA }}" as="gem" hint-placeholder-count="3">
-                      <span style="font-size:8cqw;">💎</span>
+                      <span style="font-size:calc(8 * var(--u));">💎</span>
                     </sc-for>
                   </div>
                   <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
@@ -373,7 +390,7 @@
                 <button onClick="{{ pickB }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderB }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
                   <div style="flex:1; display:flex; flex-wrap:wrap; gap:4px; align-content:center; justify-content:center;">
                     <sc-for list="{{ gemsB }}" as="gem" hint-placeholder-count="5">
-                      <span style="font-size:8cqw;">💎</span>
+                      <span style="font-size:calc(8 * var(--u));">💎</span>
                     </sc-for>
                   </div>
                   <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
@@ -390,7 +407,7 @@
               <!-- next -->
               <div style="flex:0 0 auto; padding:8px 14px 18px; min-height:64px;">
                 <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:5cqw; padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
+                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
                 </sc-if>
               </div>
             </div>
@@ -398,10 +415,10 @@
 
           <!-- ============ DON'T CATCH DRAGON (Neķer Pūķi!) ============ -->
           <sc-if value="{{ isDragon }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
                 <div style="display:flex; gap:6px;">
                   <div style="background:#fff; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">⏱️ {{ dragTime }}</div>
                   <div style="background:#FFCE3A; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#7A4E00; font-size:13px; box-shadow:0 4px 0 #E0A91E;">⭐ {{ dragScore }}</div>
@@ -409,12 +426,12 @@
               </div>
               <div style="text-align:center; padding:10px 14px 4px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
-                <div style="position:relative; width:min(82cqw, 300px); aspect-ratio:1; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
+                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(82 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
                   <sc-for list="{{ dragCells }}" as="cell" hint-placeholder-count="9">
-                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:50%; background:{{ cell.bg }}; display:grid; place-items:center; font-size:13cqw; box-shadow:inset 0 4px 8px rgba(0,0,0,.18);">{{ cell.critter }}</div>
+                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:50%; background:{{ cell.bg }}; display:grid; place-items:center; font-size:calc(13 * var(--u)); box-shadow:inset 0 4px 8px rgba(0,0,0,.18);">{{ cell.critter }}</div>
                   </sc-for>
                   <sc-if value="{{ dragIdle }}" hint-placeholder-val="{{ true }}">
-                    <div style="position:absolute; inset:0; background:rgba(43,33,80,.55); border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
+                    <div style="grid-area:1/1/-1/-1; position:absolute; inset:0; background:rgba(43,33,80,.55); border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
                       <div style="display:flex; align-items:center; gap:8px; background:#fff; padding:6px; border-radius:999px; box-shadow:0 5px 0 rgba(0,0,0,.18);">
                         <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
                         <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; min-width:54px; text-align:center;">Līm. {{ lvl }}</span>
@@ -431,10 +448,10 @@
 
           <!-- ============ COLLECTION (Manas Kartītes) ============ -->
           <sc-if value="{{ isCollection }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw; text-shadow:0 2px 0 var(--primary-dark);">🎴 Manas Kartītes</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🎴 Manas Kartītes</div>
                 <div style="background:#fff; padding:5px 11px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">{{ cardsGot }}/{{ cardsTotal }}</div>
               </div>
               <div style="text-align:center; padding:10px 14px 2px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Savāc visas salas kartītes! ✨</div>
@@ -453,13 +470,26 @@
 
           <!-- ============ PARENT ZONE (Vecāku Zona) ============ -->
           <sc-if value="{{ isParent }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; inset:0; container-type:inline-size; background:#EEF3F9; display:flex; flex-direction:column;">
+            <div style="position:absolute; inset:0; background:#EEF3F9; display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, #6E5BD0, #5B45BE); box-shadow:0 4px 0 #4A3699; flex:0 0 auto;">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:#5B45BE; width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:4.6cqw;">👪 Vecāku Zona</div>
+                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u));">👪 Vecāku Zona</div>
                 <div style="background:#fff; padding:5px 11px; border-radius:999px; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🔒</div>
               </div>
               <div style="flex:1 1 auto; overflow-y:auto; padding:14px;">
+                <!-- what this app is -->
+                <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:7px;">🏝️ Par Prāta Piedzīvojumu Salu</div>
+                  <div style="font-weight:700; color:#5B6B86; font-size:12px; line-height:1.45;">
+                    Sala ir piecu mini-spēļu komplekts pirmsskolas un sākumskolas bērniem. Katra spēle attīsta citu prasmi, un katrai ir pieci grūtības līmeņi — tos var pārslēgt ar <b>−</b> un <b>+</b> pogām spēles augšpusē, tāpēc sala aug līdzi bērnam.
+                  </div>
+                  <div style="font-weight:700; color:#5B6B86; font-size:12px; line-height:1.45; margin-top:8px;">
+                    Par pabeigtām spēlēm bērns pelna zvaigznes un kolekcijas kartītes. Katru dienu ir trīs jauni uzdevumi ar balvu.
+                  </div>
+                  <div style="margin-top:10px; background:#F1F7F3; border:2px solid #CDE7DA; border-radius:12px; padding:9px 11px; font-weight:800; color:#2E7D5B; font-size:11.5px; line-height:1.4;">
+                    🔒 Viss progress tiek glabāts tikai šajā ierīcē. Nekas netiek augšupielādēts internetā, un spēle nelūdz nekādus personas datus.
+                  </div>
+                </div>
                 <!-- stat cards -->
                 <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;">
                   <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
@@ -488,6 +518,22 @@
                         </div>
                       </div>
                       <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#8A63E8; font-size:13px;">Lvl {{ pg.lvl }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <!-- what each game develops -->
+                <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
+                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:4px;">Ko katra spēle attīsta</div>
+                  <sc-for list="{{ parentGames }}" as="pg" hint-placeholder-count="5">
+                    <div style="display:flex; gap:10px; padding:10px 0; border-top:2px solid #EDF1F6;">
+                      <span style="font-size:22px; flex:0 0 auto;">{{ pg.icon }}</span>
+                      <div style="flex:1;">
+                        <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+                          <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px;">{{ pg.name }}</span>
+                          <span style="background:#EFEAFC; color:#6B45C9; font-weight:800; font-size:10px; padding:2px 8px; border-radius:999px;">{{ pg.sub }}</span>
+                        </div>
+                        <div style="font-weight:700; color:#7C8AA3; font-size:11.5px; line-height:1.42; margin-top:4px;">{{ pg.desc }}</div>
+                      </div>
                     </div>
                   </sc-for>
                 </div>
@@ -579,6 +625,13 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
+// Shown on the start screen so you can tell which build is actually being
+// served. Bump this every release.
+const APP_VERSION = '1.1.0';
+
+// Deliberately separate from APP_VERSION: this one gates the saved-progress
+// format and must only change when the stored shape changes, because bumping
+// it discards every existing player's progress.
 const SAVE_KEY = 'prata-sala-v1';
 const SAVE_VERSION = 1;
 
@@ -736,11 +789,16 @@ class Component extends DCLogic {
 
   zoneDefs() {
     return [
-      { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9' },
-      { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684' },
-      { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A' },
-      { id:'numberTreasure', icon:'💎', name:'Skaitļu Dārgumi', sub:'Skaitļi', c1:'#69D6A8', c2:'#3FB389', shadow:'#2E9E70' },
-      { id:'dontCatchDragon', icon:'🐉', name:'Neķer Pūķi!', sub:'Reakcija', c1:'#B79CF2', c2:'#8A63E8', shadow:'#6B45C9' },
+      { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9',
+        desc:'Bērns saliek komandu virkni, lai robots sasniegtu zvaigzni. Attīsta secīgu domāšanu, plānošanu un cēloņsakarību izpratni — algoritmiskās domāšanas pirmsākumi.' },
+      { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684',
+        desc:'Jāiegaumē un jāatkārto mirgojošo lauciņu secība. Trenē vizuālo darba atmiņu un koncentrēšanos.' },
+      { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A',
+        desc:'Bērns noklausās norādi un izpilda to pareizā secībā. Attīsta klausīšanās uzmanību un spēju sekot norādījumiem.' },
+      { id:'numberTreasure', icon:'💎', name:'Skaitļu Dārgumi', sub:'Skaitļi', c1:'#69D6A8', c2:'#3FB389', shadow:'#2E9E70',
+        desc:'Jāsalīdzina divas dārgakmeņu kaudzītes — kur ir vairāk vai mazāk. Veido skaitļa izjūtu un salīdzināšanas prasmes.' },
+      { id:'dontCatchDragon', icon:'🐉', name:'Neķer Pūķi!', sub:'Reakcija', c1:'#B79CF2', c2:'#8A63E8', shadow:'#6B45C9',
+        desc:'Jāsavāc draugi, bet jāizvairās no pūķa. Trenē reakcijas ātrumu un impulsu kontroli.' },
     ];
   }
   gameStats(id){ return this.state.stats.perGame[id] || { played:0, successes:0, stars:0 }; }
@@ -1150,7 +1208,7 @@ class Component extends DCLogic {
     const parentGames = this.zoneDefs().map(z => {
       const gs = this.gameStats(z.id);
       return {
-        name:z.name, icon:z.icon,
+        name:z.name, icon:z.icon, sub:z.sub, desc:z.desc,
         lvl: this.state.levels[z.id] || 1,
         pct: (gs.played > 0 ? Math.round(gs.successes/gs.played*100) : 0) + '%',
       };
@@ -1182,6 +1240,7 @@ class Component extends DCLogic {
     ] : [];
 
     return {
+      appVersion: APP_VERSION,
       themeVars: { ...cur.vars },
       themes,
       isStart: screen==='start',
