@@ -30,6 +30,47 @@
         font: 800 18px/1.35 system-ui, sans-serif;
         text-align: center;
       }
+
+      /* The design board wraps the playable phone in a page of annotations.
+         index.html keeps only the phone; these rules restyle the surviving
+         nodes for a full-screen app, keyed off the data-app hooks in
+         "Prata Sala.dc.html". */
+      [data-app="page"] {
+        min-height: 100dvh;
+        padding: 16px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        font-family: "Nunito", sans-serif;
+        background: radial-gradient(
+          circle at 20% 0%,
+          #eaf6ff,
+          #dceaf7 40%,
+          #d3e0f0 100%
+        );
+      }
+
+      [data-app="frame"] {
+        width: 100%;
+        max-width: 430px;
+        display: flex;
+        justify-content: center;
+      }
+
+      [data-app="device"] {
+        width: 100%;
+        max-width: 430px;
+        background: #2b2150;
+        border-radius: clamp(30px, 10vw, 48px);
+        padding: min(14px, 3.4vw);
+        box-shadow: 0 24px 54px rgba(43, 33, 80, 0.32);
+      }
+
+      /* The only override on a node that keeps its inline style, so it needs
+         the !important the three rules above avoid by dropping theirs. */
+      [data-app="screen"] {
+        border-radius: clamp(22px, 8vw, 36px) !important;
+      }
     </style>
   </head>
   <body>
@@ -57,44 +98,23 @@
           throw new Error("Spēles eksportā trūkst nepieciešamā x-dc satura.");
         }
 
-        const page = Array.from(sourceDc.children).find(
-          (node) => node.tagName.toLowerCase() === "div"
-        );
-        const pageChildren = Array.from(page.children);
-        const prototypeSection = pageChildren[2];
-        const playableFrame = prototypeSection
-          ? Array.from(prototypeSection.children)[1]
-          : null;
+        // The export is a design board: style comparisons, headings, and one
+        // playable phone. Select by data-app hook rather than child index so
+        // rearranging the board can't silently mount the wrong subtree.
+        const page = sourceDc.querySelector('[data-app="page"]');
+        const playableFrame = sourceDc.querySelector('[data-app="frame"]');
 
         if (!page || !playableFrame) {
           throw new Error("Spēles sākuma ekrānu neizdevās sagatavot.");
         }
 
+        // Drop the annotations, keep the phone. These three carry board-layout
+        // inline styles that only make sense on the board; clearing them hands
+        // layout to the [data-app] rules in this file's stylesheet.
         page.replaceChildren(playableFrame);
-        page.setAttribute(
-          "style",
-          "min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:16px; display:grid; place-items:center; overflow:hidden;"
-        );
-
-        playableFrame.setAttribute(
-          "style",
-          "width:100%; max-width:430px; display:flex; justify-content:center;"
-        );
-
-        const deviceFrame = playableFrame.firstElementChild;
-        if (deviceFrame) {
-          deviceFrame.setAttribute(
-            "style",
-            "width:100%; max-width:430px; background:#2B2150; border-radius:clamp(30px, 10vw, 48px); padding:min(14px, 3.4vw); box-shadow:0 24px 54px rgba(43,33,80,.32);"
-          );
-        }
-
-        const gameScreen = deviceFrame
-          ? deviceFrame.querySelector('div[style*="aspect-ratio:9/16"]')
-          : null;
-        if (gameScreen) {
-          gameScreen.style.borderRadius = "clamp(22px, 8vw, 36px)";
-        }
+        page.removeAttribute("style");
+        playableFrame.removeAttribute("style");
+        playableFrame.querySelector('[data-app="device"]')?.removeAttribute("style");
 
         const dc = sourceDc.cloneNode(true);
         document.body.appendChild(dc);
