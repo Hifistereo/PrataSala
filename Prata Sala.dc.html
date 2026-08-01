@@ -246,7 +246,15 @@
               <!-- dragon hint bubble -->
               <div style="display:flex; align-items:center; gap:8px; padding:10px 12px 4px; flex:0 0 auto;">
                 <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
-                <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px;">{{ hint }}</div>
+                <div style="flex:1; min-width:0;">
+                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px;">{{ hint }}</div>
+                  <!-- soma: what is still out on the board vs already picked up -->
+                  <div style="display:flex; align-items:center; gap:5px; margin-top:5px; padding-left:2px;">
+                    <sc-for list="{{ bag }}" as="b" hint-placeholder-count="3">
+                      <div style="width:27px; height:27px; border-radius:9px; background:{{ b.bg }}; border:2px solid {{ b.ring }}; display:grid; place-items:center; font-size:15px; opacity:{{ b.op }}; filter:{{ b.filter }}; box-shadow:0 2px 0 rgba(0,0,0,.12);">{{ b.e }}</div>
+                    </sc-for>
+                  </div>
+                </div>
               </div>
 
               <!-- grid board -->
@@ -265,9 +273,9 @@
               <!-- command queue -->
               <div style="flex:0 0 auto; padding:4px 12px; min-height:38px;">
                 <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:center; min-height:38px; flex-wrap:wrap;">
-                  <span style="font-weight:900; color:#5B6B86; font-size:12px;">Komandas:</span>
+                  <span style="font-weight:900; color:#5B6B86; font-size:12px;">{{ queueLabel }}</span>
                   <sc-for list="{{ queue }}" as="q" hint-placeholder-count="0">
-                    <div style="width:26px; height:26px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:15px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
+                    <div style="width:24px; height:24px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:14px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
                   </sc-for>
                 </div>
               </div>
@@ -521,6 +529,23 @@
                     </div>
                   </sc-for>
                 </div>
+                <!-- lifetime tally of objects collected in Robotu Laukums -->
+                <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
+                  <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">🎒 Savāktās mantas</div>
+                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#8A63E8; font-size:15px;">{{ collectedTotal }}</div>
+                  </div>
+                  <div style="font-weight:700; color:#5B6B86; font-size:11.5px; line-height:1.4; margin-bottom:10px;">Mantas, ko robots savācis Robotu Laukumā — pa vienai no katra laukuma stūra.</div>
+                  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:9px;">
+                    <sc-for list="{{ collectedList }}" as="ci" hint-placeholder-count="16">
+                      <div style="text-align:center; opacity:{{ ci.op }};">
+                        <div style="font-size:22px; filter:{{ ci.filter }};">{{ ci.e }}</div>
+                        <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px;">{{ ci.count }}</div>
+                        <div style="font-weight:700; color:#7C8AA3; font-size:9px; line-height:1.1;">{{ ci.n }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
                 <!-- what each game develops -->
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
                   <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:4px;">Ko katra spēle attīsta</div>
@@ -627,7 +652,7 @@
 <script type="text/x-dc" data-dc-script data-props="{}">
 // Shown on the start screen so you can tell which build is actually being
 // served. Bump this every release.
-const APP_VERSION = '1.1.0';
+const APP_VERSION = '1.2.0';
 
 // Deliberately separate from APP_VERSION: this one gates the saved-progress
 // format and must only change when the stored shape changes, because bumping
@@ -654,6 +679,25 @@ const CARD_DEFS = [
   { id:12, e:'🦩', n:'Rozā Flamingo' },
 ];
 
+// Robotu Laukums board areas. The 5x5 grid is split into four 2x2 themed
+// corners; the middle cross (row 2 / column 2) stays neutral meadow, which keeps
+// the board's own grass gradient. Tints are near-opaque and each area carries its
+// own A/B checker: at lower alpha the corners all washed out into the green board
+// and stopped reading as separate places, which is the whole point of them. Being
+// opaque also makes an area look the same under all three island themes.
+// Emoji are Emoji 5.0 or older so they render as real glyphs on older phones —
+// there are no image assets here, so a missing glyph is a broken sprite.
+const AREA_DEFS = [
+  { id:'darzs', name:'Dārzs', rows:[3,4], cols:[0,1], tintA:'rgba(255,222,120,.92)', tintB:'rgba(250,206,86,.86)',
+    items:[{e:'🍎',n:'ābols'},{e:'🍓',n:'zemene'},{e:'🥕',n:'burkāns'},{e:'🌻',n:'saulespuķe'}] },
+  { id:'mezs', name:'Mežs', rows:[0,1], cols:[0,1], tintA:'rgba(28,92,58,.92)', tintB:'rgba(20,74,46,.92)',
+    items:[{e:'🍄',n:'sēne'},{e:'🌰',n:'kastanis'},{e:'🦔',n:'ezītis'},{e:'🍁',n:'lapa'}] },
+  { id:'jura', name:'Jūra', rows:[3,4], cols:[3,4], tintA:'rgba(96,199,240,.92)', tintB:'rgba(56,170,220,.92)',
+    items:[{e:'🐚',n:'gliemežvāks'},{e:'🐠',n:'zivtiņa'},{e:'🦀',n:'krabis'},{e:'🐙',n:'astoņkājis'}] },
+  { id:'ala', name:'Ala', rows:[0,1], cols:[3,4], tintA:'rgba(150,128,196,.92)', tintB:'rgba(124,101,172,.92)',
+    items:[{e:'💎',n:'dimants'},{e:'🔮',n:'kristāls'},{e:'🔑',n:'atslēga'},{e:'👑',n:'kronis'}] },
+];
+
 const MISSION_DEFS = [
   { icon: '🤖', label: 'Pabeidz Robotu Laukumu' },
   { icon: '🐾', label: 'Spēlē Atmiņas Taku' },
@@ -675,7 +719,10 @@ function freshCards(gotIds){
 }
 
 function freshStats(){
-  return { played: 0, successes: 0, perGame: {} };
+  // `collected` is the lifetime Robotu Laukums tally, keyed by item emoji. It is
+  // additive: loadSave() spreads saved stats over freshStats(), so saves written
+  // before this field existed load fine without a SAVE_VERSION bump.
+  return { played: 0, successes: 0, perGame: {}, collected: {} };
 }
 
 // localStorage throws outright in Safari private mode and when storage is
@@ -711,6 +758,8 @@ class Component extends DCLogic {
     start: { r: 4, c: 0 },
     target: { r: 0, c: 4 },
     queue: [],
+    // Per-run board objects, re-rolled by resetGame(). Never persisted.
+    items: [],
     running: false,
     levels: { ...DEFAULT_LEVELS },
     mem: { seq: [], phase: 'idle', step: 0, flash: -1 },
@@ -790,7 +839,7 @@ class Component extends DCLogic {
   zoneDefs() {
     return [
       { id:'robotCommands', icon:'🤖', name:'Robotu Laukums', sub:'Plānošana', c1:'#7AA8FF', c2:'#5B7FE8', shadow:'#3F5FC9',
-        desc:'Bērns saliek komandu virkni, lai robots sasniegtu zvaigzni. Attīsta secīgu domāšanu, plānošanu un cēloņsakarību izpratni — algoritmiskās domāšanas pirmsākumi.' },
+        desc:'Bērns saliek komandu virkni, lai robots savāktu mantas dažādos laukuma stūros un sasniegtu zvaigzni. Attīsta secīgu domāšanu, maršruta plānošanu un cēloņsakarību izpratni — algoritmiskās domāšanas pirmsākumi.' },
       { id:'memoryPath', icon:'🐾', name:'Atmiņas Taka', sub:'Atmiņa', c1:'#FF9ECb', c2:'#F46BA6', shadow:'#D24684',
         desc:'Jāiegaumē un jāatkārto mirgojošo lauciņu secība. Trenē vizuālo darba atmiņu un koncentrēšanos.' },
       { id:'listenAndDo', icon:'👂', name:'Klausies un Dari', sub:'Uzmanība', c1:'#FFC861', c2:'#FFA63D', shadow:'#E8842A',
@@ -860,6 +909,93 @@ class Component extends DCLogic {
   obstaclesFor(L){ if(L<3) return []; if(L===3) return [[2,2]]; if(L===4) return [[2,2],[1,3]]; return [[2,2],[1,3],[3,1]]; }
   isObstacle(r,c){ return this.obstaclesFor(this.state.levels.robotCommands||1).some(o => o[0]===r && o[1]===c); }
 
+  // ---------- Robotu Laukums board objects ----------
+  areaAt(r,c){
+    return AREA_DEFS.find(a => r>=a.rows[0] && r<=a.rows[1] && c>=a.cols[0] && c<=a.cols[1]) || null;
+  }
+  // At most one object per area, so collecting them all always means visiting
+  // different corners of the board — that detour is the point of the feature.
+  itemCountFor(L){ return [1,2,2,3,3][Math.min(5, Math.max(1, L)) - 1]; }
+  spawnItems(L){
+    const s = this.state;
+    const obs = this.obstaclesFor(L);
+    const taken = (r,c) => obs.some(o => o[0]===r && o[1]===c)
+      || (r===s.start.r && c===s.start.c)
+      || (r===s.target.r && c===s.target.c);
+    const areas = AREA_DEFS.slice().sort(() => Math.random() - 0.5).slice(0, this.itemCountFor(L));
+    const out = [];
+    areas.forEach(a => {
+      const free = [];
+      for(let r=a.rows[0]; r<=a.rows[1]; r++){
+        for(let c=a.cols[0]; c<=a.cols[1]; c++){
+          if(!taken(r,c)) free.push([r,c]);
+        }
+      }
+      if(!free.length) return; // corner fully blocked by rocks/start/star — skip it
+      const spot = free[Math.floor(Math.random()*free.length)];
+      const it = a.items[Math.floor(Math.random()*a.items.length)];
+      out.push({ r:spot[0], c:spot[1], e:it.e, n:it.n, area:a.id, got:false });
+    });
+    return out;
+  }
+  // Shortest walkable distance between two squares. Breadth-first rather than
+  // Manhattan because a rock in the way makes the straight-line count a lie,
+  // and that shortfall comes straight out of the child's command budget.
+  robotStepsBetween(from, to){
+    if(from.r===to.r && from.c===to.c) return 0;
+    const seen = new Set([from.r + ',' + from.c]);
+    let frontier = [[from.r, from.c]], d = 0;
+    while(frontier.length){
+      d++;
+      const next = [];
+      for(const cell of frontier){
+        const around = [[cell[0]-1,cell[1]],[cell[0]+1,cell[1]],[cell[0],cell[1]-1],[cell[0],cell[1]+1]];
+        for(const n of around){
+          if(n[0]<0 || n[0]>4 || n[1]<0 || n[1]>4 || this.isObstacle(n[0],n[1])) continue;
+          const k = n[0] + ',' + n[1];
+          if(seen.has(k)) continue;
+          seen.add(k);
+          if(n[0]===to.r && n[1]===to.c) return d;
+          next.push(n);
+        }
+      }
+      frontier = next;
+    }
+    return Infinity;
+  }
+  // Shortest legal route: start -> every object, in the best order -> star.
+  // Brute force is fine at three objects (six orderings).
+  robotRouteCost(items){
+    const s = this.state;
+    const d = (a,b) => this.robotStepsBetween(a,b);
+    const best = (from, left) => {
+      if(!left.length) return d(from, s.target);
+      let min = Infinity;
+      left.forEach((it,i) => {
+        min = Math.min(min, d(from, it) + best(it, left.slice(0,i).concat(left.slice(i+1))));
+      });
+      return min;
+    };
+    return best(s.start, items || []);
+  }
+  // Derived from the layout that actually spawned rather than a flat per-level
+  // formula: opposite corners cost far more to visit than adjacent ones, and a
+  // fixed cap would make those rounds unwinnable. The slack covers a wrong turn
+  // or two plus any detour around a rock.
+  robotQueueCap(){
+    const cost = this.robotRouteCost(this.state.items);
+    return (isFinite(cost) ? cost : 16) + 5;
+  }
+
+  recordCollected(list){
+    if(!list || !list.length) return;
+    this.setState(st => {
+      const collected = { ...(st.stats.collected || {}) };
+      list.forEach(it => { collected[it.e] = (collected[it.e] || 0) + 1; });
+      return { stats: { ...st.stats, collected } };
+    }, () => this.saveProgress());
+  }
+
   isGameScreen(screen){ return this.zoneDefs().some(z => z.id === screen); }
 
   go(screen){
@@ -890,7 +1026,10 @@ class Component extends DCLogic {
 
   resetGame(){
     this.runToken=(this.runToken||0)+1;
-    this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false, result:null }));
+    // The single place objects are rolled — go(), playAgain() and the level
+    // stepper all reach it through initScreen(), so every entry gets a new board.
+    const items = this.spawnItems(this.state.levels.robotCommands||1);
+    this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false, result:null, items }));
   }
 
   // ---------- Memory Path ----------
@@ -1032,7 +1171,7 @@ class Component extends DCLogic {
 
   addCmd(dir){
     if(this.state.running || this.state.result) return;
-    const cap = 8 + (this.state.levels.robotCommands||1);
+    const cap = this.robotQueueCap();
     if(this.state.queue.length >= cap) return;
     this.setState(s => ({ queue:[...s.queue, dir] }));
   }
@@ -1047,6 +1186,13 @@ class Component extends DCLogic {
     this.setState({ running:true });
     let r = this.state.start.r, c = this.state.start.c;
     const cmds = this.state.queue.slice();
+    // Snapshot: positions are frozen for the run, and `picked` — not the `got`
+    // flags in state — is the authoritative tally, so a run cancelled mid-walk
+    // can never half-apply its pickups.
+    const spawn = (this.state.items || []).slice();
+    const tgt = this.state.target;
+    const picked = new Set();
+    let onStar = false;
     for(const cmd of cmds){
       let nr=r, nc=c;
       if(cmd==='up') nr = Math.max(0, r-1);
@@ -1054,18 +1200,43 @@ class Component extends DCLogic {
       if(cmd==='left') nc = Math.max(0, c-1);
       if(cmd==='right') nc = Math.min(4, c+1);
       if(!this.isObstacle(nr, nc)){ r=nr; c=nc; }
+      const hit = spawn.findIndex((it,i) => !picked.has(i) && it.r===r && it.c===c);
+      if(hit >= 0){
+        picked.add(hit);
+        this.setState(s => ({ items: s.items.map((it,i) => i===hit ? ({ ...it, got:true }) : it) }));
+      }
       this.setState({ robot:{ r, c, dir:cmd } });
+      const onTarget = (r === tgt.r && c === tgt.c);
       await this.wait(360);
       if(token !== this.runToken) return;
+      // Landing on the star ends the run early only once the bag is full, so
+      // leftover commands can't turn a finished route into a loss. It must not
+      // cut the run short while objects remain: the cave objects sit right
+      // beside the star, and routes to them regularly cross it.
+      if(onTarget && picked.size === spawn.length){ onStar = true; break; }
     }
     await this.wait(200);
     if(token !== this.runToken) return;
-    if(r === this.state.target.r && c === this.state.target.c){
+    if(onStar || (r === tgt.r && c === tgt.c)){
+      // Reaching the star always wins — the objects only decide how many stars.
+      const total = spawn.length;
+      const got = picked.size;
       this.setState({ running:false });
-      this.setResult({ emoji:'🌟', title:'Malacis!', msg:'Robots aizsniedza zvaigzni!', stars:3 });
+      this.recordCollected(spawn.filter((_,i) => picked.has(i)));
+      if(total === 0 || got === total){
+        this.setResult({ emoji:'🌟', title:'Malacis!',
+          msg: total ? 'Robots savāca visu un aizsniedza zvaigzni!' : 'Robots aizsniedza zvaigzni!', stars:3 });
+      } else if(got > 0){
+        this.setResult({ emoji:'✨', title:'Labi padarīts!',
+          msg:'Savāci ' + got + ' no ' + total + '. Pamēģini savākt visu!', stars:2 });
+      } else {
+        this.setResult({ emoji:'⭐', title:'Tiki galā!',
+          msg:'Zvaigzne sasniegta! Nākamreiz pamēģini savākt arī mantas.', stars:1 });
+      }
     } else {
-      // gentle retry: bounce back to start
-      this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false }));
+      // gentle retry: bounce back to start, and put the collected objects back
+      this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false,
+        items: s.items.map(it => ({ ...it, got:false })) }));
     }
   }
 
@@ -1099,21 +1270,38 @@ class Component extends DCLogic {
       };
     });
 
-    // robot grid
+    // robot grid — precedence: star > rock > object > area tint > meadow checker
     const obs = this.obstaclesFor(this.state.levels.robotCommands||1);
     const isObs = (r,c) => obs.some(o => o[0]===r && o[1]===c);
+    const items = this.state.items || [];
     const cells = [];
     for(let r=0;r<5;r++){
       for(let c=0;c<5;c++){
         const isTarget = r===this.state.target.r && c===this.state.target.c;
         const ob = isObs(r,c);
+        const area = this.areaAt(r,c);
+        // A collected object stops rendering, so the board visibly empties as
+        // the robot walks.
+        const item = items.find(it => it.r===r && it.c===c && !it.got);
         const checker = (r+c)%2===0;
+        // Areas keep their own checker so the grid stays readable inside a corner.
+        const base = area ? (checker ? area.tintA : area.tintB)
+          : (checker ? 'rgba(255,255,255,.30)' : 'rgba(255,255,255,.16)');
         cells.push({
-          bg: isTarget ? 'rgba(255,210,63,.4)' : (ob ? 'rgba(70,52,38,.32)' : (checker ? 'rgba(255,255,255,.30)' : 'rgba(255,255,255,.16)')),
-          mark: isTarget ? '⭐' : (ob ? '🪨' : ''),
+          bg: isTarget ? 'rgba(255,210,63,.55)' : (ob ? 'rgba(70,52,38,.32)' : base),
+          mark: isTarget ? '⭐' : (ob ? '🪨' : (item ? item.e : '')),
         });
       }
     }
+    // bag strip on the robot screen — grey until picked up, then full colour
+    const bag = items.map(it => ({
+      e: it.e,
+      bg: it.got ? '#FFE9A8' : '#FFFFFF',
+      ring: it.got ? '#46C091' : 'rgba(0,0,0,.10)',
+      // Only lightly desaturated: the child still has to recognise what to hunt.
+      op: it.got ? '1' : '.85',
+      filter: it.got ? 'none' : 'grayscale(0.45)',
+    }));
 
     // ----- result overlay -----
     const result = this.state.result;
@@ -1213,6 +1401,15 @@ class Component extends DCLogic {
         pct: (gs.played > 0 ? Math.round(gs.successes/gs.played*100) : 0) + '%',
       };
     });
+    const collectedMap = this.state.stats.collected || {};
+    const collectedList = AREA_DEFS.reduce((acc,a) => acc.concat(a.items.map(it => ({
+      e: it.e,
+      n: it.n,
+      count: String(collectedMap[it.e] || 0),
+      op: collectedMap[it.e] ? '1' : '.35',
+      filter: collectedMap[it.e] ? 'none' : 'grayscale(0.7)',
+    }))), []);
+    const collectedTotal = Object.keys(collectedMap).reduce((sum,k) => sum + collectedMap[k], 0);
     const resetConfirm = !!this.state.resetConfirm;
 
     // ----- level control (current game) -----
@@ -1285,7 +1482,12 @@ class Component extends DCLogic {
       playAgain: () => this.playAgain(),
       // robot
       cells,
-      hint: 'Palīdzi robotam aizsniegt ⭐ zvaigzni!',
+      bag,
+      // "Savāc lietu" for one object — "1 lietas" would be wrong Latvian.
+      hint: bag.length === 0 ? 'Palīdzi robotam aizsniegt ⭐ zvaigzni!'
+        : (bag.length === 1 ? 'Savāc mantu un aizved robotu pie ⭐!'
+        : 'Savāc visas ' + bag.length + ' mantas un aizved robotu pie ⭐!'),
+      queueLabel: 'Komandas ' + this.state.queue.length + '/' + this.robotQueueCap() + ':',
       robotLeft: 'calc(8px + ' + this.state.robot.c + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
       robotTop: 'calc(8px + ' + this.state.robot.r + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
       robotRot: this.rotFor(this.state.robot.dir),
@@ -1315,7 +1517,7 @@ class Component extends DCLogic {
       // collection
       cards, cardsGot, cardsTotal: this.state.cards.length,
       // parent
-      played, successes, accuracy, parentGames,
+      played, successes, accuracy, parentGames, collectedList, collectedTotal,
       speechLabel: this.state.speech ? 'Ieslēgtas' : 'Izslēgtas',
       speechKnob: this.state.speech
         ? { background:'#46C091', justifyContent:'flex-end' }
