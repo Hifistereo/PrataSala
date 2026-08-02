@@ -282,16 +282,17 @@
 
               <!-- controls -->
               <div style="flex:0 0 auto; display:flex; align-items:center; gap:max(10px, calc(2.6 * var(--u))); padding:max(6px, calc(1.6 * var(--u))) max(12px, calc(3 * var(--u))) max(16px, calc(4 * var(--u)));">
-                <!-- D-pad sizing is driven by --u like the rest of the screen, with a
-                     40px floor so it never shrinks below a thumb on a small phone.
-                     It was pinned at 40px, which looked tiny on a tablet. -->
-                <div style="display:grid; grid-template-columns:repeat(3, max(40px, calc(11.5 * var(--u)))); grid-template-rows:repeat(2, max(40px, calc(11.5 * var(--u)))); gap:max(5px, calc(1.4 * var(--u)));">
-                  <div></div>
-                  <button onClick="{{ addUp }}" aria-label="Uz augšu" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬆️</button>
-                  <div></div>
-                  <button onClick="{{ addLeft }}" aria-label="Pa kreisi" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬅️</button>
-                  <button onClick="{{ addDown }}" aria-label="Uz leju" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
-                  <button onClick="{{ addRight }}" aria-label="Pa labi" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
+                <!-- Laid out as a cross, each button in the direction it moves the
+                     robot: a child aims where they want to go rather than reading
+                     the arrow. Down must sit under the middle, never in a row
+                     between left and right. Sizing is driven by --u like the rest
+                     of the screen, with a 40px floor so it never shrinks below a
+                     thumb on a small phone. -->
+                <div style="display:grid; grid-template-columns:repeat(3, max(40px, calc(11.5 * var(--u)))); grid-template-rows:repeat(3, max(40px, calc(11.5 * var(--u)))); gap:max(5px, calc(1.4 * var(--u))); flex:0 0 auto;">
+                  <button onClick="{{ addUp }}" aria-label="Uz augšu" style="grid-column:2; grid-row:1; border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬆️</button>
+                  <button onClick="{{ addLeft }}" aria-label="Pa kreisi" style="grid-column:1; grid-row:2; border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬅️</button>
+                  <button onClick="{{ addRight }}" aria-label="Pa labi" style="grid-column:3; grid-row:2; border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
+                  <button onClick="{{ addDown }}" aria-label="Uz leju" style="grid-column:2; grid-row:3; border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
                 </div>
                 <div style="flex:1; display:flex; flex-direction:column; gap:max(7px, calc(1.8 * var(--u)));">
                   <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:max(13px, calc(3.4 * var(--u))); border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
