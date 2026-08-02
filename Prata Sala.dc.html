@@ -39,6 +39,7 @@
   @keyframes wave { 0%,100%{ transform: rotate(-8deg);} 50%{ transform: rotate(18deg);} }
   @keyframes confetti-fall { 0%{ transform: translateY(-20px) rotate(0); opacity:1;} 100%{ transform: translateY(420px) rotate(540deg); opacity:0;} }
   @keyframes robotHop { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-6px);} }
+  @keyframes robotFall { 0%{ transform: translateY(0) scale(1) rotate(0); opacity:1;} 100%{ transform: translateY(52px) scale(.2) rotate(200deg); opacity:0;} }
   @keyframes pulseGlow { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.035);} }
   @keyframes raysSpin { 0%{ transform: rotate(0);} 100%{ transform: rotate(360deg);} }
   @keyframes sparkPop { 0%{ transform: scale(0) rotate(0); opacity:0;} 40%{ opacity:1;} 100%{ transform: scale(1.3) rotate(40deg); opacity:0;} }
@@ -247,7 +248,10 @@
               <div style="display:flex; align-items:center; gap:8px; padding:10px 12px 4px; flex:0 0 auto;">
                 <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
                 <div style="flex:1; min-width:0;">
-                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px;">{{ hint }}</div>
+                  <!-- Always two lines tall. The hint is one line at level 1 and two at
+                       level 4-5, and since the board below is flex:1 it absorbed the
+                       difference — changing level visibly resized the playfield. -->
+                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px; line-height:1.25; min-height:calc(2 * 1.25em + 18px); display:flex; align-items:center;">{{ hint }}</div>
                   <!-- soma: what is still out on the board vs already picked up -->
                   <div style="display:flex; align-items:center; gap:5px; margin-top:5px; padding-left:2px;">
                     <sc-for list="{{ bag }}" as="b" hint-placeholder-count="3">
@@ -263,17 +267,26 @@
                   <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="25">
                     <div style="border-radius:10px; background:{{ cell.bg }}; box-shadow:{{ cell.ring }}; display:grid; place-items:center; font-size:calc(5.5 * var(--u));">{{ cell.mark }}</div>
                   </sc-for>
+                  <!-- trail: where this attempt's robot has walked. Sits over the
+                       squares and under the robot, so DOM order matters here. -->
+                  <div style="position:absolute; inset:0; pointer-events:none;">
+                    <sc-for list="{{ trail }}" as="t" hint-placeholder-count="0">
+                      <div style="position:absolute; left:{{ t.left }}; top:{{ t.top }}; width:{{ t.w }}; height:{{ t.h }}; border-radius:99px; background:rgba(255,255,255,.75); box-shadow:0 0 0 2px rgba(60,80,110,.30);"></div>
+                    </sc-for>
+                  </div>
                   <!-- robot overlay -->
                   <div style="grid-area:1/1/-1/-1; position:absolute; width:14%; height:14%; left:{{ robotLeft }}; top:{{ robotTop }}; transition:left .32s cubic-bezier(.34,1.56,.64,1), top .32s cubic-bezier(.34,1.56,.64,1); display:grid; place-items:center; pointer-events:none;">
-                    <div style="font-size:calc(8 * var(--u)); animation:robotHop .5s ease-in-out infinite; transform:rotate({{ robotRot }});">🤖</div>
+                    <div style="font-size:calc(8 * var(--u)); animation:{{ robotAnim }}; transform:rotate({{ robotRot }});">🤖</div>
                   </div>
                 </div>
               </div>
 
               <!-- command queue -->
-              <div style="flex:0 0 auto; padding:4px 12px; min-height:38px;">
-                <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:center; min-height:38px; flex-wrap:wrap;">
-                  <span style="font-weight:900; color:#5B6B86; font-size:12px;">{{ queueLabel }}</span>
+              <!-- Fixed at two chip rows, scrolling beyond. Left free to wrap it grew to
+                   three rows as commands were queued and shrank the board mid-run. -->
+              <div style="flex:0 0 auto; padding:4px 12px; height:76px;">
+                <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:flex-start; align-content:flex-start; height:68px; overflow-y:auto; flex-wrap:wrap;">
+                  <span style="font-weight:900; color:#5B6B86; font-size:12px; line-height:24px;">{{ queueLabel }}</span>
                   <sc-for list="{{ queue }}" as="q" hint-placeholder-count="0">
                     <div style="width:24px; height:24px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:14px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
                   </sc-for>
@@ -656,7 +669,7 @@
 <script type="text/x-dc" data-dc-script data-props="{}">
 // Shown on the start screen so you can tell which build is actually being
 // served. Bump this every release.
-const APP_VERSION = '1.3.0';
+const APP_VERSION = '1.4.0';
 
 // Deliberately separate from APP_VERSION: this one gates the saved-progress
 // format and must only change when the stored shape changes, because bumping
@@ -762,8 +775,11 @@ class Component extends DCLogic {
     start: { r: 4, c: 0 },
     target: { r: 0, c: 4 },
     queue: [],
-    // Per-run board objects, re-rolled by resetGame(). Never persisted.
+    // Per-run board state, re-rolled by resetGame(). None of it is persisted.
     items: [],
+    rocks: [],
+    trail: [],
+    robotFalling: false,
     running: false,
     levels: { ...DEFAULT_LEVELS },
     mem: { seq: [], phase: 'idle', step: 0, flash: -1 },
@@ -869,7 +885,9 @@ class Component extends DCLogic {
       return { result: r, stats: { ...st.stats, successes: st.stats.successes + won,
         perGame: { ...st.stats.perGame, [id]: { ...prev, successes: prev.successes + won, stars: Math.max(prev.stars, r.stars || 0) } } } };
     });
-    this.advanceDaily();
+    // A hard failure (0 stars) must not tick off a daily mission. Every other
+    // result is 1 star or better, so nothing else changes.
+    if((r.stars || 0) >= 1) this.advanceDaily();
   }
   recordPlayed(id){
     this.setState(st => {
@@ -910,8 +928,24 @@ class Component extends DCLogic {
       return { cards, reward:{ open:false, revealed:false, cardIdx:null }, daily:{ ...s.daily, claimed:true } };
     }, () => this.saveProgress());
   }
+  // Static layout, kept only as the fallback if random placement can't find a
+  // solvable board. Rocks are normally rolled per round — see spawnRocks().
   obstaclesFor(L){ if(L<3) return []; if(L===3) return [[2,2]]; if(L===4) return [[2,2],[1,3]]; return [[2,2],[1,3],[3,1]]; }
-  isObstacle(r,c){ return this.obstaclesFor(this.state.levels.robotCommands||1).some(o => o[0]===r && o[1]===c); }
+  rockCountFor(L){ return [0,0,1,2,3][Math.min(5, Math.max(1, L)) - 1]; }
+  isRockAt(rocks, r, c){ return (rocks || []).some(o => o[0]===r && o[1]===c); }
+  isObstacle(r,c){ return this.isRockAt(this.state.rocks, r, c); }
+  spawnRocks(L, start, target){
+    const free = [];
+    for(let r=0;r<5;r++){
+      for(let c=0;c<5;c++){
+        if(r===start.r && c===start.c) continue;
+        if(r===target.r && c===target.c) continue;
+        free.push([r,c]);
+      }
+    }
+    free.sort(() => Math.random() - 0.5);
+    return free.slice(0, this.rockCountFor(L));
+  }
 
   // ---------- Robotu Laukums board objects ----------
   areaAt(r,c){
@@ -936,9 +970,8 @@ class Component extends DCLogic {
     const pick = diagonals[Math.floor(Math.random()*diagonals.length)];
     return { start:pick[0], target:pick[1] };
   }
-  spawnItems(L, start, target){
-    const obs = this.obstaclesFor(L);
-    const taken = (r,c) => obs.some(o => o[0]===r && o[1]===c)
+  spawnItems(L, start, target, rocks){
+    const taken = (r,c) => this.isRockAt(rocks, r, c)
       || (r===start.r && c===start.c)
       || (r===target.r && c===target.c);
     const areas = AREA_DEFS.slice().sort(() => Math.random() - 0.5).slice(0, this.itemCountFor(L));
@@ -960,7 +993,10 @@ class Component extends DCLogic {
   // Shortest walkable distance between two squares. Breadth-first rather than
   // Manhattan because a rock in the way makes the straight-line count a lie,
   // and that shortfall comes straight out of the child's command budget.
-  robotStepsBetween(from, to){
+  // `rocks` is explicit so the board generator can test a candidate layout before
+  // it is committed to state.
+  robotStepsBetween(from, to, rocks){
+    const rk = rocks || this.state.rocks;
     if(from.r===to.r && from.c===to.c) return 0;
     const seen = new Set([from.r + ',' + from.c]);
     let frontier = [[from.r, from.c]], d = 0;
@@ -970,7 +1006,7 @@ class Component extends DCLogic {
       for(const cell of frontier){
         const around = [[cell[0]-1,cell[1]],[cell[0]+1,cell[1]],[cell[0],cell[1]-1],[cell[0],cell[1]+1]];
         for(const n of around){
-          if(n[0]<0 || n[0]>4 || n[1]<0 || n[1]>4 || this.isObstacle(n[0],n[1])) continue;
+          if(n[0]<0 || n[0]>4 || n[1]<0 || n[1]>4 || this.isRockAt(rk, n[0], n[1])) continue;
           const k = n[0] + ',' + n[1];
           if(seen.has(k)) continue;
           seen.add(k);
@@ -1043,17 +1079,36 @@ class Component extends DCLogic {
     });
   }
 
+  // Rolls a whole board and rejects it unless it is actually playable. Random
+  // rocks can wall off a corner, so a layout only counts if every themed corner
+  // that was chosen still had room for its object, and if the star and every
+  // object can be walked to from the start.
+  rollBoard(L){
+    for(let attempt=0; attempt<40; attempt++){
+      const ends = this.spawnEnds();
+      const rocks = this.spawnRocks(L, ends.start, ends.target);
+      const items = this.spawnItems(L, ends.start, ends.target, rocks);
+      if(items.length !== this.itemCountFor(L)) continue;
+      const stops = items.concat([ends.target]);
+      if(stops.some(s => !isFinite(this.robotStepsBetween(ends.start, s, rocks)))) continue;
+      return { start:ends.start, target:ends.target, rocks, items };
+    }
+    // Fall back to the hand-picked layout so a round can never fail to start.
+    const ends = this.spawnEnds();
+    const rocks = this.obstaclesFor(L);
+    return { start:ends.start, target:ends.target, rocks,
+      items: this.spawnItems(L, ends.start, ends.target, rocks) };
+  }
+
   resetGame(){
     this.runToken=(this.runToken||0)+1;
     // The single place the board is rolled — go(), playAgain() and the level
     // stepper all reach it through initScreen(), so every entry gets a new one.
-    // Ends are chosen first and passed in: spawnItems has to exclude the squares
-    // this round's robot and star will occupy, not last round's.
     const L = this.state.levels.robotCommands||1;
-    const ends = this.spawnEnds();
-    const items = this.spawnItems(L, ends.start, ends.target);
-    this.setState({ robot:{ r:ends.start.r, c:ends.start.c, dir:'up' },
-      start:ends.start, target:ends.target, queue:[], running:false, result:null, items });
+    const b = this.rollBoard(L);
+    this.setState({ robot:{ r:b.start.r, c:b.start.c, dir:'up' },
+      start:b.start, target:b.target, rocks:b.rocks, items:b.items,
+      trail:[], robotFalling:false, queue:[], running:false, result:null });
   }
 
   // ---------- Memory Path ----------
@@ -1207,7 +1262,9 @@ class Component extends DCLogic {
     // Same cancellation token as the memory game: leaving the screen mid-run
     // must not drop a result overlay on whatever comes next.
     const token = this.runToken = (this.runToken||0)+1;
-    this.setState({ running:true });
+    // A new attempt wipes the previous attempt's trail — it is kept after the run
+    // ends precisely so the child can see what went wrong before trying again.
+    this.setState(s => ({ running:true, robotFalling:false, trail:[{ r:s.start.r, c:s.start.c }] }));
     let r = this.state.start.r, c = this.state.start.c;
     const cmds = this.state.queue.slice();
     // Snapshot: positions are frozen for the run, and `picked` — not the `got`
@@ -1219,11 +1276,26 @@ class Component extends DCLogic {
     let onStar = false;
     for(const cmd of cmds){
       let nr=r, nc=c;
-      if(cmd==='up') nr = Math.max(0, r-1);
-      if(cmd==='down') nr = Math.min(4, r+1);
-      if(cmd==='left') nc = Math.max(0, c-1);
-      if(cmd==='right') nc = Math.min(4, c+1);
-      if(!this.isObstacle(nr, nc)){ r=nr; c=nc; }
+      if(cmd==='up') nr = r-1;
+      if(cmd==='down') nr = r+1;
+      if(cmd==='left') nc = c-1;
+      if(cmd==='right') nc = c+1;
+      if(nr<0 || nr>4 || nc<0 || nc>4){
+        // Step onto the empty square past the edge and drop out of sight. The board
+        // clips nothing and robotLeft/robotTop are plain calc() off the index, so
+        // -1 and 5 land outside the grid with no special casing.
+        this.setState({ robot:{ r:nr, c:nc, dir:cmd }, robotFalling:true });
+        await this.wait(640);
+        if(token !== this.runToken) return;
+        this.setState({ running:false });
+        this.setResult({ emoji:'🕳️', title:'Ai, robots nokrita!',
+          msg:'Robots aizgāja ārpus laukuma. Mēģini īsāku ceļu!', stars:0 });
+        return;
+      }
+      if(!this.isObstacle(nr, nc)){
+        r=nr; c=nc;
+        this.setState(s => ({ trail:[...s.trail, { r, c }] }));
+      }
       const hit = spawn.findIndex((it,i) => !picked.has(i) && it.r===r && it.c===c);
       if(hit >= 0){
         picked.add(hit);
@@ -1295,8 +1367,7 @@ class Component extends DCLogic {
     });
 
     // robot grid — precedence: star > rock > object > area tint > meadow checker
-    const obs = this.obstaclesFor(this.state.levels.robotCommands||1);
-    const isObs = (r,c) => obs.some(o => o[0]===r && o[1]===c);
+    const isObs = (r,c) => this.isRockAt(this.state.rocks, r, c);
     const items = this.state.items || [];
     const cells = [];
     for(let r=0;r<5;r++){
@@ -1321,6 +1392,38 @@ class Component extends DCLogic {
         });
       }
     }
+    // Trail of the route just walked. Same cell geometry as the robot overlay:
+    // 8px board padding, 5px gaps, so one cell is (100% - 36px)/5. A dot per
+    // visited square plus a bar per move, which keeps the corners round at turns.
+    const CELL = '((100% - 36px) / 5)';
+    const TH = 'max(6px, calc(1.5 * var(--u)))';
+    const cxr = c => '8px + ' + c + ' * (' + CELL + ' + 5px) + ' + CELL + ' / 2';
+    const cyr = r => '8px + ' + r + ' * (' + CELL + ' + 5px) + ' + CELL + ' / 2';
+    const path = this.state.trail || [];
+    const trail = [];
+    path.forEach((p, i) => {
+      trail.push({
+        left: 'calc(' + cxr(p.c) + ' - ' + TH + ' / 2)',
+        top: 'calc(' + cyr(p.r) + ' - ' + TH + ' / 2)',
+        w: TH, h: TH,
+      });
+      const q = path[i+1];
+      if(!q) return;
+      if(p.r === q.r){
+        trail.push({
+          left: 'calc(' + cxr(Math.min(p.c, q.c)) + ')',
+          top: 'calc(' + cyr(p.r) + ' - ' + TH + ' / 2)',
+          w: 'calc(' + CELL + ' + 5px)', h: TH,
+        });
+      } else {
+        trail.push({
+          left: 'calc(' + cxr(p.c) + ' - ' + TH + ' / 2)',
+          top: 'calc(' + cyr(Math.min(p.r, q.r)) + ')',
+          w: TH, h: 'calc(' + CELL + ' + 5px)',
+        });
+      }
+    });
+
     // bag strip on the robot screen — grey until picked up, then full colour
     const bag = items.map(it => ({
       e: it.e,
@@ -1519,6 +1622,8 @@ class Component extends DCLogic {
       robotLeft: 'calc(8px + ' + this.state.robot.c + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
       robotTop: 'calc(8px + ' + this.state.robot.r + ' * (((100% - 36px) / 5) + 5px) + (((100% - 36px) / 5) - 14%) / 2)',
       robotRot: this.rotFor(this.state.robot.dir),
+      robotAnim: this.state.robotFalling ? 'robotFall .6s ease-in forwards' : 'robotHop .5s ease-in-out infinite',
+      trail,
       queue: this.state.queue.map(d => qmap[d]),
       addUp: () => this.addCmd('up'),
       addDown: () => this.addCmd('down'),
