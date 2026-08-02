@@ -261,7 +261,7 @@
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 12px;">
                 <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(86 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
                   <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="25">
-                    <div style="border-radius:10px; background:{{ cell.bg }}; display:grid; place-items:center; font-size:calc(5.5 * var(--u));">{{ cell.mark }}</div>
+                    <div style="border-radius:10px; background:{{ cell.bg }}; box-shadow:{{ cell.ring }}; display:grid; place-items:center; font-size:calc(5.5 * var(--u));">{{ cell.mark }}</div>
                   </sc-for>
                   <!-- robot overlay -->
                   <div style="grid-area:1/1/-1/-1; position:absolute; width:14%; height:14%; left:{{ robotLeft }}; top:{{ robotTop }}; transition:left .32s cubic-bezier(.34,1.56,.64,1), top .32s cubic-bezier(.34,1.56,.64,1); display:grid; place-items:center; pointer-events:none;">
@@ -281,18 +281,21 @@
               </div>
 
               <!-- controls -->
-              <div style="flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:6px 12px 16px;">
-                <div style="display:grid; grid-template-columns:repeat(3,40px); grid-template-rows:repeat(2,40px); gap:5px;">
+              <div style="flex:0 0 auto; display:flex; align-items:center; gap:max(10px, calc(2.6 * var(--u))); padding:max(6px, calc(1.6 * var(--u))) max(12px, calc(3 * var(--u))) max(16px, calc(4 * var(--u)));">
+                <!-- D-pad sizing is driven by --u like the rest of the screen, with a
+                     40px floor so it never shrinks below a thumb on a small phone.
+                     It was pinned at 40px, which looked tiny on a tablet. -->
+                <div style="display:grid; grid-template-columns:repeat(3, max(40px, calc(11.5 * var(--u)))); grid-template-rows:repeat(2, max(40px, calc(11.5 * var(--u)))); gap:max(5px, calc(1.4 * var(--u)));">
                   <div></div>
-                  <button onClick="{{ addUp }}" aria-label="Uz augšu" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬆️</button>
+                  <button onClick="{{ addUp }}" aria-label="Uz augšu" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬆️</button>
                   <div></div>
-                  <button onClick="{{ addLeft }}" aria-label="Pa kreisi" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬅️</button>
-                  <button onClick="{{ addDown }}" aria-label="Uz leju" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
-                  <button onClick="{{ addRight }}" aria-label="Pa labi" style="border:none; cursor:pointer; background:#fff; border-radius:12px; font-size:18px; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
+                  <button onClick="{{ addLeft }}" aria-label="Pa kreisi" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬅️</button>
+                  <button onClick="{{ addDown }}" aria-label="Uz leju" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
+                  <button onClick="{{ addRight }}" aria-label="Pa labi" style="border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">➡️</button>
                 </div>
-                <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
-                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
-                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(3.8 * var(--u)); padding:9px; border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
+                <div style="flex:1; display:flex; flex-direction:column; gap:max(7px, calc(1.8 * var(--u)));">
+                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:max(13px, calc(3.4 * var(--u))); border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
+                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(3.8 * var(--u)); padding:max(9px, calc(2.4 * var(--u))); border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
                 </div>
               </div>
 
@@ -652,7 +655,7 @@
 <script type="text/x-dc" data-dc-script data-props="{}">
 // Shown on the start screen so you can tell which build is actually being
 // served. Bump this every release.
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 
 // Deliberately separate from APP_VERSION: this one gates the saved-progress
 // format and must only change when the stored shape changes, because bumping
@@ -916,12 +919,27 @@ class Component extends DCLogic {
   // At most one object per area, so collecting them all always means visiting
   // different corners of the board — that detour is the point of the feature.
   itemCountFor(L){ return [1,2,2,3,3][Math.min(5, Math.max(1, L)) - 1]; }
-  spawnItems(L){
-    const s = this.state;
+  // Robot and star swap between diagonally opposite corners, so the run is not
+  // always the same bottom-left-to-top-right trip. The four pairings need
+  // up+right, down+left, down+right and up+left in turn, which is what puts the
+  // ⬇️ and ⬅️ buttons to work — they were decorative while the ends were fixed.
+  // Diagonals only: an adjacent pair would sit 4 steps apart instead of 8 and
+  // quietly make the board smaller.
+  spawnEnds(){
+    const diagonals = [
+      [{r:4,c:0},{r:0,c:4}],
+      [{r:0,c:4},{r:4,c:0}],
+      [{r:0,c:0},{r:4,c:4}],
+      [{r:4,c:4},{r:0,c:0}],
+    ];
+    const pick = diagonals[Math.floor(Math.random()*diagonals.length)];
+    return { start:pick[0], target:pick[1] };
+  }
+  spawnItems(L, start, target){
     const obs = this.obstaclesFor(L);
     const taken = (r,c) => obs.some(o => o[0]===r && o[1]===c)
-      || (r===s.start.r && c===s.start.c)
-      || (r===s.target.r && c===s.target.c);
+      || (r===start.r && c===start.c)
+      || (r===target.r && c===target.c);
     const areas = AREA_DEFS.slice().sort(() => Math.random() - 0.5).slice(0, this.itemCountFor(L));
     const out = [];
     areas.forEach(a => {
@@ -1026,10 +1044,15 @@ class Component extends DCLogic {
 
   resetGame(){
     this.runToken=(this.runToken||0)+1;
-    // The single place objects are rolled — go(), playAgain() and the level
-    // stepper all reach it through initScreen(), so every entry gets a new board.
-    const items = this.spawnItems(this.state.levels.robotCommands||1);
-    this.setState(s => ({ robot:{ r:s.start.r, c:s.start.c, dir:'up' }, queue:[], running:false, result:null, items }));
+    // The single place the board is rolled — go(), playAgain() and the level
+    // stepper all reach it through initScreen(), so every entry gets a new one.
+    // Ends are chosen first and passed in: spawnItems has to exclude the squares
+    // this round's robot and star will occupy, not last round's.
+    const L = this.state.levels.robotCommands||1;
+    const ends = this.spawnEnds();
+    const items = this.spawnItems(L, ends.start, ends.target);
+    this.setState({ robot:{ r:ends.start.r, c:ends.start.c, dir:'up' },
+      start:ends.start, target:ends.target, queue:[], running:false, result:null, items });
   }
 
   // ---------- Memory Path ----------
@@ -1287,9 +1310,13 @@ class Component extends DCLogic {
         // Areas keep their own checker so the grid stays readable inside a corner.
         const base = area ? (checker ? area.tintA : area.tintB)
           : (checker ? 'rgba(255,255,255,.30)' : 'rgba(255,255,255,.16)');
+        const isStart = r===this.state.start.r && c===this.state.start.c;
         cells.push({
           bg: isTarget ? 'rgba(255,210,63,.55)' : (ob ? 'rgba(70,52,38,.32)' : base),
           mark: isTarget ? '⭐' : (ob ? '🪨' : (item ? item.e : '')),
+          // Now that the start moves between rounds, ring it so the child can see
+          // where the robot set off from once it has walked away.
+          ring: isStart ? 'inset 0 0 0 3px rgba(255,255,255,.85)' : 'none',
         });
       }
     }
