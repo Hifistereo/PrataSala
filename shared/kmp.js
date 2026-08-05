@@ -169,9 +169,20 @@
    *
    *   PROGRESS_KEY = KMP.key('burtu-feja-progress')
    *     -> 'burtu-feja-progress:anna-1a2b'
+   *
+   * With NOBODY set up at all, this returns the base key unchanged. That case
+   * is not rare and it matters: this file is vendored into every app, so
+   * window.KMP also exists at hifistereo.github.io/<repo>/ — a different origin
+   * where kmp:* can never appear — and on kidmindpath.com before anyone has
+   * been named. Suffixing there would rename every returning player's storage
+   * for no benefit, forcing a migration on people who are not using the hub at
+   * all. An explicitly created guest is a real profile with a real id and does
+   * get namespaced, which is what lets naming them later keep everything.
    */
   function key(base) {
-    return String(base) + ':' + activeChild().id;
+    var child = activeChild();
+    if (child === GUEST) return String(base);
+    return String(base) + ':' + child.id;
   }
 
   /**
