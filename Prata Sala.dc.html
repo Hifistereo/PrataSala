@@ -8,9 +8,6 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
   *{ box-sizing:border-box; }
   body{ margin:0; }
@@ -46,20 +43,20 @@
 </style>
 </helmet>
 
-<div data-app="page" style="min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:'Nunito', sans-serif; padding:40px 20px 80px;">
+<div data-app="page" style="min-height:100dvh; background:radial-gradient(circle at 20% 0%, #EAF6FF, #DCEAF7 40%, #D3E0F0 100%); font-family:var(--kmp-font-body); padding:40px 20px 80px;">
 
   <!-- board header -->
   <div style="max-width:1180px; margin:0 auto 36px; text-align:center;">
-    <div style="display:inline-block; background:#fff; border-radius:999px; padding:8px 22px; box-shadow:0 6px 0 #C9D6E8; font-weight:900; color:#5B6B86; letter-spacing:.5px; font-size:14px;">PRĀTA PIEDZĪVOJUMU SALA · VIZUĀLAIS DIZAINS</div>
-    <h1 style="font-family:'Baloo 2', cursive; font-size:40px; color:#34245C; margin:18px 0 6px; font-weight:800;">Bērnu spēļu sala 🏝️</h1>
-    <p style="margin:0; color:#5B6B86; font-weight:800; font-size:17px;">Trīs salas stili · interaktīvais prototips ar īstu mini-spēli</p>
+    <div style="display:inline-block; background:#fff; border-radius:999px; padding:8px 22px; box-shadow:0 6px 0 #C9D6E8; font-weight:700; color:#5B6B86; letter-spacing:.5px; font-size:14px;">PRĀTA PIEDZĪVOJUMU SALA · VIZUĀLAIS DIZAINS</div>
+    <h1 style="font-family:var(--kmp-font-display); font-size:40px; color:#34245C; margin:18px 0 6px; font-weight:700;">Bērnu spēļu sala 🏝️</h1>
+    <p style="margin:0; color:#5B6B86; font-weight:700; font-size:17px;">Trīs salas stili · interaktīvais prototips ar īstu mini-spēli</p>
   </div>
 
   <!-- ===== SECTION 1: THREE STYLE DIRECTIONS ===== -->
   <div style="max-width:1180px; margin:0 auto 60px;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-      <div style="width:38px; height:38px; border-radius:12px; background:#FF7A55; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; box-shadow:0 4px 0 #E55733;">1</div>
-      <h2 style="font-family:'Baloo 2',cursive; font-size:26px; color:#34245C; margin:0; font-weight:800;">Izvēlies salas stilu</h2>
+      <div style="width:38px; height:38px; border-radius:12px; background:#FF7A55; color:#fff; display:grid; place-items:center; font-family:var(--kmp-font-display); font-weight:700; font-size:22px; box-shadow:0 4px 0 #E55733;">1</div>
+      <h2 style="font-family:var(--kmp-font-display); font-size:26px; color:#34245C; margin:0; font-weight:700;">Izvēlies salas stilu</h2>
     </div>
 
     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;">
@@ -87,17 +84,17 @@
                 </div>
                 <!-- title -->
                 <div style="position:absolute; top:6%; left:0; right:0; text-align:center;">
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(13px, calc(4.2 * var(--u)), 22px); color:#fff; line-height:1; text-shadow:0 2px 0 var(--primary-dark), 0 4px 8px rgba(0,0,0,.18); -webkit-text-stroke:1px var(--primary-dark);">PRĀTA<br>SALA</div>
+                  <div style="font-family:var(--kmp-font-display); font-weight:700; font-size:clamp(13px, calc(4.2 * var(--u)), 22px); color:#fff; line-height:1; text-shadow:0 2px 0 var(--primary-dark), 0 4px 8px rgba(0,0,0,.18); -webkit-text-stroke:1px var(--primary-dark);">PRĀTA<br>SALA</div>
                 </div>
                 <!-- start button -->
-                <div style="position:absolute; bottom:4%; left:14%; right:14%; background:var(--primary); border-radius:999px; padding:7% 0; text-align:center; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(10px,calc(3.2 * var(--u)),16px); box-shadow:0 4px 0 var(--primary-dark);">▶ Sākt!</div>
+                <div style="position:absolute; bottom:4%; left:14%; right:14%; background:var(--primary); border-radius:999px; padding:7% 0; text-align:center; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:clamp(10px,calc(3.2 * var(--u)),16px); box-shadow:0 4px 0 var(--primary-dark);">▶ Sākt!</div>
               </div>
             </div>
           </div>
           <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 6px 0;">
             <div>
-              <div style="font-family:'Baloo 2',cursive; font-weight:800; font-size:19px; color:#34245C;">{{ t.label }}</div>
-              <div style="font-weight:800; font-size:13px; color:#7C8AA3;">{{ t.tag }}</div>
+              <div style="font-family:var(--kmp-font-display); font-weight:700; font-size:19px; color:#34245C;">{{ t.label }}</div>
+              <div style="font-weight:700; font-size:13px; color:#7C8AA3;">{{ t.tag }}</div>
             </div>
             <div style="background:{{ t.chip }}; width:34px; height:34px; border-radius:50%; box-shadow:0 3px 0 rgba(0,0,0,.15);"></div>
           </div>
@@ -109,11 +106,11 @@
   <!-- ===== SECTION 2: INTERACTIVE PROTOTYPE ===== -->
   <div style="max-width:1180px; margin:0 auto;">
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
-      <div style="width:38px; height:38px; border-radius:12px; background:#8A63E8; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; box-shadow:0 4px 0 #6B45C9;">2</div>
-      <h2 style="font-family:'Baloo 2',cursive; font-size:26px; color:#34245C; margin:0; font-weight:800;">Spēlē pats!</h2>
-      <span style="font-weight:800; color:#7C8AA3; font-size:15px;">5 spēles · kartītes · vecāku zona</span>
+      <div style="width:38px; height:38px; border-radius:12px; background:#8A63E8; color:#fff; display:grid; place-items:center; font-family:var(--kmp-font-display); font-weight:700; font-size:22px; box-shadow:0 4px 0 #6B45C9;">2</div>
+      <h2 style="font-family:var(--kmp-font-display); font-size:26px; color:#34245C; margin:0; font-weight:700;">Spēlē pats!</h2>
+      <span style="font-weight:700; color:#7C8AA3; font-size:15px;">5 spēles · kartītes · vecāku zona</span>
       <div style="margin-left:auto; display:flex; gap:8px; align-items:center; background:#fff; padding:6px 8px; border-radius:999px; box-shadow:0 4px 0 #C9D6E8;">
-        <span style="font-weight:900; font-size:12px; color:#7C8AA3; padding-left:6px;">STILS:</span>
+        <span style="font-weight:700; font-size:12px; color:#7C8AA3; padding-left:6px;">STILS:</span>
         <sc-for list="{{ themes }}" as="t" hint-placeholder-count="3">
           <button onClick="{{ t.pick }}" aria-label="{{ t.label }}" style="width:26px; height:26px; border-radius:50%; border:3px solid {{ t.ring }}; background:{{ t.chip }}; cursor:pointer; padding:0;"></button>
         </sc-for>
@@ -152,19 +149,25 @@
 
               <!-- title -->
               <div style="position:absolute; top:8%; left:0; right:0; text-align:center; animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;">
-                <div style="display:block; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(13 * var(--u)); color:#fff; line-height:.95; text-shadow:0 3px 0 var(--primary-dark), 0 7px 0 rgba(0,0,0,.12), 0 10px 16px rgba(0,0,0,.2); -webkit-text-stroke:2px var(--primary-dark);">PRĀTA<br>SALA</div>
-                <div style="margin-top:4px; display:inline-block; background:#fff; color:var(--primary); font-weight:900; font-size:calc(3.4 * var(--u)); padding:4px 14px; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.1);">PIEDZĪVOJUMU SALA</div>
+                <div style="display:block; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(13 * var(--u)); color:#fff; line-height:.95; text-shadow:0 3px 0 var(--primary-dark), 0 7px 0 rgba(0,0,0,.12), 0 10px 16px rgba(0,0,0,.2); -webkit-text-stroke:2px var(--primary-dark);">PRĀTA<br>SALA</div>
+                <div style="margin-top:4px; display:inline-block; background:#fff; color:var(--primary); font-weight:700; font-size:calc(3.4 * var(--u)); padding:4px 14px; border-radius:999px; box-shadow:0 3px 0 rgba(0,0,0,.1);">PIEDZĪVOJUMU SALA</div>
               </div>
 
               <!-- buttons -->
               <div style="position:absolute; bottom:5%; left:7%; right:7%; display:flex; flex-direction:column; gap:11px;">
-                <button onClick="{{ goMap }}" style="width:100%; border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(6 * var(--u)); padding:18px; border-radius:22px; box-shadow:0 7px 0 var(--primary-dark), 0 12px 18px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; gap:10px;">▶ Sākt piedzīvojumu!</button>
+                <button onClick="{{ goMap }}" style="width:100%; border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(6 * var(--u)); padding:18px; border-radius:22px; box-shadow:0 7px 0 var(--primary-dark), 0 12px 18px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; gap:10px;">▶ Sākt piedzīvojumu!</button>
                 <div style="display:flex; gap:11px;">
-                  <button onClick="{{ goCollection }}" style="flex:1; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #E0A91E; display:flex; align-items:center; justify-content:center; gap:6px;">🎴 Kartītes</button>
-                  <button onClick="{{ goParent }}" style="flex:1; border:none; cursor:pointer; background:#8A63E8; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #6B45C9; display:flex; align-items:center; justify-content:center; gap:6px;">👪 Vecāki</button>
+                  <button onClick="{{ goCollection }}" style="flex:1; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #E0A91E; display:flex; align-items:center; justify-content:center; gap:6px;">🎴 Kartītes</button>
+                  <button onClick="{{ goParent }}" style="flex:1; border:none; cursor:pointer; background:#8A63E8; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(4.2 * var(--u)); padding:14px 8px; border-radius:20px; box-shadow:0 6px 0 #6B45C9; display:flex; align-items:center; justify-content:center; gap:6px;">👪 Vecāki</button>
                 </div>
+                <!-- Back to the other KidMindPath games. Start screen only — a
+                     control that leaves the game has no business next to a
+                     running mini-game. The URL is absolute because the app is
+                     also served from hifistereo.github.io/PrataSala/, where
+                     "/" is a different site. -->
+                <a class="kmp-home" href="https://www.kidmindpath.com/" style="align-self:center;"><span aria-hidden="true">←</span> KidMindPath</a>
                 <!-- build marker: tells you which version Pages is serving -->
-                <div style="text-align:right; font-weight:800; font-size:calc(2.6 * var(--u)); color:#fff; opacity:.55; text-shadow:0 1px 2px rgba(0,0,0,.25);">v{{ appVersion }}</div>
+                <div style="text-align:right; font-weight:700; font-size:calc(2.6 * var(--u)); color:#fff; opacity:.55; text-shadow:0 1px 2px rgba(0,0,0,.25);">v{{ appVersion }}</div>
               </div>
             </div>
           </sc-if>
@@ -178,10 +181,10 @@
               <!-- top bar -->
               <div style="position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; padding:14px 14px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark);">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:42px; height:42px; border-radius:14px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(5 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">Piedzīvojumu Sala</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(5 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">Piedzīvojumu Sala</div>
                 <div style="display:flex; align-items:center; gap:5px; background:#fff; padding:6px 12px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <span style="font-size:16px; animation:star-twinkle 2s ease-in-out infinite;">⭐</span>
-                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">{{ totalStars }}</span>
+                  <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px;">{{ totalStars }}</span>
                 </div>
               </div>
 
@@ -189,23 +192,23 @@
               <div style="position:relative; z-index:2; margin:14px; background:#fff; border-radius:22px; padding:13px 14px; box-shadow:0 7px 0 rgba(0,0,0,.08);">
                 <div style="display:flex; align-items:center; gap:10px;">
                   <div style="font-size:26px; animation:floaty 3s ease-in-out infinite;">📜</div>
-                  <div style="flex:1; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">Šodienas uzdevumi</div>
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:14px;">{{ dailyDoneCount }}/3</div>
+                  <div style="flex:1; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px;">Šodienas uzdevumi</div>
+                  <div style="font-family:var(--kmp-font-display); font-weight:700; color:#46C091; font-size:14px;">{{ dailyDoneCount }}/3</div>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:6px; margin-top:10px;">
                   <sc-for list="{{ dailyChips }}" as="mm" hint-placeholder-count="3">
                     <div style="display:flex; align-items:center; gap:9px; background:{{ mm.bg }}; border:2px solid {{ mm.ring }}; border-radius:13px; padding:7px 10px;">
                       <span style="font-size:18px;">{{ mm.icon }}</span>
-                      <span style="flex:1; font-weight:800; color:#34245C; font-size:12px;">{{ mm.label }}</span>
-                      <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:15px;">{{ mm.tick }}</span>
+                      <span style="flex:1; font-weight:700; color:#34245C; font-size:12px;">{{ mm.label }}</span>
+                      <span style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:15px;">{{ mm.tick }}</span>
                     </div>
                   </sc-for>
                 </div>
                 <sc-if value="{{ dailyReady }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ claimReward }}" style="width:100%; margin-top:10px; border:none; cursor:pointer; background:linear-gradient(180deg,#FFD86B,#FFB627); color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:15px; padding:12px; border-radius:14px; box-shadow:0 5px 0 #E0A91E; animation:pulseGlow 1.3s ease-in-out infinite;">🎁 Saņem balvu!</button>
+                  <button onClick="{{ claimReward }}" style="width:100%; margin-top:10px; border:none; cursor:pointer; background:linear-gradient(180deg,#FFD86B,#FFB627); color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:15px; padding:12px; border-radius:14px; box-shadow:0 5px 0 #E0A91E; animation:pulseGlow 1.3s ease-in-out infinite;">🎁 Saņem balvu!</button>
                 </sc-if>
                 <sc-if value="{{ dailyClaimed }}" hint-placeholder-val="{{ false }}">
-                  <div style="text-align:center; margin-top:10px; font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:13px;">✓ Balva saņemta! 🎉</div>
+                  <div style="text-align:center; margin-top:10px; font-family:var(--kmp-font-display); font-weight:700; color:#46C091; font-size:13px;">✓ Balva saņemta! 🎉</div>
                 </sc-if>
               </div>
 
@@ -216,12 +219,12 @@
                     <!-- node -->
                     <div style="position:relative; flex:0 0 auto; width:84px; height:84px; border-radius:28px; background:linear-gradient(165deg, {{ z.c1 }}, {{ z.c2 }}); display:grid; place-items:center; box-shadow:0 8px 0 {{ z.shadow }}, 0 14px 20px rgba(0,0,0,.18); border:4px solid #fff;">
                       <span style="font-size:38px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.2));">{{ z.icon }}</span>
-                      <div style="position:absolute; top:-12px; right:-10px; background:#fff; border-radius:50%; width:30px; height:30px; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 3px 0 rgba(0,0,0,.12);">{{ z.lvlLabel }}</div>
+                      <div style="position:absolute; top:-12px; right:-10px; background:#fff; border-radius:50%; width:30px; height:30px; display:grid; place-items:center; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:13px; box-shadow:0 3px 0 rgba(0,0,0,.12);">{{ z.lvlLabel }}</div>
                     </div>
                     <!-- label card -->
                     <div style="flex:1; background:#fff; border-radius:20px; padding:11px 14px; box-shadow:0 6px 0 rgba(0,0,0,.08);">
-                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px; line-height:1.05;">{{ z.name }}</div>
-                      <div style="font-weight:800; color:#8595AE; font-size:12px; margin:2px 0 5px;">{{ z.sub }}</div>
+                      <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:16px; line-height:1.05;">{{ z.name }}</div>
+                      <div style="font-weight:700; color:#8595AE; font-size:12px; margin:2px 0 5px;">{{ z.sub }}</div>
                       <div style="display:flex; gap:3px;">{{ z.starRow }}</div>
                     </div>
                   </div>
@@ -236,11 +239,11 @@
               <!-- header -->
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
-                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
 
@@ -251,7 +254,7 @@
                   <!-- Always two lines tall. The hint is one line at level 1 and two at
                        level 4-5, and since the board below is flex:1 it absorbed the
                        difference — changing level visibly resized the playfield. -->
-                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:800; color:#34245C; font-size:13px; line-height:1.25; min-height:calc(2 * 1.25em + 18px); display:flex; align-items:center;">{{ hint }}</div>
+                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:700; color:#34245C; font-size:13px; line-height:1.25; min-height:calc(2 * 1.25em + 18px); display:flex; align-items:center;">{{ hint }}</div>
                   <!-- soma: what is still out on the board vs already picked up -->
                   <div style="display:flex; align-items:center; gap:5px; margin-top:5px; padding-left:2px;">
                     <sc-for list="{{ bag }}" as="b" hint-placeholder-count="3">
@@ -286,7 +289,7 @@
                    three rows as commands were queued and shrank the board mid-run. -->
               <div style="flex:0 0 auto; padding:4px 12px; height:76px;">
                 <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:flex-start; align-content:flex-start; height:68px; overflow-y:auto; flex-wrap:wrap;">
-                  <span style="font-weight:900; color:#5B6B86; font-size:12px; line-height:24px;">{{ queueLabel }}</span>
+                  <span style="font-weight:700; color:#5B6B86; font-size:12px; line-height:24px;">{{ queueLabel }}</span>
                   <sc-for list="{{ queue }}" as="q" hint-placeholder-count="0">
                     <div style="width:24px; height:24px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:14px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
                   </sc-for>
@@ -308,8 +311,8 @@
                   <button onClick="{{ addDown }}" aria-label="Uz leju" style="grid-column:2; grid-row:3; border:none; cursor:pointer; background:#fff; border-radius:max(12px, calc(3.4 * var(--u))); font-size:max(18px, calc(5.2 * var(--u))); line-height:1; box-shadow:0 4px 0 #C9D6E8;">⬇️</button>
                 </div>
                 <div style="flex:1; display:flex; flex-direction:column; gap:max(7px, calc(1.8 * var(--u)));">
-                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:max(13px, calc(3.4 * var(--u))); border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
-                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(3.8 * var(--u)); padding:max(9px, calc(2.4 * var(--u))); border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
+                  <button onClick="{{ runQueue }}" style="border:none; cursor:pointer; background:#46C091; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(5 * var(--u)); padding:max(13px, calc(3.4 * var(--u))); border-radius:16px; box-shadow:0 6px 0 #2E9E70;">▶ Palaist!</button>
+                  <button onClick="{{ resetGame }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(3.8 * var(--u)); padding:max(9px, calc(2.4 * var(--u))); border-radius:14px; box-shadow:0 5px 0 #E0A91E;">↺ No jauna</button>
                 </div>
               </div>
 
@@ -321,16 +324,16 @@
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
-                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px; padding:12px 12px 4px; flex:0 0 auto;">
                 <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
-                <div style="flex:1; background:#fff; border-radius:16px; padding:10px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">{{ memStatus }}</div>
+                <div style="flex:1; background:#fff; border-radius:16px; padding:10px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">{{ memStatus }}</div>
               </div>
               <div style="display:flex; justify-content:center; padding:4px;">{{ memStepEls }}</div>
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
@@ -341,7 +344,7 @@
                 </div>
               </div>
               <div style="flex:0 0 auto; padding:8px 14px 18px;">
-                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(4.4 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
+                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(4.4 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
               </div>
             </div>
           </sc-if>
@@ -351,25 +354,25 @@
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
-                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <!-- instruction -->
               <div style="display:flex; align-items:center; gap:10px; padding:14px 14px 6px; flex:0 0 auto;">
                 <div style="width:56px; height:56px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
                 <div style="flex:1; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 5px 0 rgba(0,0,0,.08); display:flex; align-items:center; gap:10px;">
-                  <div style="flex:1; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px;">{{ listenInstr }}</div>
+                  <div style="flex:1; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:16px;">{{ listenInstr }}</div>
                   <button onClick="{{ listenSpeak }}" aria-label="Klausīties" style="border:none; cursor:pointer; background:var(--primary); color:#fff; width:42px; height:42px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 var(--primary-dark);">🔊</button>
                 </div>
               </div>
               <!-- feedback + round progress -->
               <div style="display:flex; align-items:center; justify-content:center; gap:10px; min-height:26px; padding:2px;">
                 <span>{{ listenRoundEls }}</span>
-                <span style="font-family:'Baloo 2',cursive; font-weight:800; color:{{ listenFbColor }}; font-size:16px;">{{ listenFeedback }}</span>
+                <span style="font-family:var(--kmp-font-display); font-weight:700; color:{{ listenFbColor }}; font-size:16px;">{{ listenFeedback }}</span>
               </div>
               <!-- objects -->
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 16px 18px;">
@@ -387,17 +390,17 @@
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
-                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
-                  <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
-                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
+                  <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
+                  <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:12px; min-width:32px; text-align:center;">Lvl {{ lvl }}</span>
+                  <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
               <!-- question -->
-              <div style="margin:14px 14px 4px; background:#fff; border-radius:18px; padding:12px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:19px;">{{ numQ }}</div>
+              <div style="margin:14px 14px 4px; background:#fff; border-radius:18px; padding:12px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:19px;">{{ numQ }}</div>
               <div style="display:flex; justify-content:center; align-items:center; gap:6px; padding:2px;">
-                <span style="font-weight:800; color:#7C8AA3; font-size:11px;">Dārgumi:</span>
+                <span style="font-weight:700; color:#7C8AA3; font-size:11px;">Dārgumi:</span>
                 <span>{{ numCountEls }}</span>
               </div>
               <!-- two chests -->
@@ -409,7 +412,7 @@
                     </sc-for>
                   </div>
                   <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:30px; margin-top:6px;">{{ numA }}</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:30px; margin-top:6px;">{{ numA }}</div>
                   </sc-if>
                 </button>
                 <button onClick="{{ pickB }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderB }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
@@ -419,20 +422,20 @@
                     </sc-for>
                   </div>
                   <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:30px; margin-top:6px;">{{ numB }}</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:30px; margin-top:6px;">{{ numB }}</div>
                   </sc-if>
                 </button>
               </div>
               <!-- equal option (higher levels) -->
               <sc-if value="{{ numAllowEqual }}" hint-placeholder-val="{{ false }}">
                 <div style="padding:4px 14px 0;">
-                  <button onClick="{{ pickEqual }}" style="width:100%; cursor:pointer; border:4px solid {{ numEqualBorder }}; background:#fff; border-radius:16px; padding:11px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:16px; box-shadow:0 5px 0 rgba(0,0,0,.08);">⚖️ Vienādi!</button>
+                  <button onClick="{{ pickEqual }}" style="width:100%; cursor:pointer; border:4px solid {{ numEqualBorder }}; background:#fff; border-radius:16px; padding:11px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:16px; box-shadow:0 5px 0 rgba(0,0,0,.08);">⚖️ Vienādi!</button>
                 </div>
               </sc-if>
               <!-- next -->
               <div style="flex:0 0 auto; padding:8px 14px 18px; min-height:64px;">
                 <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:calc(5 * var(--u)); padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
+                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(5 * var(--u)); padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
                 </sc-if>
               </div>
             </div>
@@ -443,13 +446,13 @@
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
                 <div style="display:flex; gap:6px;">
-                  <div style="background:#fff; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">⏱️ {{ dragTime }}</div>
-                  <div style="background:#FFCE3A; padding:5px 9px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#7A4E00; font-size:13px; box-shadow:0 4px 0 #E0A91E;">⭐ {{ dragScore }}</div>
+                  <div style="background:#fff; padding:5px 9px; border-radius:999px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">⏱️ {{ dragTime }}</div>
+                  <div style="background:#FFCE3A; padding:5px 9px; border-radius:999px; font-family:var(--kmp-font-display); font-weight:700; color:#7A4E00; font-size:13px; box-shadow:0 4px 0 #E0A91E;">⭐ {{ dragScore }}</div>
                 </div>
               </div>
-              <div style="text-align:center; padding:10px 14px 4px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
+              <div style="text-align:center; padding:10px 14px 4px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
                 <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(82 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
                   <sc-for list="{{ dragCells }}" as="cell" hint-placeholder-count="9">
@@ -458,11 +461,11 @@
                   <sc-if value="{{ dragIdle }}" hint-placeholder-val="{{ true }}">
                     <div style="grid-area:1/1/-1/-1; position:absolute; inset:0; background:rgba(43,33,80,.55); border-radius:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;">
                       <div style="display:flex; align-items:center; gap:8px; background:#fff; padding:6px; border-radius:999px; box-shadow:0 5px 0 rgba(0,0,0,.18);">
-                        <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
-                        <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; min-width:54px; text-align:center;">Līm. {{ lvl }}</span>
-                        <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; line-height:1; display:grid; place-items:center;">+</button>
+                        <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:22px; line-height:1; display:grid; place-items:center;">−</button>
+                        <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px; min-width:54px; text-align:center;">Līm. {{ lvl }}</span>
+                        <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:22px; line-height:1; display:grid; place-items:center;">+</button>
                       </div>
-                      <button onClick="{{ dragStart }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; padding:16px 34px; border-radius:20px; box-shadow:0 7px 0 var(--primary-dark);">▶ Sākt!</button>
+                      <button onClick="{{ dragStart }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:22px; padding:16px 34px; border-radius:20px; box-shadow:0 7px 0 var(--primary-dark);">▶ Sākt!</button>
                     </div>
                   </sc-if>
                 </div>
@@ -476,16 +479,16 @@
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🎴 Manas Kartītes</div>
-                <div style="background:#fff; padding:5px 11px; border-radius:999px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">{{ cardsGot }}/{{ cardsTotal }}</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🎴 Manas Kartītes</div>
+                <div style="background:#fff; padding:5px 11px; border-radius:999px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">{{ cardsGot }}/{{ cardsTotal }}</div>
               </div>
-              <div style="text-align:center; padding:10px 14px 2px; font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:14px;">Savāc visas salas kartītes! ✨</div>
+              <div style="text-align:center; padding:10px 14px 2px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">Savāc visas salas kartītes! ✨</div>
               <div style="flex:1 1 auto; overflow-y:auto; padding:12px 14px 16px;">
                 <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:11px;">
                   <sc-for list="{{ cards }}" as="card" hint-placeholder-count="12">
                     <div style="background:{{ card.bg }}; border:3px solid {{ card.ring }}; border-radius:18px; padding:10px 5px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); opacity:{{ card.op }};">
                       <div style="font-size:32px; filter:{{ card.filter }};">{{ card.e }}</div>
-                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:9.5px; margin-top:5px; line-height:1.12; min-height:24px;">{{ card.n }}</div>
+                      <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:9.5px; margin-top:5px; line-height:1.12; min-height:24px;">{{ card.n }}</div>
                     </div>
                   </sc-for>
                 </div>
@@ -498,66 +501,66 @@
             <div style="position:absolute; inset:0; background:#EEF3F9; display:flex; flex-direction:column;">
               <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, #6E5BD0, #5B45BE); box-shadow:0 4px 0 #4A3699; flex:0 0 auto;">
                 <button onClick="{{ goStart }}" aria-label="Sākums" style="border:none; cursor:pointer; background:#fff; color:#5B45BE; width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🏠</button>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:calc(4.6 * var(--u));">👪 Vecāku Zona</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u));">👪 Vecāku Zona</div>
                 <div style="background:#fff; padding:5px 11px; border-radius:999px; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.18);">🔒</div>
               </div>
               <div style="flex:1 1 auto; overflow-y:auto; padding:14px;">
                 <!-- what this app is -->
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:7px;">🏝️ Par Prāta Piedzīvojumu Salu</div>
+                  <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px; margin-bottom:7px;">🏝️ Par Prāta Piedzīvojumu Salu</div>
                   <div style="font-weight:700; color:#5B6B86; font-size:12px; line-height:1.45;">
                     Sala ir piecu mini-spēļu komplekts pirmsskolas un sākumskolas bērniem. Katra spēle attīsta citu prasmi, un katrai ir pieci grūtības līmeņi — tos var pārslēgt ar <b>−</b> un <b>+</b> pogām spēles augšpusē, tāpēc sala aug līdzi bērnam.
                   </div>
                   <div style="font-weight:700; color:#5B6B86; font-size:12px; line-height:1.45; margin-top:8px;">
                     Par pabeigtām spēlēm bērns pelna zvaigznes un kolekcijas kartītes. Katru dienu ir trīs jauni uzdevumi ar balvu.
                   </div>
-                  <div style="margin-top:10px; background:#F1F7F3; border:2px solid #CDE7DA; border-radius:12px; padding:9px 11px; font-weight:800; color:#2E7D5B; font-size:11.5px; line-height:1.4;">
+                  <div style="margin-top:10px; background:#F1F7F3; border:2px solid #CDE7DA; border-radius:12px; padding:9px 11px; font-weight:700; color:#2E7D5B; font-size:11.5px; line-height:1.4;">
                     🔒 Viss progress tiek glabāts tikai šajā ierīcē. Nekas netiek augšupielādēts internetā, un spēle nelūdz nekādus personas datus.
                   </div>
                 </div>
                 <!-- stat cards -->
                 <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;">
                   <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#2BB7D6; font-size:26px;">{{ played }}</div>
-                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Spēlēts</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#2BB7D6; font-size:26px;">{{ played }}</div>
+                    <div style="font-weight:700; color:#7C8AA3; font-size:11px;">Spēlēts</div>
                   </div>
                   <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#46C091; font-size:26px;">{{ successes }}</div>
-                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Veiksmes</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#46C091; font-size:26px;">{{ successes }}</div>
+                    <div style="font-weight:700; color:#7C8AA3; font-size:11px;">Veiksmes</div>
                   </div>
                   <div style="background:#fff; border-radius:16px; padding:12px 6px; text-align:center; box-shadow:0 4px 0 #D9E1EC;">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#FF7A55; font-size:26px;">{{ accuracy }}</div>
-                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">Precizitāte</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#FF7A55; font-size:26px;">{{ accuracy }}</div>
+                    <div style="font-weight:700; color:#7C8AA3; font-size:11px;">Precizitāte</div>
                   </div>
                 </div>
                 <!-- per game -->
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:10px;">Spēļu līmeņi</div>
+                  <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px; margin-bottom:10px;">Spēļu līmeņi</div>
                   <sc-for list="{{ parentGames }}" as="pg" hint-placeholder-count="5">
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
                       <span style="font-size:22px;">{{ pg.icon }}</span>
                       <div style="flex:1;">
-                        <div style="font-weight:800; color:#34245C; font-size:12px;">{{ pg.name }}</div>
+                        <div style="font-weight:700; color:#34245C; font-size:12px;">{{ pg.name }}</div>
                         <div style="height:8px; background:#EDF1F6; border-radius:99px; margin-top:4px; overflow:hidden;">
                           <div style="height:100%; width:{{ pg.pct }}; background:linear-gradient(90deg,#8A63E8,#6E5BD0); border-radius:99px;"></div>
                         </div>
                       </div>
-                      <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#8A63E8; font-size:13px;">Lvl {{ pg.lvl }}</span>
+                      <span style="font-family:var(--kmp-font-display); font-weight:700; color:#8A63E8; font-size:13px;">Lvl {{ pg.lvl }}</span>
                     </div>
                   </sc-for>
                 </div>
                 <!-- lifetime tally of objects collected in Robotu Laukums -->
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
                   <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4px;">
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px;">🎒 Savāktās mantas</div>
-                    <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#8A63E8; font-size:15px;">{{ collectedTotal }}</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px;">🎒 Savāktās mantas</div>
+                    <div style="font-family:var(--kmp-font-display); font-weight:700; color:#8A63E8; font-size:15px;">{{ collectedTotal }}</div>
                   </div>
                   <div style="font-weight:700; color:#5B6B86; font-size:11.5px; line-height:1.4; margin-bottom:10px;">Mantas, ko robots savācis Robotu Laukumā — pa vienai no katra laukuma stūra.</div>
                   <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:9px;">
                     <sc-for list="{{ collectedList }}" as="ci" hint-placeholder-count="16">
                       <div style="text-align:center; opacity:{{ ci.op }};">
                         <div style="font-size:22px; filter:{{ ci.filter }};">{{ ci.e }}</div>
-                        <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:12px;">{{ ci.count }}</div>
+                        <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:12px;">{{ ci.count }}</div>
                         <div style="font-weight:700; color:#7C8AA3; font-size:9px; line-height:1.1;">{{ ci.n }}</div>
                       </div>
                     </sc-for>
@@ -565,14 +568,14 @@
                 </div>
                 <!-- what each game develops -->
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px;">
-                  <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; margin-bottom:4px;">Ko katra spēle attīsta</div>
+                  <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px; margin-bottom:4px;">Ko katra spēle attīsta</div>
                   <sc-for list="{{ parentGames }}" as="pg" hint-placeholder-count="5">
                     <div style="display:flex; gap:10px; padding:10px 0; border-top:2px solid #EDF1F6;">
                       <span style="font-size:22px; flex:0 0 auto;">{{ pg.icon }}</span>
                       <div style="flex:1;">
                         <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-                          <span style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:13px;">{{ pg.name }}</span>
-                          <span style="background:#EFEAFC; color:#6B45C9; font-weight:800; font-size:10px; padding:2px 8px; border-radius:999px;">{{ pg.sub }}</span>
+                          <span style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:13px;">{{ pg.name }}</span>
+                          <span style="background:#EFEAFC; color:#6B45C9; font-weight:700; font-size:10px; padding:2px 8px; border-radius:999px;">{{ pg.sub }}</span>
                         </div>
                         <div style="font-weight:700; color:#7C8AA3; font-size:11.5px; line-height:1.42; margin-top:4px;">{{ pg.desc }}</div>
                       </div>
@@ -583,8 +586,8 @@
                 <div style="background:#fff; border-radius:18px; padding:14px; box-shadow:0 5px 0 #D9E1EC; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
                   <span style="font-size:22px;">🔊</span>
                   <div style="flex:1;">
-                    <div style="font-weight:800; color:#34245C; font-size:13px;">Balss norādes</div>
-                    <div style="font-weight:800; color:#7C8AA3; font-size:11px;">{{ speechLabel }}</div>
+                    <div style="font-weight:700; color:#34245C; font-size:13px;">Balss norādes</div>
+                    <div style="font-weight:700; color:#7C8AA3; font-size:11px;">{{ speechLabel }}</div>
                   </div>
                   <button onClick="{{ toggleSpeech }}" aria-label="Pārslēgt balss norādes" style="border:none; cursor:pointer; width:54px; height:30px; border-radius:99px; padding:3px; display:flex; align-items:center; background:{{ speechKnob.background }}; justify-content:{{ speechKnob.justifyContent }};">
                     <span style="width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,.2);"></span>
@@ -592,14 +595,14 @@
                 </div>
                 <!-- reset -->
                 <sc-if value="{{ notResetConfirm }}" hint-placeholder-val="{{ true }}">
-                  <button onClick="{{ askReset }}" style="width:100%; border:none; cursor:pointer; background:#fff; color:#E25555; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:14px; border-radius:16px; box-shadow:0 5px 0 #D9E1EC;">↺ Atiestatīt progresu</button>
+                  <button onClick="{{ askReset }}" style="width:100%; border:none; cursor:pointer; background:#fff; color:#E25555; font-family:var(--kmp-font-display); font-weight:700; font-size:14px; padding:14px; border-radius:16px; box-shadow:0 5px 0 #D9E1EC;">↺ Atiestatīt progresu</button>
                 </sc-if>
                 <sc-if value="{{ resetConfirm }}" hint-placeholder-val="{{ false }}">
                   <div style="background:#fff; border-radius:16px; padding:14px; box-shadow:0 5px 0 #D9E1EC;">
-                    <div style="font-weight:800; color:#34245C; font-size:13px; text-align:center; margin-bottom:10px;">Vai tiešām dzēst visu progresu?</div>
+                    <div style="font-weight:700; color:#34245C; font-size:13px; text-align:center; margin-bottom:10px;">Vai tiešām dzēst visu progresu?</div>
                     <div style="display:flex; gap:10px;">
-                      <button onClick="{{ cancelReset }}" style="flex:1; border:none; cursor:pointer; background:#EDF1F6; color:#5B6B86; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:12px; border-radius:14px;">Nē</button>
-                      <button onClick="{{ doReset }}" style="flex:1; border:none; cursor:pointer; background:#E25555; color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:14px; padding:12px; border-radius:14px; box-shadow:0 4px 0 #B83C3C;">Jā, dzēst</button>
+                      <button onClick="{{ cancelReset }}" style="flex:1; border:none; cursor:pointer; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:14px; padding:12px; border-radius:14px;">Nē</button>
+                      <button onClick="{{ doReset }}" style="flex:1; border:none; cursor:pointer; background:#E25555; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:14px; padding:12px; border-radius:14px; box-shadow:0 4px 0 #B83C3C;">Jā, dzēst</button>
                     </div>
                   </div>
                 </sc-if>
@@ -612,12 +615,12 @@
             <div style="position:absolute; inset:0; background:rgba(43,33,80,.55); display:grid; place-items:center; z-index:30; overflow:hidden;">
               <div style="background:#fff; border-radius:30px; padding:26px 24px; text-align:center; box-shadow:0 16px 40px rgba(0,0,0,.3); animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both; opacity:1; max-width:82%; position:relative; z-index:2;">
                 <div style="font-size:58px; animation:star-twinkle 1.2s ease-in-out infinite;">{{ resultEmoji }}</div>
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:26px; margin:6px 0;">{{ resultTitle }}</div>
-                <div style="font-weight:800; color:#7C8AA3; font-size:15px; margin-bottom:14px;">{{ resultMsg }}</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:26px; margin:6px 0;">{{ resultTitle }}</div>
+                <div style="font-weight:700; color:#7C8AA3; font-size:15px; margin-bottom:14px;">{{ resultMsg }}</div>
                 <div style="margin-bottom:18px;">{{ resultStars }}</div>
                 <div style="display:flex; gap:10px; justify-content:center;">
-                  <button onClick="{{ playAgain }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:'Baloo 2',cursive; font-weight:800; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 var(--primary-dark);">↺ Vēlreiz!</button>
-                  <button onClick="{{ goMap }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">🏝️ Karte</button>
+                  <button onClick="{{ playAgain }}" style="border:none; cursor:pointer; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 var(--primary-dark);">↺ Vēlreiz!</button>
+                  <button onClick="{{ goMap }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:16px; padding:13px 22px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">🏝️ Karte</button>
                 </div>
               </div>
               <sc-for list="{{ confetti }}" as="c" hint-placeholder-count="0">
@@ -637,15 +640,15 @@
               </sc-for>
               <!-- modal -->
               <div style="position:relative; z-index:2; text-align:center; animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;">
-                <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#fff; font-size:24px; text-shadow:0 2px 0 rgba(0,0,0,.25); margin-bottom:4px;">🎉 Jauna kartīte!</div>
-                <div style="font-weight:800; color:#FFE08A; font-size:13px; margin-bottom:16px;">Tu nopelnīji balvu par uzdevumiem</div>
+                <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:24px; text-shadow:0 2px 0 rgba(0,0,0,.25); margin-bottom:4px;">🎉 Jauna kartīte!</div>
+                <div style="font-weight:700; color:#FFE08A; font-size:13px; margin-bottom:16px;">Tu nopelnīji balvu par uzdevumiem</div>
                 <!-- flip card -->
                 <div style="perspective:900px; width:170px; height:218px; margin:0 auto 18px;">
                   <div style="position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .7s cubic-bezier(.34,1.4,.5,1); transform:{{ rewardFlip }};">
                     <!-- front (revealed card) -->
                     <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(165deg,#FFFFFF,#FFF3E0); border:5px solid #FFCE3A; border-radius:24px; box-shadow:{{ rewardGlow }}; transition:box-shadow .5s; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;">
                       <div style="font-size:74px;">{{ rewardEmoji }}</div>
-                      <div style="font-family:'Baloo 2',cursive; font-weight:800; color:#34245C; font-size:15px; padding:0 8px; line-height:1.1;">{{ rewardName }}</div>
+                      <div style="font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:15px; padding:0 8px; line-height:1.1;">{{ rewardName }}</div>
                     </div>
                     <!-- back (cover) -->
                     <div style="position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateY(180deg); background:linear-gradient(165deg,#8A63E8,#6B45C9); border:5px solid #fff; border-radius:24px; box-shadow:0 12px 26px rgba(0,0,0,.3); display:grid; place-items:center;">
@@ -653,7 +656,7 @@
                     </div>
                   </div>
                 </div>
-                <button onClick="{{ closeReward }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:'Baloo 2',cursive; font-weight:800; font-size:17px; padding:13px 34px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">Forši! ✨</button>
+                <button onClick="{{ closeReward }}" style="border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:17px; padding:13px 34px; border-radius:18px; box-shadow:0 6px 0 #E0A91E;">Forši! ✨</button>
               </div>
             </div>
           </sc-if>
@@ -674,7 +677,20 @@ const APP_VERSION = '1.4.0';
 // Deliberately separate from APP_VERSION: this one gates the saved-progress
 // format and must only change when the stored shape changes, because bumping
 // it discards every existing player's progress.
-const SAVE_KEY = 'prata-sala-v1';
+// Namespaced to the child chosen on kidmindpath.com, so two siblings sharing a
+// tablet do not overwrite each other's island. KMP.key() returns the bare key
+// when there is no hub (hifistereo.github.io, or a plain file server), and
+// migrateKey() moves pre-existing progress onto the active child exactly once —
+// without it, everyone who has already played would appear to have lost the lot.
+const SAVE_KEY = (() => {
+  try {
+    if (window.KMP) {
+      window.KMP.migrateKey('prata-sala-v1');
+      return window.KMP.key('prata-sala-v1');
+    }
+  } catch (e) { /* storage unavailable — fall through */ }
+  return 'prata-sala-v1';
+})();
 const SAVE_VERSION = 1;
 
 // Baseline difficulty per game. Not progress — "reset progress" restores these,
@@ -796,6 +812,16 @@ class Component extends DCLogic {
   };
 
   // ---------- persistence ----------
+
+  // The KidMindPath bar leaves on a plain tap, so a child can walk out of a
+  // half-finished round. Publish the save so index.html can flush before the
+  // page goes away — this is the one app where progress is written at round
+  // boundaries rather than continuously, so without this hook that round is
+  // simply lost.
+  componentDidMount(){
+    window.__prataSaveProgress = () => { try { this.saveProgress(); } catch (e) {} };
+  }
+
   saveProgress(){
     try {
       const s = this.state;
