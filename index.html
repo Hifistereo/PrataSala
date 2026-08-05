@@ -54,6 +54,11 @@
 
       body {
         min-width: 320px;
+        /* The game sets its own font on [data-app="screen"], so this changes
+           nothing visible today. Without it, though, <body> inherits the
+           browser default, and anything that ever renders outside the screen
+           element lands in Times New Roman. */
+        font-family: var(--kmp-font-body);
       }
 
       .boot-error {
