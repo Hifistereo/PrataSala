@@ -1,4 +1,15 @@
 // GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
+//
+// EXCEPT: the React, ReactDOM and Babel URLs below were changed BY HAND to
+// point at ./vendor/ instead of unpkg.com, so this app makes no third-party
+// network requests, boots without a connection, and can run under a CSP that
+// forbids external scripts. The dc-runtime source is not in this repository,
+// so a rebuild WILL silently restore the unpkg URLs and undo that. If you
+// rebuild, re-apply the four constants marked "vendored locally" below.
+//
+// The vendored bytes are verified: react.production.min.js and
+// react-dom.production.min.js match the SRI hashes recorded here, and
+// babel.min.js is @babel/standalone 7.26.4 straight from the npm registry.
 "use strict";
 (() => {
   var __defProp = Object.defineProperty;
@@ -939,7 +950,9 @@
     }
     return cur;
   }
-  var BABEL_URL = "https://unpkg.com/@babel/standalone@7.26.4/babel.min.js";
+  // vendored locally — see the note at the top of this file
+  var BABEL_URL = "./vendor/babel.min.js";
+  var BABEL_SRI = "sha384-x/ilTFv/u/eu6YSmkFDZl5V5Mm/pkxxcVv2cVJOrr1J0rvILhMvRBCy6yA75wYBj";
   var GLOBAL_POLL_INTERVAL_MS = 50;
   var GLOBAL_POLL_TIMEOUT_MS = 3e4;
   function createExternalModules(onResolved) {
@@ -953,7 +966,7 @@
       babelLoading = new Promise((res, rej) => {
         const s = document.createElement("script");
         s.src = BABEL_URL;
-        s.crossOrigin = "anonymous";
+        s.integrity = BABEL_SRI;
         s.onload = () => res();
         s.onerror = rej;
         document.head.appendChild(s);
@@ -1374,9 +1387,11 @@
   }
 
   // src/index.ts
-  var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
+  // vendored locally — see the note at the top of this file
+  var REACT_URL = "./vendor/react.production.min.js";
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
-  var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
+  // vendored locally — see the note at the top of this file
+  var REACT_DOM_URL = "./vendor/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
   function hideRawTemplate() {
     const s = document.createElement("style");
@@ -1388,8 +1403,8 @@
       //! nosemgrep: create-script-element
       const s = document.createElement("script");
       s.src = src;
+      // Kept for same-origin files too: it still verifies the bytes on disk.
       s.integrity = integrity;
-      s.crossOrigin = "anonymous";
       s.async = false;
       s.onload = () => resolve2();
       s.onerror = () => reject(new Error(`failed to load ${src}`));
