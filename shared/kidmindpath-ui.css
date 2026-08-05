@@ -1,9 +1,9 @@
-/* kidmindpath-shared v1.0.0 — UI primitives. Do not edit in an app copy;
+/* kidmindpath-shared v1.1.0 — UI primitives. Do not edit in an app copy;
    edit Hifistereo.github.io/shared/ and re-sync. See shared/README.md.
 
    Optional layer. Requires kidmindpath-tokens.css and kidmindpath-fonts.css.
    An app can take the tokens without taking this file; most apps only need
-   .kmp-home from here. */
+   .kmp-bar from here. */
 
 /* ---- Shared focus ring -------------------------------------------------
    Wrapped in :where() so it has ZERO specificity. It gives every app the
@@ -69,6 +69,77 @@
   background: rgba(255, 255, 255, .92);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
+}
+
+/* ---- .kmp-bar ----------------------------------------------------------
+   The way back to the hub from inside a game, built by KMP.homeBar() in
+   kmp.js. Fixed to the top of every screen and always visible, so swapping
+   games never means hunting for a link.
+
+   It leaves on a plain tap. That is a deliberate choice and it has a cost: a
+   child mid-activity can hit it and end the round. Games mitigate by saving
+   round state in the onLeave callback rather than by hiding the control.
+
+   Height is published as --kmp-bar-h by kmp.js (measured, not guessed, because
+   the safe-area inset changes it). Every game must make room for it —
+   `padding-top: var(--kmp-bar-h)` on its root, or equivalent — since all five
+   are full-screen layouts that would otherwise run underneath. */
+.kmp-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 2147483000;   /* above game overlays, sheets and confetti layers */
+  display: flex;
+  align-items: center;
+  gap: var(--kmp-s-3);
+  padding: var(--kmp-s-2) var(--kmp-s-3);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--kmp-s-2));
+  padding-left: calc(env(safe-area-inset-left, 0px) + var(--kmp-s-3));
+  padding-right: calc(env(safe-area-inset-right, 0px) + var(--kmp-s-3));
+  color: var(--kmp-ink);
+  background: rgba(255, 250, 242, .94);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--kmp-line);
+  font-family: var(--kmp-font-display);
+  font-size: var(--kmp-t-sm);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.kmp-bar__back,
+.kmp-bar__who {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kmp-s-2);
+  /* 44px is the floor for a control an adult uses one-handed on a phone. */
+  min-height: 44px;
+  padding: 0 var(--kmp-s-4);
+  color: var(--kmp-brand);
+  background: var(--kmp-surface);
+  border: 1px solid var(--kmp-line);
+  border-radius: var(--kmp-r-pill);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.kmp-bar__back:active,
+.kmp-bar__who:active { transform: translateY(1px); }
+
+/* The game's name. First to be sacrificed when the bar is tight — the two
+   controls either side of it must never shrink or wrap. */
+.kmp-bar__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--kmp-ink-soft);
+}
+
+@media (max-width: 420px) {
+  .kmp-bar__title { display: none; }
+  .kmp-bar { justify-content: space-between; }
 }
 
 /* ---- .kmp-btn ----------------------------------------------------------

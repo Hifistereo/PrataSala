@@ -677,7 +677,20 @@ const APP_VERSION = '1.4.0';
 // Deliberately separate from APP_VERSION: this one gates the saved-progress
 // format and must only change when the stored shape changes, because bumping
 // it discards every existing player's progress.
-const SAVE_KEY = 'prata-sala-v1';
+// Namespaced to the child chosen on kidmindpath.com, so two siblings sharing a
+// tablet do not overwrite each other's island. KMP.key() returns the bare key
+// when there is no hub (hifistereo.github.io, or a plain file server), and
+// migrateKey() moves pre-existing progress onto the active child exactly once —
+// without it, everyone who has already played would appear to have lost the lot.
+const SAVE_KEY = (() => {
+  try {
+    if (window.KMP) {
+      window.KMP.migrateKey('prata-sala-v1');
+      return window.KMP.key('prata-sala-v1');
+    }
+  } catch (e) { /* storage unavailable — fall through */ }
+  return 'prata-sala-v1';
+})();
 const SAVE_VERSION = 1;
 
 // Baseline difficulty per game. Not progress — "reset progress" restores these,
@@ -799,6 +812,16 @@ class Component extends DCLogic {
   };
 
   // ---------- persistence ----------
+
+  // The KidMindPath bar leaves on a plain tap, so a child can walk out of a
+  // half-finished round. Publish the save so index.html can flush before the
+  // page goes away — this is the one app where progress is written at round
+  // boundaries rather than continuously, so without this hook that round is
+  // simply lost.
+  componentDidMount(){
+    window.__prataSaveProgress = () => { try { this.saveProgress(); } catch (e) {} };
+  }
+
   saveProgress(){
     try {
       const s = this.state;

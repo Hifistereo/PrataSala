@@ -52,6 +52,28 @@ Every inline `font-weight:800` and `:900` in the board export moved to 700,
 because Fredoka ships nothing heavier and the browser would otherwise
 synthesise a face that looks subtly wrong.
 
+## Per-child progress
+
+`SAVE_KEY` is namespaced to the child chosen on kidmindpath.com
+(`prata-sala-v1:<childId>`), so two siblings on one tablet no longer overwrite
+each other's island. `KMP.migrateKey()` moves pre-existing progress onto the
+active child exactly once; without it everyone who has already played would
+appear to have lost the lot, the data still sitting at the old key.
+
+With no hub — `hifistereo.github.io/PrataSala/`, or a plain file server — the
+key stays `prata-sala-v1` and nothing changes.
+
+## The bar, and why this app needs a save hook
+
+`.kmp-bar` is on every screen and leaves on a plain tap. This is the only one
+of the five games that writes progress at round boundaries rather than
+continuously, so leaving mid-round would otherwise lose it.
+
+`componentDidMount` in the board export publishes `window.__prataSaveProgress`,
+and `index.html` passes it to `KMP.homeBar({ onLeave })`. The bar calls it on
+the click, before the page goes away — `pagehide` is not reliable enough for a
+link navigation in Safari.
+
 ## Deploying on GitHub Pages
 
 1. Repository settings → **Pages**.

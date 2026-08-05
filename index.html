@@ -43,6 +43,9 @@
     <link rel="stylesheet" href="./shared/kidmindpath-fonts.css" />
     <link rel="stylesheet" href="./shared/kidmindpath-tokens.css" />
     <link rel="stylesheet" href="./shared/kidmindpath-ui.css" />
+    <!-- Classic script. Must load before the game: "Prata Sala.dc.html"
+         reads window.KMP at module scope to namespace SAVE_KEY. -->
+    <script src="./shared/kmp.js"></script>
     <style>
       html,
       body {
@@ -79,7 +82,10 @@
          --sky-top and --u (from "Prata Sala.dc.html") keep working. */
       [data-app="screen"] {
         position: fixed;
-        inset: 0;
+        /* The KidMindPath bar is fixed over the top of the viewport, so the
+           screen has to start below it. --kmp-bar-h is published by
+           shared/kmp.js and is 0 when there is no bar. */
+        inset: var(--kmp-bar-h, 0px) 0 0 0;
         overflow: hidden;
         font-family: var(--kmp-font-body);
         /* the theme's sky colour, so a notch or home-indicator inset blends in
@@ -157,6 +163,21 @@
         const runtime = document.createElement("script");
         runtime.src = "./support.js";
         document.head.appendChild(runtime);
+
+        // The bar back to the hub. Its onLeave flushes progress, because this
+        // game saves at round boundaries rather than continuously and the bar
+        // leaves on a plain tap — see componentDidMount in the board export,
+        // which publishes __prataSaveProgress.
+        try {
+          window.KMP &&
+            window.KMP.homeBar({
+              appId: "PrataSala",
+              title: "Prāta Sala",
+              onLeave: () => window.__prataSaveProgress && window.__prataSaveProgress(),
+            });
+        } catch (error) {
+          console.error("kmp: bar failed to mount", error);
+        }
       })().catch((error) => {
         console.error(error);
         document.body.innerHTML =
