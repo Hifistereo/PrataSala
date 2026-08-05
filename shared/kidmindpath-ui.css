@@ -1,0 +1,140 @@
+/* kidmindpath-shared v1.0.0 — UI primitives. Do not edit in an app copy;
+   edit Hifistereo.github.io/shared/ and re-sync. See shared/README.md.
+
+   Optional layer. Requires kidmindpath-tokens.css and kidmindpath-fonts.css.
+   An app can take the tokens without taking this file; most apps only need
+   .kmp-home from here. */
+
+/* ---- Shared focus ring -------------------------------------------------
+   Wrapped in :where() so it has ZERO specificity. It gives every app the
+   same high-visibility focus ring for free, and any rule an app already has
+   beats it without needing !important. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 4px solid var(--kmp-sun);
+  outline-offset: 3px;
+}
+
+/* ---- .kmp-home ---------------------------------------------------------
+   The way back to kidmindpath.com from inside an app. Same markup and
+   geometry in all five:
+
+     <a class="kmp-home" href="https://www.kidmindpath.com/">
+       <span aria-hidden="true">&#8592;</span> KidMindPath
+     </a>
+
+   Absolute URL on purpose: the apps are also reachable at
+   hifistereo.github.io/<repo>/, where a root-relative "/" would land on the
+   wrong site.
+
+   Belongs on an app's start/menu screen only, never beside a running
+   activity — a control that exits the game is not something to put under a
+   toddler's hand mid-play. */
+.kmp-home {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kmp-s-2);
+  min-height: 44px;
+  padding: 0 var(--kmp-s-4);
+  color: var(--kmp-brand);
+  background: var(--kmp-surface);
+  border: 1px solid var(--kmp-line);
+  border-radius: var(--kmp-r-pill);
+  box-shadow: var(--kmp-shadow-1);
+  font-family: var(--kmp-font-display);
+  font-size: var(--kmp-t-sm);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--kmp-dur-fast) var(--kmp-ease-out),
+              box-shadow var(--kmp-dur-fast) var(--kmp-ease-out);
+}
+
+.kmp-home:hover {
+  box-shadow: var(--kmp-shadow-2);
+}
+
+.kmp-home:active {
+  transform: translateY(1px);
+}
+
+/* Overlay variant for apps whose start screen is a full-bleed illustration
+   with no header to sit in. Clears the notch and the rounded-display
+   corners; the tap target stays 44px regardless. */
+.kmp-home--float {
+  position: absolute;
+  z-index: 30;
+  top: calc(env(safe-area-inset-top, 0px) + var(--kmp-s-3));
+  left: calc(env(safe-area-inset-left, 0px) + var(--kmp-s-3));
+  background: rgba(255, 255, 255, .92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* ---- .kmp-btn ----------------------------------------------------------
+   Chunky pressable button. Set --kmp-btn-bg to an app's -ink token (never a
+   -hue token: those do not carry white text at AA) and --kmp-btn-edge to a
+   darker shade of it. */
+.kmp-btn {
+  --kmp-btn-bg: var(--kmp-brand);
+  --kmp-btn-edge: var(--kmp-brand-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kmp-s-2);
+  min-height: 52px;
+  padding: 0 var(--kmp-s-5);
+  color: #fff;
+  background: var(--kmp-btn-bg);
+  border: none;
+  border-radius: var(--kmp-r-md);
+  box-shadow: 0 8px 0 var(--kmp-btn-edge);
+  font-family: var(--kmp-font-display);
+  font-size: var(--kmp-t-md);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--kmp-dur-fast) var(--kmp-ease-out),
+              box-shadow var(--kmp-dur-fast) var(--kmp-ease-out);
+}
+
+.kmp-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 6px 0 var(--kmp-btn-edge);
+}
+
+.kmp-btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 var(--kmp-btn-edge);
+}
+
+/* ---- .kmp-card ---------------------------------------------------------
+   Tinted panel. Set --kmp-card-tint / --kmp-card-line from one app's accent
+   trio, e.g. on the hub each game card carries that game's own hue. */
+.kmp-card {
+  --kmp-card-tint: var(--kmp-surface);
+  --kmp-card-line: var(--kmp-line);
+  display: flex;
+  flex-direction: column;
+  padding: var(--kmp-s-5);
+  color: var(--kmp-ink);
+  background: var(--kmp-card-tint);
+  border: 1px solid var(--kmp-card-line);
+  border-radius: var(--kmp-r-xl);
+  box-shadow: 0 8px 0 var(--kmp-card-line);
+}
+
+/* ---- Motion ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .kmp-home,
+  .kmp-btn,
+  .kmp-card {
+    transition-duration: .01ms;
+  }
+
+  .kmp-home:active,
+  .kmp-btn:hover,
+  .kmp-btn:active {
+    transform: none;
+  }
+}

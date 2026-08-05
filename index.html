@@ -11,7 +11,38 @@
       name="description"
       content="Prāta Piedzīvojumu Sala - bērnu attīstības mini spēļu sala"
     />
+    <!-- Since React, Babel and the fonts were vendored into ./vendor and
+         ./shared, this app makes no third-party requests at all and the policy
+         can say so. 'unsafe-eval' and 'unsafe-inline' are unavoidable and not
+         incidental: support.js is a design-board runtime that compiles the
+         game with Babel and evaluates it through `new Function`, and every
+         element in "Prata Sala.dc.html" is styled with a style attribute.
+         With those keywords present script-src stops approximately nothing —
+         it is here for the origin restriction, not as an XSS defence.
+
+         What still does real work: connect-src, img-src and font-src pinned to
+         'self' leave injected code nowhere to send data, and
+         object-src/base-uri/form-action close the usual side doors.
+
+         frame-ancestors is deliberately absent — browsers ignore it in a
+         <meta> policy and log an error, and GitHub Pages cannot set headers. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#dceaf7" />
+    <!-- Without this the browser falls back to requesting /favicon.ico, which
+         does not exist here and 404'd on every load. -->
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <title>Prāta Piedzīvojumu Sala</title>
+    <!-- KidMindPath design system. This is what makes the "Nunito" below an
+         actual font: the family was named here from the start, but nothing
+         ever loaded it, so the game shipped in whatever generic sans-serif the
+         device happened to pick. -->
+    <link rel="stylesheet" href="./shared/kidmindpath-fonts.css" />
+    <link rel="stylesheet" href="./shared/kidmindpath-tokens.css" />
+    <link rel="stylesheet" href="./shared/kidmindpath-ui.css" />
     <style>
       html,
       body {
@@ -31,7 +62,7 @@
         place-items: center;
         padding: 24px;
         color: #34245c;
-        font: 800 18px/1.35 system-ui, sans-serif;
+        font: 700 18px/1.35 var(--kmp-font-display);
         text-align: center;
       }
 
@@ -45,7 +76,7 @@
         position: fixed;
         inset: 0;
         overflow: hidden;
-        font-family: "Nunito", sans-serif;
+        font-family: var(--kmp-font-body);
         /* the theme's sky colour, so a notch or home-indicator inset blends in
            instead of showing white */
         background: var(--sky-top, #dceaf7);

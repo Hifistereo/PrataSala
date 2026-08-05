@@ -1,0 +1,133 @@
+/* kidmindpath-shared v1.0.0 — design tokens. Do not edit in an app copy;
+   edit Hifistereo.github.io/shared/ and re-sync. See shared/README.md.
+
+   Custom properties only. Dropping this file into an app changes nothing
+   until something references a token, so it is always safe to add first and
+   adopt gradually.
+
+   Naming: every token is prefixed --kmp- so it can never collide with an
+   app's own variables. Apps keep their existing variable names and repoint
+   them at these, rather than renaming call sites across their components. */
+
+:root {
+  /* ---- Neutrals -------------------------------------------------------
+     Warm cream rather than white. Six sites on the same domain reading as
+     one product depends more on a shared paper colour than on anything
+     else here. */
+  --kmp-paper:        #fffaf2;   /* page background */
+  --kmp-paper-sunk:   #f4eee6;   /* footers, wells, inset areas */
+  --kmp-surface:      #ffffff;   /* cards and raised panels */
+  --kmp-line:         #e7e0d7;   /* hairline borders on paper */
+
+  --kmp-ink:          #24213b;   /* body + headings          14.9:1 on paper */
+  --kmp-ink-soft:     #68647a;   /* secondary copy            5.5:1 on paper */
+
+  /* ---- Brand ----------------------------------------------------------
+     The KidMindPath purple. Used for the wordmark, the hub's primary
+     actions, and the .kmp-home control in every app. */
+  --kmp-brand:        #5f4bb6;   /*  6.4:1 on paper, white on it 6.6:1 */
+  --kmp-brand-deep:   #42317f;   /* pressed state / --kmp-edge shade */
+  --kmp-brand-tint:   #f0ecff;
+  --kmp-sun:          #ffc857;   /* focus ring + highlight, never text */
+
+  /* ---- Type -----------------------------------------------------------
+     Fredoka for anything a child reads as a label; Nunito for prose.
+     Both are loaded by kidmindpath-fonts.css — link that file too, or
+     these stacks silently fall through to the system font, which is the
+     bug this design system exists to fix.
+
+     Available weights are exactly: Fredoka 400/500/600/700,
+     Nunito 400/600/700/700-italic/800. Asking for anything else gets a
+     synthesised face that looks wrong. Do not use 850. */
+  --kmp-font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --kmp-font-body:    'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --kmp-t-xs:   0.8125rem;
+  --kmp-t-sm:   0.9375rem;
+  --kmp-t-md:   1.0625rem;
+  --kmp-t-lg:   clamp(1.25rem, 3.2vw, 1.75rem);
+  --kmp-t-xl:   clamp(1.75rem, 5vw, 2.75rem);
+  --kmp-t-2xl:  clamp(2.25rem, 8vw, 4rem);
+  --kmp-t-3xl:  clamp(2.7rem, 6vw, 5.4rem);   /* hub hero only */
+
+  /* ---- Space (8px base) ---------------------------------------------- */
+  --kmp-s-1: 0.25rem;
+  --kmp-s-2: 0.5rem;
+  --kmp-s-3: 0.75rem;
+  --kmp-s-4: 1rem;
+  --kmp-s-5: 1.5rem;
+  --kmp-s-6: 2rem;
+  --kmp-s-7: 3rem;
+  --kmp-s-8: 4rem;
+
+  /* ---- Radii ----------------------------------------------------------
+     Generously round throughout: it is the fastest visual cue that a
+     surface belongs to this family rather than to a generic web page. */
+  --kmp-r-sm:   0.5rem;
+  --kmp-r-md:   1rem;
+  --kmp-r-lg:   1.5rem;
+  --kmp-r-xl:   2rem;
+  --kmp-r-pill: 999px;
+
+  /* ---- Elevation ------------------------------------------------------ */
+  --kmp-shadow-1: 0 2px 6px rgba(29, 39, 51, .08);
+  --kmp-shadow-2: 0 6px 18px rgba(29, 39, 51, .12);
+  --kmp-shadow-3: 0 14px 34px rgba(29, 39, 51, .18);
+  /* The chunky bottom lip that makes a control look physically pressable
+     to a small child. Pair it with a translateY on :active so the button
+     visibly travels down onto the page. */
+  --kmp-edge: 0 6px 0 rgba(0, 0, 0, .14);
+
+  /* ---- Motion --------------------------------------------------------- */
+  --kmp-ease-out:    cubic-bezier(.22, 1, .36, 1);
+  --kmp-ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --kmp-dur-fast: 150ms;
+  --kmp-dur:      280ms;
+  --kmp-dur-slow: 600ms;
+
+  /* ---- Touch ----------------------------------------------------------
+     Floor for anything a child taps. Apps aimed at toddlers raise it
+     further (ENG-learning goes to 112px for its 2-4 track). */
+  --kmp-tap-min: 88px;
+
+  /* ---- Per-app accents ------------------------------------------------
+     Each app owns one hue, drawn from its own existing palette, so a child
+     can tell the five apps apart at a glance while everything structural
+     stays shared. The hub's cards use these same values, so a card is a
+     preview of the app it opens.
+
+     Three roles, and they are not interchangeable:
+       -tint  card / panel background
+       -hue   DECORATIVE ONLY — icon fills, rules, progress. Never text.
+              Paint's gold carries white text at only 2.8:1.
+       -ink   text on paper or tint, AND button background with white text
+       -line  border on tint
+
+     Every -ink is >= 4.9:1 on both paper and its own tint, and white on
+     every -ink is >= 5.4:1. Verified, not eyeballed. */
+
+  --kmp-prata-tint: #f0ebfd;
+  --kmp-prata-hue:  #7a55d6;
+  --kmp-prata-ink:  #5a3aa8;
+  --kmp-prata-line: #ddd2f8;
+
+  --kmp-paint-tint: #fdf3da;
+  --kmp-paint-hue:  #cf8f16;
+  --kmp-paint-ink:  #8b6200;
+  --kmp-paint-line: #f2e0ae;
+
+  --kmp-kidla-tint: #fbeaf5;
+  --kmp-kidla-hue:  #b04b8f;
+  --kmp-kidla-ink:  #82346a;
+  --kmp-kidla-line: #f2cfe5;
+
+  --kmp-eng-tint:   #e6f4f9;
+  --kmp-eng-hue:    #1b7f9e;
+  --kmp-eng-ink:    #126782;
+  --kmp-eng-line:   #c3e3ee;
+
+  --kmp-memory-tint: #e9f4ed;
+  --kmp-memory-hue:  #3f7f59;
+  --kmp-memory-ink:  #2e6544;
+  --kmp-memory-line: #c9e3d3;
+}

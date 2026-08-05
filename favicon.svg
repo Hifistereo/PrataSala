@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Prāta Piedzīvojumu Sala">
+  <rect width="100" height="100" rx="25" fill="#dceaf7"/>
+  <circle cx="50" cy="70" r="26" fill="#46c091"/>
+  <path d="M50 20c9 0 16 7 16 16 0 6-3 10-7 13v5H41v-5c-4-3-7-7-7-13 0-9 7-16 16-16z" fill="#ffce3a"/>
+</svg>
