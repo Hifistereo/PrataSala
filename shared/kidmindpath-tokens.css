@@ -31,15 +31,23 @@
   --kmp-sun:          #ffc857;   /* focus ring + highlight, never text */
 
   /* ---- Type -----------------------------------------------------------
-     Baloo 2 for anything a child reads as a label; Nunito for prose.
+     Quicksand for anything a child reads as a label; Nunito for prose.
      Both are loaded by kidmindpath-fonts.css — link that file too, or
      these stacks silently fall through to the system font, which is the
      bug this design system exists to fix.
 
-     Available weights are exactly: Baloo 2 400/500/600/700,
+     Quicksand (not Fredoka): Fredoka's own latin-ext subset is missing 9 of
+     the 11 Latvian diacritic letters, so Latvian display text rendered in
+     it silently switched fonts mid-word for those letters. Baloo 2 was
+     tried as a same-mood rounded replacement first but has broken
+     combining-macron placement (ā/ē/ī/ū render with the accent floating
+     off the letter). Quicksand has full Latvian coverage with every mark
+     correctly positioned — see kidmindpath-fonts.css for the full note.
+
+     Available weights are exactly: Quicksand 400/500/600/700,
      Nunito 400/600/700/700-italic/800. Asking for anything else gets a
      synthesised face that looks wrong. Do not use 850. */
-  --kmp-font-display: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --kmp-font-display: 'Quicksand', 'Nunito', system-ui, sans-serif;
   --kmp-font-body:    'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --kmp-t-xs:   0.8125rem;
