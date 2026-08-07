@@ -339,7 +339,7 @@
               <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
                 <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(80 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:9px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
                   <sc-for list="{{ memCells }}" as="cell" hint-placeholder-count="16">
-                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:calc(6 * var(--u)); transition:background .15s;">{{ cell.mark }}</div>
+                    <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:calc(6 * var(--u)); transition:background .28s ease, box-shadow .28s ease;">{{ cell.mark }}</div>
                   </sc-for>
                 </div>
               </div>
@@ -1141,7 +1141,11 @@ class Component extends DCLogic {
   startMemory(){
     const len = 2 + (this.state.levels.memoryPath||1);
     const seq=[];
-    while(seq.length<len){ seq.push(Math.floor(Math.random()*16)); }
+    while(seq.length<len){
+      let n;
+      do{ n=Math.floor(Math.random()*16); } while(n===seq[seq.length-1]);
+      seq.push(n);
+    }
     this.memToken=(this.memToken||0)+1;
     this.setState({ mem:{ seq, phase:'show', step:0, flash:-1 } }, () => this.playMemory());
   }
@@ -1155,7 +1159,7 @@ class Component extends DCLogic {
       await this.wait(520);
       if(token!==this.memToken) return;
       this.setState(st => ({ mem:{ ...st.mem, flash:-1 } }));
-      await this.wait(240);
+      await this.wait(320);
     }
     if(token!==this.memToken) return;
     this.setState(st => ({ mem:{ ...st.mem, phase:'input', step:0 } }));
@@ -1166,7 +1170,7 @@ class Component extends DCLogic {
     if(i===m.seq[m.step]){
       const step=m.step+1;
       this.setState(st => ({ mem:{ ...st.mem, step, flash:i } }));
-      this.later(() => this.setState(st => st.mem.flash===i ? ({ mem:{ ...st.mem, flash:-1 } }) : null), 240);
+      this.later(() => this.setState(st => st.mem.flash===i ? ({ mem:{ ...st.mem, flash:-1 } }) : null), 320);
       if(step>=m.seq.length){
         this.later(() => this.setResult({ emoji:'🧠', title:'Lieliski!', msg:'Tu iegaumēji visu taciņu!', stars:3 }), 320);
       }
