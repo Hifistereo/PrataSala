@@ -44,20 +44,25 @@ overwritten on the next sync.
 
 Loading it is what makes the `font-family` declarations in this app true. The
 game named Nunito from the start but nothing ever loaded it, so it shipped in
-whatever generic sans-serif the device picked; the display font was named as
-`'Baloo 2'` and only loaded on the design board, which `index.html` throws
-away. Both now resolve to the self-hosted Baloo 2 and Nunito in
-`shared/fonts`.
+whatever generic sans-serif the device picked; the display font is
+`var(--kmp-font-display)`, which the design board originally named as
+`'Baloo 2'` before it was routed through the shared token. Both now resolve
+to the self-hosted Quicksand and Nunito in `shared/fonts`.
 
-(The display font briefly self-hosted as Fredoka instead of Baloo 2. Fredoka
-is missing glyphs for most Latvian diacritics — `ā č ē ģ ī ķ ļ ņ ū` — even in
-Google's own copy, so words containing them rendered with that one letter
-jumping to a fallback font mid-word. Baloo 2 has full Latvian coverage and
-matches the name the design board used originally.)
+(The display font has moved twice since the design board export. It first
+self-hosted as Fredoka, which is missing glyphs for most Latvian diacritics —
+`ā č ē ģ ī ķ ļ ņ ū` — even in Google's own copy, so words containing them
+rendered with that one letter jumping to a fallback font mid-word. Baloo 2
+replaced it next: full Latvian coverage, but its vendored file positions
+combining macrons wrong, so `ā`/`ē`/`ī`/`ū` render with the accent floating
+above and to the side of the letter instead of sitting on it. Quicksand is
+the one of the three with full, correctly-positioned Latvian coverage, and is
+now what the whole KidMindPath family uses.)
 
 Every inline `font-weight:800` and `:900` in the board export moved to 700,
-because Baloo 2 (like Fredoka before it) ships nothing heavier here and the
-browser would otherwise synthesise a face that looks subtly wrong.
+because Quicksand (like Baloo 2 and Fredoka before it) ships nothing heavier
+here and the browser would otherwise synthesise a face that looks subtly
+wrong.
 
 ## Per-child progress
 
