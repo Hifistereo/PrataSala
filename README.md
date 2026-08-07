@@ -46,11 +46,18 @@ Loading it is what makes the `font-family` declarations in this app true. The
 game named Nunito from the start but nothing ever loaded it, so it shipped in
 whatever generic sans-serif the device picked; the display font was named as
 `'Baloo 2'` and only loaded on the design board, which `index.html` throws
-away. Both now resolve to the self-hosted Fredoka and Nunito in `shared/fonts`.
+away. Both now resolve to the self-hosted Baloo 2 and Nunito in
+`shared/fonts`.
+
+(The display font briefly self-hosted as Fredoka instead of Baloo 2. Fredoka
+is missing glyphs for most Latvian diacritics — `ā č ē ģ ī ķ ļ ņ ū` — even in
+Google's own copy, so words containing them rendered with that one letter
+jumping to a fallback font mid-word. Baloo 2 has full Latvian coverage and
+matches the name the design board used originally.)
 
 Every inline `font-weight:800` and `:900` in the board export moved to 700,
-because Fredoka ships nothing heavier and the browser would otherwise
-synthesise a face that looks subtly wrong.
+because Baloo 2 (like Fredoka before it) ships nothing heavier here and the
+browser would otherwise synthesise a face that looks subtly wrong.
 
 ## Per-child progress
 
