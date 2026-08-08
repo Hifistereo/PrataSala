@@ -237,8 +237,8 @@
           <sc-if value="{{ isRobot }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
               <!-- header -->
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
-                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:36px; height:36px; border-radius:12px; font-size:19px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🤖 Robotu Laukums</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
@@ -248,25 +248,26 @@
               </div>
 
               <!-- dragon hint bubble -->
-              <div style="display:flex; align-items:center; gap:8px; padding:10px 12px 4px; flex:0 0 auto;">
-                <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:5px 12px 2px; flex:0 0 auto;">
+                <div style="width:40px; height:40px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
                 <div style="flex:1; min-width:0;">
-                  <!-- Always two lines tall. The hint is one line at level 1 and two at
-                       level 4-5, and since the board below is flex:1 it absorbed the
-                       difference — changing level visibly resized the playfield. -->
-                  <div style="position:relative; background:#fff; border-radius:16px; padding:9px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:700; color:#34245C; font-size:13px; line-height:1.25; min-height:calc(2 * 1.25em + 18px); display:flex; align-items:center;">{{ hint }}</div>
-                  <!-- soma: what is still out on the board vs already picked up -->
-                  <div style="display:flex; align-items:center; gap:5px; margin-top:5px; padding-left:2px;">
-                    <sc-for list="{{ bag }}" as="b" hint-placeholder-count="3">
-                      <div style="width:27px; height:27px; border-radius:9px; background:{{ b.bg }}; border:2px solid {{ b.ring }}; display:grid; place-items:center; font-size:15px; opacity:{{ b.op }}; filter:{{ b.filter }}; box-shadow:0 2px 0 rgba(0,0,0,.12);">{{ b.e }}</div>
-                    </sc-for>
-                  </div>
+                  <!-- Pinned to two lines so changing level (a 1-line hint at level 1
+                       vs a 2-line one at 4-5) does not resize the flex:1 board below.
+                       Kept tight so the board gets the most room. -->
+                  <div style="position:relative; background:#fff; border-radius:14px; padding:6px 12px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-weight:700; color:#34245C; font-size:13px; line-height:1.2; min-height:calc(2 * 1.2em + 10px); display:flex; align-items:center;">{{ hint }}</div>
+                </div>
+                <!-- soma: what is still out on the board vs already picked up. Moved
+                     inline beside the hint (was a full row below) to save height. -->
+                <div style="display:flex; align-items:center; gap:4px; flex:0 0 auto;">
+                  <sc-for list="{{ bag }}" as="b" hint-placeholder-count="3">
+                    <div style="width:24px; height:24px; border-radius:8px; background:{{ b.bg }}; border:2px solid {{ b.ring }}; display:grid; place-items:center; font-size:13px; opacity:{{ b.op }}; filter:{{ b.filter }}; box-shadow:0 2px 0 rgba(0,0,0,.12);">{{ b.e }}</div>
+                  </sc-for>
                 </div>
               </div>
 
               <!-- grid board -->
-              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 12px;">
-                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(86 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
+              <div style="flex:1 1 auto; min-height:0; display:grid; place-items:center; padding:3px 10px;">
+                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(94 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:7px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(5,1fr); gap:5px;">
                   <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="25">
                     <div style="border-radius:10px; background:{{ cell.bg }}; box-shadow:{{ cell.ring }}; display:grid; place-items:center; font-size:calc(5.5 * var(--u));">{{ cell.mark }}</div>
                   </sc-for>
@@ -287,8 +288,8 @@
               <!-- command queue -->
               <!-- Fixed at two chip rows, scrolling beyond. Left free to wrap it grew to
                    three rows as commands were queued and shrank the board mid-run. -->
-              <div style="flex:0 0 auto; padding:4px 12px; height:76px;">
-                <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:7px 10px; display:flex; gap:6px; align-items:flex-start; align-content:flex-start; height:68px; overflow-y:auto; flex-wrap:wrap;">
+              <div style="flex:0 0 auto; padding:3px 12px; height:58px;">
+                <div style="background:rgba(255,255,255,.6); border-radius:14px; padding:5px 10px; display:flex; gap:5px; align-items:flex-start; align-content:flex-start; height:52px; overflow-y:auto; flex-wrap:wrap;">
                   <span style="font-weight:700; color:#5B6B86; font-size:12px; line-height:24px;">{{ queueLabel }}</span>
                   <sc-for list="{{ queue }}" as="q" hint-placeholder-count="0">
                     <div style="width:24px; height:24px; border-radius:8px; background:#fff; display:grid; place-items:center; font-size:14px; box-shadow:0 2px 0 rgba(0,0,0,.1);">{{ q }}</div>
@@ -297,7 +298,7 @@
               </div>
 
               <!-- controls -->
-              <div style="flex:0 0 auto; display:flex; align-items:center; gap:max(10px, calc(2.6 * var(--u))); padding:max(6px, calc(1.6 * var(--u))) max(12px, calc(3 * var(--u))) max(16px, calc(4 * var(--u)));">
+              <div style="flex:0 0 auto; display:flex; align-items:center; gap:max(10px, calc(2.6 * var(--u))); padding:max(3px, calc(1 * var(--u))) max(12px, calc(3 * var(--u))) max(9px, calc(2.4 * var(--u)));">
                 <!-- Laid out as a cross, each button in the direction it moves the
                      robot: a child aims where they want to go rather than reading
                      the arrow. Down must sit under the middle, never in a row
@@ -322,8 +323,8 @@
           <!-- ============ MEMORY PATH (Atmiņas Taka) ============ -->
           <sc-if value="{{ isMemory }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
-                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:36px; height:36px; border-radius:12px; font-size:19px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐾 Atmiņas Taka</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
@@ -331,20 +332,20 @@
                   <button onClick="{{ incLevel }}" disabled="{{ incLevelDisabled }}" aria-label="Grūtāks līmenis" style="opacity:{{ incLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:var(--primary); color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">+</button>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; gap:8px; padding:12px 12px 4px; flex:0 0 auto;">
-                <div style="width:48px; height:48px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
-                <div style="flex:1; background:#fff; border-radius:16px; padding:10px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">{{ memStatus }}</div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 12px 3px; flex:0 0 auto;">
+                <div style="width:42px; height:42px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+                <div style="flex:1; background:#fff; border-radius:16px; padding:8px 13px; box-shadow:0 4px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">{{ memStatus }}</div>
               </div>
-              <div style="display:flex; justify-content:center; padding:4px;">{{ memStepEls }}</div>
-              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
-                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(80 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:9px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
+              <div style="display:flex; justify-content:center; padding:3px;">{{ memStepEls }}</div>
+              <div style="flex:1 1 auto; min-height:0; display:grid; place-items:center; padding:4px 12px;">
+                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(90 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--sea), color-mix(in srgb, var(--sea) 70%, #1a5)); border-radius:22px; padding:8px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.14), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); gap:8px;">
                   <sc-for list="{{ memCells }}" as="cell" hint-placeholder-count="16">
                     <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:13px; background:{{ cell.bg }}; box-shadow:{{ cell.glow }}; display:grid; place-items:center; font-size:calc(6 * var(--u)); transition:background .28s ease, box-shadow .28s ease;">{{ cell.mark }}</div>
                   </sc-for>
                 </div>
               </div>
-              <div style="flex:0 0 auto; padding:8px 14px 18px;">
-                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(4.4 * var(--u)); padding:13px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
+              <div style="flex:0 0 auto; padding:6px 14px 12px;">
+                <button onClick="{{ memReplay }}" style="width:100%; border:none; cursor:pointer; background:#FFCE3A; color:#7A4E00; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(4.4 * var(--u)); padding:11px; border-radius:16px; box-shadow:0 6px 0 #E0A91E;">🔁 Rādīt vēlreiz</button>
               </div>
             </div>
           </sc-if>
@@ -352,8 +353,8 @@
           <!-- ============ LISTEN & DO (Klausies un Dari) ============ -->
           <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
-                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:36px; height:36px; border-radius:12px; font-size:19px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">👂 Klausies un Dari</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
@@ -362,9 +363,9 @@
                 </div>
               </div>
               <!-- instruction -->
-              <div style="display:flex; align-items:center; gap:10px; padding:14px 14px 6px; flex:0 0 auto;">
-                <div style="width:56px; height:56px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
-                <div style="flex:1; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 5px 0 rgba(0,0,0,.08); display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px; padding:7px 12px 4px; flex:0 0 auto;">
+                <div style="width:46px; height:46px; flex:0 0 auto;"><dc-import name="Dragon" hint-size="100%,100%"></dc-import></div>
+                <div style="flex:1; background:#fff; border-radius:18px; padding:9px 13px; box-shadow:0 5px 0 rgba(0,0,0,.08); display:flex; align-items:center; gap:10px;">
                   <div style="flex:1; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:16px;">{{ listenInstr }}</div>
                   <button onClick="{{ listenSpeak }}" aria-label="Klausīties" style="border:none; cursor:pointer; background:var(--primary); color:#fff; width:42px; height:42px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 var(--primary-dark);">🔊</button>
                 </div>
@@ -375,8 +376,8 @@
                 <span style="font-family:var(--kmp-font-display); font-weight:700; color:{{ listenFbColor }}; font-size:16px;">{{ listenFeedback }}</span>
               </div>
               <!-- objects -->
-              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 16px 18px;">
-                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(86 * var(--u)), 100%); max-width:100%; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); gap:14px;">
+              <div style="flex:1 1 auto; min-height:0; display:grid; place-items:center; padding:4px 14px 14px;">
+                <div style="height:100%; width:auto; aspect-ratio:1; max-height:min(calc(92 * var(--u)), 100%); max-width:100%; display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(2,1fr); gap:14px;">
                   <sc-for list="{{ listenObjs }}" as="o" hint-placeholder-count="4">
                     <button onClick="{{ o.tap }}" style="border:4px solid #fff; cursor:pointer; background:#fff; border-radius:22px; aspect-ratio:1; display:grid; place-items:center; font-size:calc(18 * var(--u)); box-shadow:0 7px 0 rgba(0,0,0,.1);">{{ o.e }}</button>
                   </sc-for>
@@ -388,8 +389,8 @@
           <!-- ============ NUMBER TREASURE (Skaitļu Dārgumi) ============ -->
           <sc-if value="{{ isNumber }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
-                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:36px; height:36px; border-radius:12px; font-size:19px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">💎 Skaitļu Dārgumi</div>
                 <div style="display:flex; align-items:center; gap:4px; background:#fff; padding:4px; border-radius:999px; box-shadow:0 4px 0 rgba(0,0,0,.12);">
                   <button onClick="{{ decLevel }}" disabled="{{ decLevelDisabled }}" aria-label="Vieglāks līmenis" style="opacity:{{ decLevelOpacity }}; border:none; cursor:pointer; width:26px; height:26px; border-radius:50%; background:#EDF1F6; color:#5B6B86; font-family:var(--kmp-font-display); font-weight:700; font-size:18px; line-height:1; display:grid; place-items:center;">−</button>
@@ -398,13 +399,13 @@
                 </div>
               </div>
               <!-- question -->
-              <div style="margin:14px 14px 4px; background:#fff; border-radius:18px; padding:12px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:19px;">{{ numQ }}</div>
+              <div style="margin:8px 12px 3px; background:#fff; border-radius:18px; padding:10px; text-align:center; box-shadow:0 5px 0 rgba(0,0,0,.08); font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:19px;">{{ numQ }}</div>
               <div style="display:flex; justify-content:center; align-items:center; gap:6px; padding:2px;">
                 <span style="font-weight:700; color:#7C8AA3; font-size:11px;">Dārgumi:</span>
                 <span>{{ numCountEls }}</span>
               </div>
               <!-- two chests -->
-              <div style="flex:1 1 auto; display:flex; gap:12px; padding:6px 14px;">
+              <div style="flex:1 1 auto; min-height:0; display:flex; gap:12px; padding:4px 12px;">
                 <button onClick="{{ pickA }}" style="flex:1; cursor:pointer; border:5px solid {{ numBorderA }}; background:linear-gradient(180deg,#FFF7E6,#FFE9C2); border-radius:22px; padding:10px; display:flex; flex-direction:column; box-shadow:0 7px 0 rgba(0,0,0,.1);">
                   <div style="flex:1; display:flex; flex-wrap:wrap; gap:4px; align-content:center; justify-content:center;">
                     <sc-for list="{{ gemsA }}" as="gem" hint-placeholder-count="3">
@@ -433,7 +434,7 @@
                 </div>
               </sc-if>
               <!-- next -->
-              <div style="flex:0 0 auto; padding:8px 14px 18px; min-height:64px;">
+              <div style="flex:0 0 auto; padding:6px 14px 12px; min-height:58px;">
                 <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
                   <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(5 * var(--u)); padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
                 </sc-if>
@@ -444,17 +445,17 @@
           <!-- ============ DON'T CATCH DRAGON (Neķer Pūķi!) ============ -->
           <sc-if value="{{ isDragon }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute; inset:0; background:linear-gradient(180deg, var(--sky-top), var(--sky-bot)); display:flex; flex-direction:column;">
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
-                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:40px; height:40px; border-radius:13px; font-size:20px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:7px 12px; background:linear-gradient(180deg, var(--primary), color-mix(in srgb, var(--primary) 86%, #000)); box-shadow:0 4px 0 var(--primary-dark); flex:0 0 auto;">
+                <button onClick="{{ goMap }}" aria-label="Atpakaļ" style="border:none; cursor:pointer; background:#fff; color:var(--primary); width:36px; height:36px; border-radius:12px; font-size:19px; box-shadow:0 4px 0 rgba(0,0,0,.12);">←</button>
                 <div style="font-family:var(--kmp-font-display); font-weight:700; color:#fff; font-size:calc(4.6 * var(--u)); text-shadow:0 2px 0 var(--primary-dark);">🐉 Neķer Pūķi!</div>
                 <div style="display:flex; gap:6px;">
                   <div style="background:#fff; padding:5px 9px; border-radius:999px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:13px; box-shadow:0 4px 0 rgba(0,0,0,.12);">⏱️ {{ dragTime }}</div>
                   <div style="background:#FFCE3A; padding:5px 9px; border-radius:999px; font-family:var(--kmp-font-display); font-weight:700; color:#7A4E00; font-size:13px; box-shadow:0 4px 0 #E0A91E;">⭐ {{ dragScore }}</div>
                 </div>
               </div>
-              <div style="text-align:center; padding:10px 14px 4px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
-              <div style="flex:1 1 auto; display:grid; place-items:center; padding:6px 14px;">
-                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(82 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
+              <div style="text-align:center; padding:6px 14px 3px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:14px;">Pieskaries draugiem 🐰 — bet NE pūķim! 🐉</div>
+              <div style="flex:1 1 auto; min-height:0; display:grid; place-items:center; padding:4px 12px;">
+                <div style="position:relative; height:100%; width:auto; aspect-ratio:1; max-height:min(calc(92 * var(--u)), 100%); max-width:100%; background:linear-gradient(165deg, var(--grass), var(--hill)); border-radius:22px; padding:10px; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12), 0 8px 0 rgba(0,0,0,.12); display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:10px;">
                   <sc-for list="{{ dragCells }}" as="cell" hint-placeholder-count="9">
                     <div onClick="{{ cell.tap }}" style="cursor:pointer; border-radius:50%; background:{{ cell.bg }}; display:grid; place-items:center; font-size:calc(13 * var(--u)); box-shadow:inset 0 4px 8px rgba(0,0,0,.18);">{{ cell.critter }}</div>
                   </sc-for>
@@ -470,7 +471,7 @@
                   </sc-if>
                 </div>
               </div>
-              <div style="flex:0 0 auto; height:14px;"></div>
+              <div style="flex:0 0 auto; height:10px;"></div>
             </div>
           </sc-if>
 
