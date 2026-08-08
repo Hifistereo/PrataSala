@@ -433,12 +433,7 @@
                   <button onClick="{{ pickEqual }}" style="width:100%; cursor:pointer; border:4px solid {{ numEqualBorder }}; background:#fff; border-radius:16px; padding:11px; font-family:var(--kmp-font-display); font-weight:700; color:#34245C; font-size:16px; box-shadow:0 5px 0 rgba(0,0,0,.08);">⚖️ Vienādi!</button>
                 </div>
               </sc-if>
-              <!-- next -->
-              <div style="flex:0 0 auto; padding:6px 14px 12px; min-height:58px;">
-                <sc-if value="{{ numAnswered }}" hint-placeholder-val="{{ false }}">
-                  <button onClick="{{ nextNumber }}" style="width:100%; border:none; cursor:pointer; background:#46C091; color:#fff; font-family:var(--kmp-font-display); font-weight:700; font-size:calc(5 * var(--u)); padding:14px; border-radius:16px; box-shadow:0 6px 0 #2E9E70;">Nākamais →</button>
-                </sc-if>
-              </div>
+              <div style="flex:0 0 auto; padding:6px 14px 12px;"></div>
             </div>
           </sc-if>
 
@@ -697,6 +692,8 @@ const SAVE_VERSION = 1;
 // Baseline difficulty per game. Not progress — "reset progress" restores these,
 // it does not drop everything to 1.
 const DEFAULT_LEVELS = { robotCommands: 1, memoryPath: 2, listenAndDo: 1, numberTreasure: 3, dontCatchDragon: 2 };
+
+const LISTEN_OBJS = [ {e:'🍎', n:'ābolam'}, {e:'⭐', n:'zvaigznei'}, {e:'🦋', n:'tauriņam'}, {e:'🌸', n:'puķei'} ];
 
 const CARD_DEFS = [
   { id:1, e:'🐉', n:'Pūķēns Dārcis' },
@@ -1182,13 +1179,23 @@ class Component extends DCLogic {
   }
 
   // ---------- Listen & Do ----------
-  startListen(){ this._listenRounds = 2 + (this.state.levels.listenAndDo||1); this.setState({ listen:{ round:0, seq:this.genListenSeq(), step:0, status:'' } }); }
+  startListen(){
+    this._listenRounds = 2 + (this.state.levels.listenAndDo||1);
+    const seq = this.genListenSeq();
+    this.setState({ listen:{ round:0, seq, step:0, status:'' } });
+    this.later(() => this.speak(this.listenInstrFor(seq)), 500);
+  }
   genListenSeq(){
     const two = (this.state.levels.listenAndDo||1) >= 3;
     const a = Math.floor(Math.random()*4);
     if(!two) return [a];
     let b; do{ b=Math.floor(Math.random()*4); } while(b===a);
     return [a, b];
+  }
+  listenInstrFor(seq){
+    return seq.length>1
+      ? ('Pieskaries ' + LISTEN_OBJS[seq[0]].n + ', tad ' + LISTEN_OBJS[seq[1]].n + '!')
+      : ('Pieskaries ' + LISTEN_OBJS[seq[0]].n + '!');
   }
   speak(text){
     if(!this.state.speech) return;
@@ -1208,8 +1215,10 @@ class Component extends DCLogic {
           this.setState({ listen:{ ...Ls, status:'done' } });
           this.later(() => this.setResult({ emoji:'👂', title:'Malacis!', msg:'Tu visu izdarīji pareizi!', stars:3 }), 320);
         } else {
-          this.setState({ listen:{ round, seq:this.genListenSeq(), step:0, status:'good' } });
+          const seq = this.genListenSeq();
+          this.setState({ listen:{ round, seq, step:0, status:'good' } });
           this.later(() => this.setState(st => st.listen.status==='good' ? ({ listen:{ ...st.listen, status:'' } }) : null), 600);
+          this.later(() => this.speak(this.listenInstrFor(seq)), 500);
         }
       }
     } else {
@@ -1220,6 +1229,9 @@ class Component extends DCLogic {
 
   // ---------- Number Treasure ----------
   startNumber(){ this._numCount=0; this.dealNumber(); }
+  numQFor(mode){
+    return mode==='equal' ? 'Vai 💎 ir vienādi?' : (mode==='more' ? 'Kur ir VAIRĀK 💎?' : 'Kur ir MAZĀK 💎?');
+  }
   dealNumber(){
     const L=this.state.levels.numberTreasure||1;
     const maxN=Math.min(10, 2+L);
@@ -1229,6 +1241,7 @@ class Component extends DCLogic {
     if(allowEqual && Math.random()<0.25){ b=a; mode='equal'; }
     else { while(a===b){ b=1+Math.floor(Math.random()*maxN); } mode = Math.random()<0.5?'more':'less'; }
     this.setState({ num:{ a, b, mode, answered:false, correct:false, picked:null, count:this._numCount||0 } });
+    this.later(() => this.speak(this.numQFor(mode)), 500);
   }
   answerNumber(pick){
     const n=this.state.num; if(n.answered) return;
@@ -1242,6 +1255,10 @@ class Component extends DCLogic {
     this.setState({ num:{ ...n, answered:true, correct, picked:pick, count:this._numCount||0 } });
     if(correct && this._numCount>=3){
       this.later(() => this.setResult({ emoji:'💎', title:'Bagāts!', msg:'Tu atradi visus dārgumus!', stars:3 }), 750);
+    } else {
+      // Auto-advance whether the pick was right or wrong — the child should
+      // never need to tap a "next" button to keep playing.
+      this.later(() => this.nextNumber(), 1200);
     }
   }
   nextNumber(){ this.dealNumber(); }
@@ -1495,13 +1512,10 @@ class Component extends DCLogic {
     );
 
     // ----- listen -----
-    const objs = [ {e:'🍎', n:'ābolam'}, {e:'⭐', n:'zvaigznei'}, {e:'🦋', n:'tauriņam'}, {e:'🌸', n:'puķei'} ];
     const L = this.state.listen;
     const lseq = L.seq && L.seq.length ? L.seq : [0];
-    const listenObjs = objs.map((o,i) => ({ e:o.e, tap:()=>this.tapListen(i) }));
-    const listenInstr = lseq.length>1
-      ? ('Pieskaries ' + objs[lseq[0]].n + ', tad ' + objs[lseq[1]].n + '!')
-      : ('Pieskaries ' + objs[lseq[0]].n + '!');
+    const listenObjs = LISTEN_OBJS.map((o,i) => ({ e:o.e, tap:()=>this.tapListen(i) }));
+    const listenInstr = this.listenInstrFor(lseq);
     const listenSpeak = () => this.speak(listenInstr);
     const listenFeedback = L.status==='good' ? '✅ Pareizi!' : (L.status==='bad' ? '🤔 Mēģini vēlreiz!' : (L.status==='done' ? '🎉 Gatavs!' : ''));
     const listenFbColor = L.status==='bad' ? '#FF6B6B' : '#46C091';
@@ -1514,7 +1528,7 @@ class Component extends DCLogic {
     const n = this.state.num;
     const gemsA = Array.from({length:n.a}, (_,i)=>i);
     const gemsB = Array.from({length:n.b}, (_,i)=>i);
-    const numQ = n.mode==='equal' ? 'Vai 💎 ir vienādi?' : (n.mode==='more' ? 'Kur ir VAIRĀK 💎?' : 'Kur ir MAZĀK 💎?');
+    const numQ = this.numQFor(n.mode);
     const numAllowEqual = (this.state.levels.numberTreasure||1) >= 4;
     const panelBorder = (which) => {
       if(!n.answered) return '#FFFFFF';
@@ -1674,7 +1688,6 @@ class Component extends DCLogic {
       pickA: () => this.answerNumber('a'),
       pickB: () => this.answerNumber('b'),
       pickEqual: () => this.answerNumber('equal'),
-      nextNumber: () => this.nextNumber(),
       // dragon
       dragCells, dragScore:g.score, dragTime:g.timeLeft,
       dragStart: () => this.startDragon(),
